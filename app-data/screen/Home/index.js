@@ -1,11 +1,22 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import Header from '../../shared/components/Header';
 
 const Home = (props) => (
   <View style={styles.container}>
     <Text style={styles.text}>Home Screen</Text>
   </View>
 );
+
+Home.navigationOptions = {
+  header: ({navigation}) => {
+    return (<Header navigation={navigation} />);
+  },
+};
 
 const styles = StyleSheet.create({
   container: {

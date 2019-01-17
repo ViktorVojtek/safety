@@ -6,12 +6,17 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Home from './app-data/screen/Home';
+import {ApolloProvider, compose, graphql} from 'react-apollo';
+import {client} from './app-data/graphql/with-apollo';
+import Router from './app-data/router';
+import Splash from './app-data/screen/Splash';
 
 const App = (props) => (
-  <Home />
+  <ApolloProvider client={client}>
+    <Router />
+  </ApolloProvider>
 ); 
 
 export default App;
