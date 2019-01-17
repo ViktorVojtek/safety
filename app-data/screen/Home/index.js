@@ -13,9 +13,7 @@ const Home = (props) => (
 );
 
 Home.navigationOptions = {
-  header: ({navigation}) => {
-    return (<Header navigation={navigation} />);
-  },
+  header: ({navigation}) => <Header navigation={navigation} />,
 };
 
 const styles = StyleSheet.create({

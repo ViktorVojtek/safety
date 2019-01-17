@@ -1,11 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Header from '../../shared/components/Header';
 
-export default () => (
+const Report = () => (
   <View style={styles.container}>
     <Text style={styles.text}>Report Screen</Text>
   </View>
 );
+
+Report.navigationOptions = {
+  header: ({navigation}) => <Header navigation={navigation} />,
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -20,3 +25,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+export default Report;

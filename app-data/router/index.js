@@ -1,3 +1,6 @@
+import React from 'react';
+// import {Text, View} from 'react-native';
+import BottomTabBar from '../shared/components/BottomTabBar';
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -16,9 +19,16 @@ import SignScreen from '../screen/auth/SignIn';
 import Splash from '../screen/Splash';
 
 const HomeStack = createStackNavigator({Home: HomeScreen});
-const OtherStack = createStackNavigator({Other: MapScreen});
+const MapStack = createStackNavigator({Map: MapScreen});
+const ReportStack = createStackNavigator({Report: ReportScreen});
 
-const AppStack = createBottomTabNavigator({Home: HomeStack, Other: OtherStack});
+const AppStack = createBottomTabNavigator({
+  Home: HomeStack,
+  Report: ReportStack,
+  Map: MapStack,
+}, {
+  tabBarComponent: (props) => <BottomTabBar {...props} />,
+});
 const AuthStack = createStackNavigator({SignIn: SignScreen});
 
 export default createAppContainer(createSwitchNavigator(
