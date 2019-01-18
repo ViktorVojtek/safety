@@ -1,14 +1,24 @@
 import React from 'react';
 import {
+  Dimensions,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 import Header from '../../shared/components/Header';
+import MapView from 'react-native-maps';
 
 const Map = () => (
   <View style={styles.container}>
-    <Text style={styles.text}>Map Screen</Text>
+    <MapView
+      style={styles.map}
+      initialRegion={{
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}
+    />
   </View>
 );
 
@@ -16,6 +26,7 @@ Map.navigationOptions = {
   header: ({navigation}) => <Header navigation={navigation} />,
 };
 
+const {height, width} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,10 +34,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  map: {
+    height: height - 140,
+    width,
   },
 });
 
