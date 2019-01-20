@@ -15,6 +15,7 @@ import ReportScreen from '../screen/Report';
 
 // AuthStack
 import AuthLoadingScreen from '../screen/auth/Loading';
+import RegisterScreen from '../screen/auth/Register';
 import SignScreen from '../screen/auth/SignIn';
 import Splash from '../screen/Splash';
 
@@ -29,7 +30,12 @@ const AppStack = createBottomTabNavigator({
 }, {
   tabBarComponent: (props) => <BottomTabBar {...props} />,
 });
-const AuthStack = createStackNavigator({SignIn: SignScreen});
+const AuthStack = createStackNavigator({
+  SignIn: SignScreen,
+  Register: RegisterScreen,
+}, {
+  initialRouteName: 'SignIn',
+});
 
 export default createAppContainer(createSwitchNavigator(
   {
