@@ -23,3 +23,7 @@ Cross platform mobile application that will track incidents in the city. Users c
     - Home screen
     - Add/Report incident screen
     - Map screen
+
+## TODO
+
+- Figure out and finish successfull registered user app state/message (consider to use [Modal](https://facebook.github.io/react-native/docs/modal))
