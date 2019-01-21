@@ -21,9 +21,9 @@ const AuthLoadingScreen = (props) => {
 };
 
 const _bootstrapAsync = async (navigation) => {
-  const userToken = await AsyncStorage.getItem('userToken');
+  const jwt = await AsyncStorage.getItem('jwt');
 
-  navigation.navigate(userToken ? 'App' : 'Auth');
+  navigation.navigate(jwt ? 'App' : 'Auth');
 };
 
 const styles = StyleSheet.create({

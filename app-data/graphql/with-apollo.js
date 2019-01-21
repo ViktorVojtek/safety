@@ -1,9 +1,9 @@
-import {ApolloClient} from "apollo-client";
-import {ApolloLink} from "apollo-link";
-import {HttpLink} from "apollo-link-http";
-import {InMemoryCache} from "apollo-cache-inmemory";
-import {withClientState} from "apollo-link-state";
-import gql from "graphql-tag";
+import {ApolloClient} from 'apollo-boost'; // "apollo-client";
+import {ApolloLink} from 'apollo-link';
+import {HttpLink} from 'apollo-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {withClientState} from 'apollo-link-state';
+import gql from 'graphql-tag';
 
 const cache = new InMemoryCache();
 const stateLink = withClientState({
@@ -72,6 +72,7 @@ const port = 3543;
 
 export const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([stateLink, new HttpLink()]),
-  // uri: protocol + '://' + domain + ':' + port + '/graphql',
+  link: ApolloLink.from([stateLink, new HttpLink({
+    uri: protocol + '://' + domain + ':' + port + '/graphql'
+  })]),
 });

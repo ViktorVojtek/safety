@@ -1,18 +1,24 @@
 import React, {Component} from 'react';
 import {
+  Animated,
   AsyncStorage,
-  Button,
-  Dimensions,
-  StyleSheet,
   Text,
   TextInput,
-  View
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {graphql} from 'react-apollo';
 import Header from './components/Header';
+import loginUser from './graphql/loginUser.mutation';
+import styles from './styles';
 
 const initialState = {
-  login: '', // 'Zadajte prihlasovacie meno',
-  password: '', // 'Zadajte heslo',
+  data: {
+    email: '',
+    password: '',
+  },
+  fadeAnim: new Animated.Value(0),
+  errorVisible: false,
 };
 
 class SignIn extends Component {
@@ -21,8 +27,10 @@ class SignIn extends Component {
 
     this.state = initialState;
 
-    this.handleLoginText = this.handleLoginText.bind(this);
-    this.handlePasswordText = this.handlePasswordText.bind(this);
+    this._signInAsync = this._signInAsync.bind(this);
+    this.handleUserData = this.handleUserData.bind(this);
+    this.startAnimation = this.startAnimation.bind(this);
+    this.toggleError = this.toggleError.bind(this);
   }
 
   static navigationOptions = {
@@ -30,64 +38,111 @@ class SignIn extends Component {
   }
 
   render () {
-    const {navigation} = this.props;
+    const {mutate, navigation} = this.props;
+    const {data: {email, password}, fadeAnim} = this.state;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Siginng Screen</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(login) => this.handleLoginText(login)}
-          value={this.state.login}
-          placeholder={'Zadajte prihlasovacie meno'}
-        />
-        <TextInput
-          secureTextEntry
-          style={styles.textInput}
-          onChangeText={(password) => this.handlePasswordText(password)}
-          value={this.state.password}
-          placeholder={'Zadajte heslo'}
-        />
-        <Button title="Sign in!" onPress={() => _signInAsync(navigation)} />
-        <Button title="Register!" onPress={() => navigation.navigate('Register')} />
+        <Animated.View style={[styles.errorContainer, {opacity: fadeAnim}]}>
+          <Text style={styles.textWhite}>Chyba! Skontrolujte prihlasovacie údaje.</Text>
+        </Animated.View>
+        <View style={[styles.subContainer, {justifyContent: 'flex-end'}]}>
+          <TextInput
+            autoCapitalize={'none'}
+            style={styles.textInput}
+            onChangeText={(emailText) => {
+              const data = this.state.data;
+
+              data.email = emailText;
+              this.handleUserData(data);
+            }}
+            value={email}
+            placeholder={'Zadajte svoj e-mail'}
+            keyboardType={'email-address'}
+          />
+          <TextInput
+            secureTextEntry
+            style={styles.textInput}
+            onChangeText={(passwordText) => {
+              const data = this.state.data;
+
+              data.password = passwordText;
+              this.handleUserData(data);
+            }}
+            value={password}
+            placeholder={'Zadajte heslo'}
+          />
+        </View>
+        <View style={[styles.subContainer, {justifyContent: 'center'}]}>
+          <TouchableOpacity style={styles.button} onPress={() => this._signInAsync(mutate, navigation)}>
+            <Text style={styles.textWhite}>Prihlásiť</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.link}>Nemáte účeť? Zaregistrujte sa.</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 
-  async _signInAsync (navigation) {
-    await AsyncStorage.setItem('userToken', 'abc');
-    navigation.navigate('App');
+  async _signInAsync (mutate, navigation) {
+    try {
+      const {data: {email, password}} = this.state;
+      const user = {email, password};
+      
+      const resp = await mutate({variables: {user}});
+      const {data: {loginUser: {firstName, id, jwt, lastName, role}}} = resp;
+
+      await AsyncStorage.multiSet([
+        ['firstName', firstName],
+        ['id', id],
+        ['jwt', jwt],
+        ['lastName', lastName],
+        ['role', String(role)],
+      ], (error) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+
+        navigation.navigate('App');
+      });
+    } catch (err) {
+      this.toggleError();
+    }
   }
 
-  handleLoginText (login) {
-    this.setState({login});
+  handleUserData (data) {
+    this.setState({data});
   }
 
-  handlePasswordText (password) {
-    this.setState({password});
+  startAnimation () {
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: this.state.errorVisible ? 0 : 1,
+        duration: 1000,
+      },
+    ).start(() => {
+      if (!this.state.errorVisible) {
+        this.setState({errorVisible: true}, () => {
+          if (this.state.errorVisible) {
+            setTimeout(() => {
+              this.startAnimation();
+            }, 3000);
+          }
+        });
+      } else {
+        this.setState({errorVisible: false});
+      }
+    });
+  }
+
+  toggleError () {
+    this.startAnimation();
   }
 }
 
-const {width} = Dimensions.get('screen');
+const withGraphql = graphql(loginUser)(SignIn);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00bcff',
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  textInput: {
-    backgroundColor: '#fff',
-    padding: 10,
-    textAlign: 'center',
-    width: width * 0.8,
-  },
-});
-
-export default SignIn;
+export default withGraphql;
