@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native';
 import styles from './styles';
+import DeviceMarker from './components/DeviceMarker';
 import Header from '../../shared/components/Header';
 import MapView, {Marker} from 'react-native-maps';
 import {compose, graphql} from 'react-apollo';
@@ -14,7 +15,7 @@ import gpsQuery from './graphql/gps.query';
 const Map = compose(
   graphql(setGPSCoords),
   graphql(gpsQuery),
-  )((props) => {
+)((props) => {
   const {data: {error, loading, gps}, mutate} = props;
 
   navigator.geolocation.getCurrentPosition((position) => {
@@ -45,9 +46,7 @@ const Map = compose(
           longitudeDelta: 0.0421,
         }}
       >
-        <Marker
-          coordinate={{latitude, longitude}}
-        />
+        <DeviceMarker coordinate={{latitude, longitude}} />
       </MapView>
     </View>
   );

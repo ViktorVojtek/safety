@@ -36,5 +36,5 @@ Cross platform mobile application that will track incidents in the city. Users c
     - Take/Use photo
     - Input report information form
 - Map screen
-  - Implement actual device positioning with graphic (rounded blue point or something like that)
+  - ~~Implement actual device positioning with graphic (rounded blue point or something like that)~~
   - Implement actial unsolved reported positions like red (or some graphical) dots with detail view of selected report
