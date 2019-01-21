@@ -1,4 +1,4 @@
-import {ApolloClient} from 'apollo-boost'; // "apollo-client";
+import {ApolloClient} from 'apollo-boost'; // 'apollo-client';
 import {ApolloLink} from 'apollo-link';
 import {HttpLink} from 'apollo-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -10,6 +10,29 @@ const stateLink = withClientState({
   cache,
   resolvers: {
     Mutation: {
+      setGPSCoords: (_, {longitude, latitude}, {cache}) => {
+        const {gps} = cache.readQuery({
+          query: gql`
+            {
+              gps {
+                longitude
+                latitude
+              }
+            }
+          `
+        });
+        const data = {
+          gps: {
+            __typename: 'Gps',
+            latitude,
+            longitude,
+          },
+        };
+
+        cache.writeData({data});
+
+        return null;
+      },
       toggleSplash: (_, {value}, {cache}) => {
         const {splash} = cache.readQuery({
           query: gql`
@@ -22,29 +45,8 @@ const stateLink = withClientState({
         });
         const data = {
           splash: {
-            __typename: "Splash",
+            __typename: 'Splash',
             value,
-          }
-        };
-
-        cache.writeData({data});
-
-        return null;
-      },
-      incrementCounter: (_, args, { cache }) => {
-        const { counter } = cache.readQuery({
-          query: gql`
-            {
-              counter {
-                value
-              }
-            }
-          `
-        });
-        const data = {
-          counter: {
-            __typename: "Counter",
-            value: counter.value + 1
           }
         };
 
@@ -56,13 +58,14 @@ const stateLink = withClientState({
   },
   defaults: {
     splash: {
-      __typename: "Splash",
+      __typename: 'Splash',
       value: true,
     },
-    counter: {
-      __typename: "Counter",
-      value: 1,
-    }
+    gps: {
+      __typename: 'Gps',
+      latitude: 37.785834,
+      longitude: -122.406417,
+    },
   },
 });
 
