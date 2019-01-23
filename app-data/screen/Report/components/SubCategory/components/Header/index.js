@@ -15,6 +15,9 @@ const Header = (props) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
+      <TouchableOpacity onPress={() => navigation.goBack(null)}>
+        <Icon name={'chevron-left'} color={'#fff'} size={25} style={styles.chevronLeft} />
+      </TouchableOpacity>
       <Image style={styles.logo} source={require('../../assets/images/erb1.png')} />
       <TouchableOpacity onPress={() => _signOutAsync(navigation)}>
         <Icon color={'#fff'} name={'log-out'} size={20} />

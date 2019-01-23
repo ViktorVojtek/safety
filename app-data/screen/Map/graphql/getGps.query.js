@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query {
+  query GetGps {
     gps @client {
-      longitude
       latitude
+      longitude
     }
   }
 `;
