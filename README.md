@@ -20,9 +20,13 @@ Cross platform mobile application that will track incidents in the city. Users c
     - Register screen
     - SignIn screen
   - Application stack
+    - Emergency lines screen
     - Home screen
-    - Add/Report incident screen
+    - Add/Report screen
     - Map screen
+    - Settings screen
+      - Emergency lines screen
+      - Parent lock/protection
 
 ## TODO
 
