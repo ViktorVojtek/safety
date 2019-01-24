@@ -38,3 +38,6 @@ Cross platform mobile application that will track incidents in the city. Users c
 - Map screen
   - ~~Implement actual device positioning with graphic (rounded blue point or something like that)~~
   - Implement actual reported issues from reports, something like red (or some graphical) dots with detail view of selected report
+- Parent lock/protection
+  - Implement user groups logic for adding/removing other users to user account that will control these users position
+  - Implement special map view, where user could specify radius of some spots e.g: Home, School, etc. for other users in his group
