@@ -1,7 +1,9 @@
 import React from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+import { styles } from '../../../shared/config';
 
-const {height, width} = Dimensions.get('screen');
+const { colors: { lightGrey } } = styles;
+const { height, width } = Dimensions.get('screen');
 
 export default StyleSheet.create({
   button: {
@@ -20,7 +22,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: lightGrey // '#F5FCFF',
   },
   flatList: {
     width,

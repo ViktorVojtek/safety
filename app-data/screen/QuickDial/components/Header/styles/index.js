@@ -1,23 +1,19 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderTopColor: '#dcdcdc',
-    borderTopWidth: 1,
     flexDirection: 'row',
-    height: 60,
+    height: 80,
     justifyContent: 'space-between',
     paddingHorizontal: 15,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
-  plusIcon: {
-    borderRadius: 20,
-    height: 40,
-    overflow: 'hidden',
-    paddingTop: 10,
+  title: {
+    color: '#8f8f8f',
     textAlign: 'center',
-    width: 40,
+    textTransform: 'uppercase',
   }
 });

@@ -7,16 +7,16 @@ import {
   View,
 } from 'react-native';
 import {compose, graphql} from 'react-apollo';
+import { strings } from '../../shared/config';
 import Header from '../../shared/components/Header';
 import FlatListItem from './components/FlatListItem';
 import styles from './styles';
-import reportCategories from './graphql/reportCategories.query';
+import reportCategories from './graphql/categories.query';
 
 const Report = compose(
   graphql(reportCategories),
 )((props) => {
-  console.log(props);
-  const {data: {error, loading, reportCategories}, navigation} = props;
+  const {data: {error, loading, categories}, navigation} = props;
 
   if (error) {
     return (<View><Text>{error.message}</Text></View>);
@@ -25,15 +25,19 @@ const Report = compose(
     return <ActivityIndicator />
   }
 
-  const {categories} = reportCategories;
-  console.log(categories);
   return (
     <View style={styles.container}>
       <FlatList
         data={categories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => {
-          return (<FlatListItem title={item.categoryName}/>);
+          return (
+          <FlatListItem
+            categoryId={item.id}  
+            navigation={navigation}
+            title={item.categoryName}
+          />
+          );
         }}
         style={styles.flatList}
       />
@@ -45,7 +49,11 @@ const Report = compose(
 });
 
 Report.navigationOptions = {
-  header: ({navigation}) => <Header navigation={navigation} />,
+  header: ({navigation}) => {
+    const { header: { title: {report} } } = strings;
+
+    return <Header navigation={navigation} title={report} />;
+  }
 };
 
 export default Report;

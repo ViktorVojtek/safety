@@ -4,13 +4,14 @@ import {
   Text,
   View
 } from 'react-native';
-import styles from './styles';
+import { strings } from '../../shared/config';
 import DeviceMarker from './components/DeviceMarker';
 import Header from '../../shared/components/Header';
 import MapView from 'react-native-maps';
 import {compose, graphql} from 'react-apollo';
 import setGPSCoords from './graphql/setGPSCoords.mutation';
 import getGps from './graphql/getGps.query';
+import styles from './styles';
 
 const Map = compose(
   graphql(setGPSCoords),
@@ -58,7 +59,11 @@ const Map = compose(
 });
 
 Map.navigationOptions = {
-  header: ({navigation}) => <Header navigation={navigation} />,
+  header: ({navigation}) => {
+    const { header: { title: {map} } } = strings;
+
+    return <Header navigation={navigation} title={map} />;
+  }
 };
 
 export default Map;

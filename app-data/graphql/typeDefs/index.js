@@ -5,7 +5,7 @@ export default `
   }
 
   type CategoryType {
-    categoryId: Int
+    id: Int
     categoryType: String
     categoryName: String
   }
@@ -21,7 +21,8 @@ export default `
 
   type Query {
     gps: GpsCoordsType
-    reportCategories: [CategoryType]
-    reportSubCategories: [CategoryType]
+    getSubCagegory(id: Int!): [CategoryType]
+    categories: [CategoryType]
+    subCategories: [CategoryType]
   }
 `;

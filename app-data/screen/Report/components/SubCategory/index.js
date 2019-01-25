@@ -7,14 +7,29 @@ import {
   View,
 } from 'react-native';
 import FlatListItem from '../FlatListItem';
-import {graphql} from 'react-apollo';
-import reportSubCategories from './graphql/reportSubCategories.query';
+import {graphql, Query} from 'react-apollo';
+import reportSubCategories from './graphql/subCategories.query';
 import styles from './styles';
 
-const SubCategory = graphql(reportSubCategories)((props) => {
-  const {data: {error, loading, reportSubCategories}, navigation} = props;
+const SubCategory = graphql(reportSubCategories, {
+  options: (props) => {
+    const {navigation: {getParam}} = props;
+    const id = getParam('categoryId');
 
-  if (error) {
+    return {variables: {id}};
+  }
+})((props) => {
+  console.log('SubCategory Screen Component');
+  console.log(props);
+  const {navigation} = props;
+
+  return (
+    <View>
+      <Text>Sub Category Screen</Text>
+    </View>
+  );
+
+  /*if (error) {
     return (<View><Text>{error.message}</Text></View>);
   }
   if (loading) {
@@ -35,7 +50,13 @@ const SubCategory = graphql(reportSubCategories)((props) => {
         style={styles.flatList}
       />
     </View>
-  );
+  );*/
 });
 
 export default SubCategory;
+
+/*
+, {
+  props: ({data: {adminActivePage: {value}}}) => ({adminActivePage: value})
+}
+*/

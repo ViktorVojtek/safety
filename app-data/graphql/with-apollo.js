@@ -5,7 +5,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import {withClientState} from 'apollo-link-state';
 
 import defaults from './defaults';
-import resolvers from './resolvers/Mutation';
+import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
 const cache = new InMemoryCache();
