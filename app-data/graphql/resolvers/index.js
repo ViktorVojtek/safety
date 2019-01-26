@@ -3,26 +3,18 @@ import gql from 'graphql-tag';
 export default {
   Query: {
     getSubCagegory: async (_, args, {cache, getCacheKey}) => {
-      const cacheData = cache.readQuery({
-        query: gql`
-          query subCategories {
-            subCategories @client {
-              id
-              categoryId
-              categoryType
-              categoryName
-            }
+      const fragment = gql`
+        fragment categoryItem on CategoryItem {
+          id
+          subCategories {
+            id
+            categoryType
+            categoryName
           }
-        `
-      });
-
-      console.log(cacheData);
-      const {subCategories} = cacheData;
-      console.log(subCategories);
-      const data = subCategories.filter((item) => (item.categoryId === args.id));
-
-      console.log(data);
-      cache.writeData({data});
+        }
+      `;
+      const id = `CategoryItem:${args.id}`;
+      const data = cache.readFragment({ fragment, id });
 
       return data;
     },

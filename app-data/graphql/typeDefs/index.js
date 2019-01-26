@@ -15,14 +15,18 @@ export default `
     longitude: Float
   }
 
+  type SubCategoryType {
+    id: Int
+    subCategories: [CategoryType]
+  }
+
   type Mutation {
     setGPSCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
   }
 
   type Query {
     gps: GpsCoordsType
-    getSubCagegory(id: Int!): [CategoryType]
+    getSubCagegory(id: Int!): [SubCategoryType]
     categories: [CategoryType]
-    subCategories: [CategoryType]
   }
 `;

@@ -41,9 +41,6 @@ const Report = compose(
         }}
         style={styles.flatList}
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SubCategory')}>
-        <Text style={styles.buttonText}>Sub Categories Screen</Text>
-      </TouchableOpacity>
     </View>
   );
 });

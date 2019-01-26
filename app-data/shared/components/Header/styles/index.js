@@ -13,6 +13,10 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
+  menuIcon: {
+    height: 25,
+    width: 25
+  },
   title: {
     color: '#8f8f8f',
     textAlign: 'center',

@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import PhoneIcon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconMenu from 'react-native-vector-icons/Ionicons';
+// import LottieView from 'lottie-react-native';
 import styles from './styles';
 
 const Header = (props) => {
@@ -20,7 +21,7 @@ const Header = (props) => {
       <TouchableOpacity onPress={() => {
         navigation.navigate({ routeName: 'QuickDial' });
       }}>
-        <PhoneIcon color={'#4a4a4a'} name={'phone'} size={20} />
+        <Icon color={'#4a4a4a'} name={'phone'} size={20} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={() => {
@@ -28,15 +29,10 @@ const Header = (props) => {
           navigation.openDrawer();
         }
       }}>
-        <Icon color={'#4a4a4a'} name={'menu'} size={25} />
+        <IconMenu color={'#4a4a4a'} name={'ios-menu'} size={30} />
       </TouchableOpacity>
     </View>
   );
-};
-
-const _signOutAsync = async (navigation) => {
-  await AsyncStorage.clear();
-  navigation.navigate('Auth');
 };
 
 export default Header;

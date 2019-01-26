@@ -23,9 +23,6 @@ import RegisterScreen from '../screen/auth/Register';
 import SignScreen from '../screen/auth/SignIn';
 // import Splash from '../screen/Splash';
 
-// DrawerStack
-import SettingsScreen from '../screen/Settings';
-
 // Stack navigation
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -49,19 +46,32 @@ const ReportStack = createStackNavigator({
 
 // Drawer navigation
 const HomeDrawerStack = createDrawerNavigator({
-  Home: HomeStack,
-  Settings: SettingsScreen
+  Home: HomeStack
 }, {
-  contentComponent: () => <DrawerNavigation />,
+  contentComponent: (props) => <DrawerNavigation {...props}  />,
   drawerPosition: 'right',
   initialRouteName: 'Home'
+});
+const MapDrawerStack = createDrawerNavigator({
+  Map: MapStack
+}, {
+  contentComponent: (props) => <DrawerNavigation {...props}  />,
+  drawerPosition: 'right',
+  initialRouteName: 'Map'
+});
+const ReportDrawerStack = createDrawerNavigator({
+  Report: ReportStack
+}, {
+  contentComponent: (props) => <DrawerNavigation {...props}  />,
+  drawerPosition: 'right',
+  initialRouteName: 'Report'
 });
 
 // Bottom navigation
 const AppStack = createBottomTabNavigator({
   Home: HomeDrawerStack, // HomeStack,
-  Report: ReportStack,
-  Map: MapStack,
+  Report: ReportDrawerStack, // ReportStack,
+  Map: MapDrawerStack // MapStack,
 }, {
   tabBarComponent: (props) => <BottomTabBar {...props} />,
 });
