@@ -33,6 +33,7 @@ const Report = compose(
         renderItem={({item}) => {
           return (
           <FlatListItem
+            data={item}
             categoryId={item.id}  
             navigation={navigation}
             title={item.categoryName}

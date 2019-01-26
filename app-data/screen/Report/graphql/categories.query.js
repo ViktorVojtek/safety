@@ -6,6 +6,11 @@ export default gql`
       id
       categoryType
       categoryName
+      subCategories {
+        id
+        categoryType
+        categoryName
+      }
     }
   }
 `;
