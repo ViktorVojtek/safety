@@ -4,7 +4,7 @@ export default gql`
   query getSubCagegory($id: Int!) {
     getSubCagegory(id: $id) @client {
       id
-      subCategories {
+      subCategories @client {
         id
         categoryType
         categoryName

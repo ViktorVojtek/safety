@@ -8,7 +8,9 @@ import defaults from './defaults';
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  dataIdFromObject: o => {o.id ? `${o.__typename}-${o.id}`: `${o.__typename}-${o.cursor}`},
+});
 const stateLink = withClientState({
   cache,
   defaults,

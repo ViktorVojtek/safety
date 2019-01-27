@@ -6,7 +6,7 @@ export default gql`
       id
       categoryType
       categoryName
-      subCategories {
+      subCategories @ client {
         id
         categoryType
         categoryName
