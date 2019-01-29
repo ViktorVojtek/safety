@@ -11,12 +11,13 @@ import styles from './styles';
 class AddReport extends Component {
   constructor(props) {
     super(props);
+
+    this.camera = undefined;
   }
 
   static navigationOptions() {
     header: ({navigation}) => {
       const { header: { title: {report} } } = strings;
-  
       return <Header navigation={navigation} title={report} />;
     }
   }
@@ -29,16 +30,21 @@ class AddReport extends Component {
     return (
       <View style={[styles.container, {
         flexDirection: 'column',
-        backgroundColor: 'black'
+        // backgroundColor: 'black'
       }]}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
           style={{
+            alignItems: 'center',
+            bottom: 0,
             flex: 1,
             justifyContent: 'flex-end',
-            alignItems: 'center'
+            left: 0,
+            right: 0,
+            position: 'absolute',
+            top: 0
           }}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
