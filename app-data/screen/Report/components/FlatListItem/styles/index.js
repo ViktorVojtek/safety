@@ -42,7 +42,8 @@ export default StyleSheet.create({
     width: width / 2,
   },
   textWhite: {
-    color: white
+    color: white,
+    textAlign: 'center'
   },
   titleText: {
     color: white,

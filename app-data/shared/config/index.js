@@ -1,9 +1,9 @@
 export const strings = {
   header: {
     title: {
-      home: 'Posledné udalosti',
+      home: 'Posledné oznámenia',
       quickDial: 'Rýchla voľba',
-      report: 'Pridať udalosť',
+      report: 'Pridať oznámenie',
       map: 'Lokácia udalosti'
     }
   }

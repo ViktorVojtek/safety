@@ -32,12 +32,12 @@ const Report = compose(
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => {
           return (
-          <FlatListItem
-            data={item}
-            categoryId={item.id}  
-            navigation={navigation}
-            title={item.categoryName}
-          />
+            <FlatListItem
+              data={item}
+              categoryId={item.id}
+              navigation={navigation}
+              title={item.categoryName}
+            />
           );
         }}
         style={styles.flatList}

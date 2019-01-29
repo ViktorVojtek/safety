@@ -15,6 +15,8 @@ export default {
       `;
       const id = `CategoryItem:${args.id}`;
       const data = cache.readFragment({ fragment, id });
+      console.log(id);
+      console.log(data);
 
       return data;
     },

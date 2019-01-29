@@ -16,6 +16,7 @@ import MapScreen from '../screen/Map';
 import QuickDialScreen from '../screen/QuickDial';
 import ReportScreen from '../screen/Report';
 import SubCategoryScreen from '../screen/Report/components/SubCategory';
+import AddReportScreen from '../screen/Report/components/AddReport';
 
 // AuthStack
 import AuthLoadingScreen from '../screen/auth/Loading';
@@ -39,7 +40,8 @@ const MapStack = createStackNavigator({
 const ReportStack = createStackNavigator({
   QuickDial: QuickDialScreen,
   Report: ReportScreen,
-  SubCategory: SubCategoryScreen
+  SubCategory: SubCategoryScreen,
+  AddReport: AddReportScreen
 }, {
   initialRouteName: 'Report',
 });

@@ -76,5 +76,10 @@ export default {
         categoryName: 'Vandalismus',
       }]
     },
-  ]
+  ],
+  report: {
+    categoryId: null,
+    subCategoryId: null,
+    content: ''
+  }
 };
