@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation'
 import AntPlusIcon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
@@ -20,7 +21,17 @@ const BottomTabBar = (props) => {
           const iconSize = 20;
 
           return (
-            <TouchableOpacity onPress={() => navigation.navigate({routeName: item.routeName})} key={item.key}>
+            <TouchableOpacity onPress={() => {
+              const { routeName } = navigation.state.routes[navigation.state.index];
+              const resetAction = StackActions.reset({
+                index: 0,
+                key: null,
+                actions: [NavigationActions.navigate({ routeName })]
+              });
+
+              navigation.dispatch(resetAction);
+              navigation.navigate({routeName: item.routeName});
+            }} key={item.key}>
               {
                 i > 0 ?
                 (i < 2?
