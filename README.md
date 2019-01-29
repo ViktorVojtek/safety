@@ -9,6 +9,7 @@ Cross platform mobile application that will track incidents in the city. Users c
 - [Graphql](https://www.npmjs.com/package/graphql)
 - ~~[Lottie React Native](https://github.com/react-native-community/lottie-react-native)~~
 - [React Apollo](https://www.npmjs.com/package/react-apollo)
+- [React Native Camera](https://github.com/react-native-community/react-native-camera)
 - ~~[React Facebook SDK Wrapper](https://www.npmjs.com/package/react-native-fbsdk)~~
 - [React Navigation](https://www.npmjs.com/package/react-navigation)
 - [React Native Maps](https://github.com/react-native-community/react-native-maps)
