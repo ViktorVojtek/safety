@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -52,24 +53,26 @@ class AddReport extends Component {
           />
         </View>
         <View style={styles.formContainer}>
-          <TextInput
-            onChangeText={(descriptionText) => this.handleDescription(descriptionText)}
-            placeholder={'Sem zadajte popis'}
-            style={styles.textInput}
-            value={description}
-          />
-          <View style={styles.textContainer}>
-            <Text>Kategória</Text>
-          </View>
-          <View style={styles.textContainer}>
-            <Text>Podkategória</Text>
-          </View>
-          <View style={styles.textContainer}>
-            <Text>Lokácia</Text>
-          </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Pridať oznámenie</Text>
-          </TouchableOpacity>
+          <ScrollView>
+            <TextInput
+              onChangeText={(descriptionText) => this.handleDescription(descriptionText)}
+              placeholder={'Sem zadajte popis'}
+              style={styles.textInput}
+              value={description}
+            />
+            <View style={styles.textContainer}>
+              <Text>Kategória</Text>
+            </View>
+            <View style={styles.textContainer}>
+              <Text>Podkategória</Text>
+            </View>
+            <View style={styles.textContainer}>
+              <Text>Lokácia</Text>
+            </View>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Pridať oznámenie</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </View>
     );

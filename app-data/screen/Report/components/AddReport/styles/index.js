@@ -7,6 +7,7 @@ const { width } = Dimensions.get('screen');
 
 export default StyleSheet.create({
   button: {
+    alignSelf: 'center',
     backgroundColor: '#ff0068',
     borderRadius: 4,
     marginVertical: 25,
@@ -33,26 +34,26 @@ export default StyleSheet.create({
   cameraContainer: {
     alignItems: 'center',
     borderWidth: 1,
-    flex: 0.5,
+    flex: 0.45,
     flexDirection: 'column',
     width
   },
   formContainer: {
     alignItems: 'center',
-    flex: 0.5
+    flex: 0.55
   },
   textContainer: {
     borderBottomColor: mediumGrey,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 15,
     width
   },
   textInput: {
     borderBottomColor: mediumGrey,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 15,
     width
   }
 });
