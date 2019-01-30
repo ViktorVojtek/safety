@@ -4,7 +4,6 @@ import {
   Image,
   StatusBar,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { strings } from '../../../../shared/config';
@@ -20,27 +19,28 @@ const SubCategory = (props) => {
   const otherItem = {
     categoryName: 'Iné',
     categoryType: 'OTHER',
-    id: 99
+    id: 99,
   };
   const list = data.concat(otherItem);
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={'default'} />
+      <StatusBar barStyle="default" />
       <View style={{
-          borderBottomColor: categoryId < 2 ? (categoryId < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
-          borderBottomWidth: 5
-        }}>
+        borderBottomColor: categoryId < 2 ? (categoryId < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
+        borderBottomWidth: 5,
+      }}
+      >
         <Image
           blurRadius={6}
-          resizeMode={'cover'}
+          resizeMode="cover"
           source={
             categoryId < 2 ?
-            (
-              categoryId < 1 ?
-              require('../../../../shared/assets/images/Traffic.jpeg') :
-              require('../../../../shared/assets/images/Infrastructure.jpeg')
-            ) : require('../../../../shared/assets/images/Police.png')
+              (
+                categoryId < 1 ?
+                require('../../../../shared/assets/images/Traffic.jpeg') :
+                require('../../../../shared/assets/images/Infrastructure.jpeg')
+              ) : require('../../../../shared/assets/images/Police.png')
           }
           style={styles.image}
         />
@@ -54,13 +54,13 @@ const SubCategory = (props) => {
       <FlatList
         data={list}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <FlatListItem
             data={item}
-            categoryId={item.id}  
+            categoryId={item.id}
             navigation={navigation}
             title={item.categoryName}
-            lastItem={index === list.length - 1 ? true : false}
+            lastItem={index === list.length - 1}
           />
         )}
         style={styles.flatList}
@@ -70,76 +70,11 @@ const SubCategory = (props) => {
 };
 
 SubCategory.navigationOptions = {
-  header: ({navigation}) => {
-    const { header: { title: {report} } } = strings;
+  header: ({ navigation }) => {
+    const { header: { title: { report } } } = strings;
 
     return <Header navigation={navigation} title={report} />;
-  }
+  },
 };
 
-/*
-<Image
-  blurRadius={6}
-  resizeMode={'cover'}
-  source={
-    categoryId < 2 ?
-    (
-      categoryId < 1 ?
-      require('../../../../../../shared/assets/images/Traffic.jpeg') :
-      require('../../../../../../shared/assets/images/Infrastructure.jpeg')
-    ) : undefined
-  }
-  style={styles.image}
-/>
-/*const SubCategory = graphql(reportSubCategories, {
-  options: (props) => {
-    const {navigation: {getParam}} = props;
-    const id = getParam('categoryId');
-
-    return {variables: {id}};
-  }
-})((props) => {
-  console.log('SubCategory Screen Component');
-  console.log(props);
-  const {navigation} = props;
-  const data = navigation.getParam('data');
-
-  console.log(data);
-
-  return (
-    <View>
-      <Text>Sub Category Screen</Text>
-    </View>
-  );
-
-  /*if (error) {
-    return (<View><Text>{error.message}</Text></View>);
-  }
-  if (loading) {
-    return <ActivityIndicator />
-  }
-
-  const {subCategories} = reportSubCategories;
-  console.log(subCategories);
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle={'default'} />
-      <FlatList
-        data={subCategories}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => {
-          return (<FlatListItem title={item.categoryName}/>);
-        }}
-        style={styles.flatList}
-      />
-    </View>
-  );
-});*/
-
 export default SubCategory;
-
-/*
-, {
-  props: ({data: {adminActivePage: {value}}}) => ({adminActivePage: value})
-}
-*/

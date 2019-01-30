@@ -1,10 +1,9 @@
 import React from 'react';
 import {
   Image,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import styles from './styles';
@@ -16,15 +15,15 @@ export default (props) => {
   const {
     data: { id, subCategories },
     title,
-    navigation
+    navigation,
   } = props;
-  
+
   return (
     <View style={styles.flatListItem}>
       <View style={[styles.image, { borderBottomColor: mediumGrey, borderBottomWidth: 1 }]}>
         <Image
           blurRadius={6}
-          resizeMode={'cover'}
+          resizeMode="cover"
           source={
             id < 2 ?
             (
@@ -35,13 +34,13 @@ export default (props) => {
           }
           style={styles.image}
         />
-        <View style={styles.imageOverlay}></View>
+        <View style={styles.imageOverlay} />
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('SubCategory', {
           id,
           categoryName: title,
-          data: subCategories
+          data: subCategories,
         })}
         style={styles.link}
       >
@@ -49,16 +48,15 @@ export default (props) => {
           <Text style={styles.titleText}>{title}</Text>
           <View style={[styles.linkDivider, {
             backgroundColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6'
-          }]}></View>
+          }]}
+          />
           <Text style={styles.textWhite}>
             {
-              subCategories.map((item, i) => {
-                return i < subCategories.length - 1 ? `${item.categoryName}, ` : `${item.categoryName}, Iné...`;
-              })
+              subCategories.map((item, i) => (i < subCategories.length - 1 ? `${item.categoryName}, ` : `${item.categoryName}, Iné...`))
             }
           </Text>
         </View>
-        <Icon color={white} name={'chevron-right'} size={30} style={styles.chevron} />
+        <Icon color={white} name="chevron-right" size={30} style={styles.chevron} />
       </TouchableOpacity>
     </View>
   );

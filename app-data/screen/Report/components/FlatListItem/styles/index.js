@@ -1,29 +1,29 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import {styles} from '../../../../../shared/config';
+import { styles } from '../../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
 const computedHeight = (height - 140) / 3;
-const { colors: { mediumGrey, white } } = styles;
+const { colors: { white } } = styles;
 
 export default StyleSheet.create({
   chevron: {
     position: 'absolute',
-    right: 20
+    right: 20,
   },
   flatListItem: {
     height: computedHeight,
-    position: 'relative'
+    position: 'relative',
   },
   image: {
     height: computedHeight,
     left: 0,
     position: 'absolute',
     top: 0,
-    width
+    width,
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   link: {
     alignItems: 'center',
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     height: computedHeight,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    width
+    width,
   },
   linkDivider: {
     borderRadius: 4,
@@ -43,12 +43,12 @@ export default StyleSheet.create({
   },
   textWhite: {
     color: white,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   titleText: {
     color: white,
     fontSize: 30,
     textAlign: 'center',
-    textTransform: 'lowercase'
-  }
+    textTransform: 'lowercase',
+  },
 });

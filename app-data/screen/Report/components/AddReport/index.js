@@ -4,7 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Header from './components/Header';
@@ -12,10 +12,17 @@ import { strings } from '../../../../shared/config';
 import styles from './styles';
 
 const initialState = {
-  description: ''
+  description: '',
 };
 
 class AddReport extends Component {
+  static navigationOptions = {
+    header: ({ navigation }) => {
+      const { header: { title: { report } } } = strings;
+      return <Header navigation={navigation} title={report} />;
+    },
+  }
+
   constructor(props) {
     super(props);
 
@@ -25,17 +32,14 @@ class AddReport extends Component {
     this.handleDescription = this.handleDescription.bind(this);
   }
 
-  static navigationOptions = {
-    header: ({navigation}) => {
-      const { header: { title: {report} } } = strings;
-      return <Header navigation={navigation} title={report} />;
-    }
+  handleDescription(description) {
+    this.setState({ description });
   }
 
   render() {
-    const { navigation } = this.props;
-    const categoryId = navigation.getParam('categoryId');
-    const subCategoryId = navigation.getParam('subCategoryId');
+    // const { navigation } = this.props;
+    // const categoryId = navigation.getParam('categoryId');
+    // const subCategoryId = navigation.getParam('subCategoryId');
     const { description } = this.state;
 
     return (
@@ -48,15 +52,15 @@ class AddReport extends Component {
             style={styles.camera}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
-            permissionDialogTitle={'Permission to use camera'}
-            permissionDialogMessage={'We need your permission to use your camera phone'}
+            permissionDialogTitle="Permission to use camera"
+            permissionDialogMessage="We need your permission to use your camera phone"
           />
         </View>
         <View style={styles.formContainer}>
           <ScrollView>
             <TextInput
-              onChangeText={(descriptionText) => this.handleDescription(descriptionText)}
-              placeholder={'Sem zadajte popis'}
+              onChangeText={descriptionText => this.handleDescription(descriptionText)}
+              placeholder="Sem zadajte popis"
               style={styles.textInput}
               value={description}
             />
@@ -76,10 +80,6 @@ class AddReport extends Component {
         </View>
       </View>
     );
-  }
-
-  handleDescription(description) {
-    this.setState({description});
   }
 }
 

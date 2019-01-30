@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const markerBorder = 2,
-      markerContainerSize = 50,
-      markerSize = 25;
+const markerBorder = 2;
+const markerContainerSize = 50;
+const markerSize = 25;
 
 export default StyleSheet.create({
   markerContainer: {

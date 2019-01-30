@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../../shared/config';
 
@@ -18,7 +17,7 @@ export default StyleSheet.create({
     color: white,
     fontWeight: 'bold',
     textAlign: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   container: {
     alignItems: 'center',
@@ -29,31 +28,31 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-end',
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   cameraContainer: {
     alignItems: 'center',
     borderWidth: 1,
     flex: 0.45,
     flexDirection: 'column',
-    width
+    width,
   },
   formContainer: {
     alignItems: 'center',
-    flex: 0.55
+    flex: 0.55,
   },
   textContainer: {
     borderBottomColor: mediumGrey,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    width
+    width,
   },
   textInput: {
     borderBottomColor: mediumGrey,
     borderBottomWidth: 1,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    width
-  }
+    width,
+  },
 });

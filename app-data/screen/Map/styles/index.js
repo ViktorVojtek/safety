@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../shared/config';
 
 const { colors: { lightGrey } } = styles;
@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightGrey // '#F5FCFF',
+    backgroundColor: lightGrey, // '#F5FCFF',
   },
   map: {
     height: height - 140,

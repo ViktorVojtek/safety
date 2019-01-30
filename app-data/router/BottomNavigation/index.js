@@ -4,13 +4,15 @@ import BottomTabBar from '../../shared/components/BottomTabBar';
 import {
   HomeStack,
   MapStack,
-  ReportStack
+  ReportStack,
 } from '../StackNavigation';
 
-export const AppTabs = createBottomTabNavigator({
+const AppTabs = createBottomTabNavigator({
   Home: HomeStack,
-  Report: ReportStack, 
-  Map: MapStack
+  Report: ReportStack,
+  Map: MapStack,
 }, {
-  tabBarComponent: (props) => <BottomTabBar {...props} />,
+  tabBarComponent: props => <BottomTabBar {...props} />,
 });
+
+export default AppTabs;

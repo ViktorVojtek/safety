@@ -3,14 +3,20 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
+import styles from './styles';
+
+const bootstrapAsync = async (navigation) => {
+  const jwt = await AsyncStorage.getItem('jwt');
+
+  navigation.navigate(jwt ? 'App' : 'Auth');
+};
 
 const AuthLoadingScreen = (props) => {
-  const {navigation} = props;
+  const { navigation } = props;
 
-  _bootstrapAsync(navigation);
+  bootstrapAsync(navigation);
 
   return (
     <View style={styles.container}>
@@ -19,20 +25,5 @@ const AuthLoadingScreen = (props) => {
     </View>
   );
 };
-
-const _bootstrapAsync = async (navigation) => {
-  const jwt = await AsyncStorage.getItem('jwt');
-
-  navigation.navigate(jwt ? 'App' : 'Auth');
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  }
-});
 
 export default AuthLoadingScreen;

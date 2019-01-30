@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../../shared/config';
 
@@ -9,18 +8,18 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: lightGrey // '#F5FCFF',
+    backgroundColor: lightGrey, // '#F5FCFF',
   },
   flatList: {
     width,
   },
   image: {
     height: height * 0.15,
-    width
+    width,
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   textSubCategoryWrapper: {
     alignItems: 'center',
@@ -28,16 +27,16 @@ export default StyleSheet.create({
     height: 50,
     borderBottomColor: mediumGrey,
     borderBottomWidth: 1,
-    width
+    width,
   },
   textWhite: {
     color: '#fff',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   titleText: {
     color: '#fff',
     fontSize: 30,
     textAlign: 'center',
-    textTransform: 'lowercase'
-  }
+    textTransform: 'lowercase',
+  },
 });
