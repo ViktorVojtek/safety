@@ -22,10 +22,10 @@ export default StyleSheet.create({
     borderColor: mediumGrey,
     borderWidth: 1,
     flexDirection: 'row',
-    height: 80,
+    height: 60,
     justifyContent: 'flex-end',
     paddingHorizontal: 15,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
+    // paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   menuIcon: {
     height: 200,

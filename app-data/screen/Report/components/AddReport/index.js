@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {
   Text,
+  TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
@@ -8,14 +10,21 @@ import Header from './components/Header';
 import { strings } from '../../../../shared/config';
 import styles from './styles';
 
+const initialState = {
+  description: ''
+};
+
 class AddReport extends Component {
   constructor(props) {
     super(props);
 
     this.camera = undefined;
+    this.state = initialState;
+
+    this.handleDescription = this.handleDescription.bind(this);
   }
 
-  static navigationOptions() {
+  static navigationOptions = {
     header: ({navigation}) => {
       const { header: { title: {report} } } = strings;
       return <Header navigation={navigation} title={report} />;
@@ -26,37 +35,48 @@ class AddReport extends Component {
     const { navigation } = this.props;
     const categoryId = navigation.getParam('categoryId');
     const subCategoryId = navigation.getParam('subCategoryId');
+    const { description } = this.state;
 
     return (
-      <View style={[styles.container, {
-        flexDirection: 'column',
-        // backgroundColor: 'black'
-      }]}>
-        <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={{
-            alignItems: 'center',
-            bottom: 0,
-            flex: 1,
-            justifyContent: 'flex-end',
-            left: 0,
-            right: 0,
-            position: 'absolute',
-            top: 0
-          }}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
-          permissionDialogTitle={'Permission to use camera'}
-          permissionDialogMessage={'We need your permission to use your camera phone'}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
-          }}
-        />
-        <Text>Add report screen</Text>
+      <View style={styles.container}>
+        <View style={styles.cameraContainer}>
+          <RNCamera
+            ref={(ref) => {
+              this.camera = ref;
+            }}
+            style={styles.camera}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.on}
+            permissionDialogTitle={'Permission to use camera'}
+            permissionDialogMessage={'We need your permission to use your camera phone'}
+          />
+        </View>
+        <View style={styles.formContainer}>
+          <TextInput
+            onChangeText={(descriptionText) => this.handleDescription(descriptionText)}
+            placeholder={'Sem zadajte popis'}
+            style={styles.textInput}
+            value={description}
+          />
+          <View style={styles.textContainer}>
+            <Text>Kategória</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text>Podkategória</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text>Lokácia</Text>
+          </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Pridať oznámenie</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
+  }
+
+  handleDescription(description) {
+    this.setState({description});
   }
 }
 

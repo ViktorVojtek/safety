@@ -1,13 +1,58 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../../shared/config';
 
-const { colors: { lightGrey, mediumGrey } } = styles;
+const { colors: { lightGrey, mediumGrey, white } } = styles;
+const { width } = Dimensions.get('screen');
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    // backgroundColor: lightGrey // '#F5FCFF',
+  button: {
+    backgroundColor: '#ff0068',
+    borderRadius: 4,
+    marginVertical: 25,
+    paddingVertical: 20,
+    width: width - 40,
   },
+  buttonText: {
+    color: white,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase'
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: lightGrey,
+    flex: 1,
+  },
+  camera: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    ...StyleSheet.absoluteFillObject
+  },
+  cameraContainer: {
+    alignItems: 'center',
+    borderWidth: 1,
+    flex: 0.5,
+    flexDirection: 'column',
+    width
+  },
+  formContainer: {
+    alignItems: 'center',
+    flex: 0.5
+  },
+  textContainer: {
+    borderBottomColor: mediumGrey,
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    width
+  },
+  textInput: {
+    borderBottomColor: mediumGrey,
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    width
+  }
 });

@@ -6,10 +6,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     flexDirection: 'row',
-    height: 80,
+    height: 60,
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
+    // paddingTop: Platform.OS === 'ios' ? 0 : 0
   },
   menuIcon: {
     height: 25,
