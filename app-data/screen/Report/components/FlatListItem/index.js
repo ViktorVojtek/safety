@@ -20,17 +20,16 @@ export default (props) => {
 
   return (
     <View style={styles.flatListItem}>
-      <View style={[styles.image, { borderBottomColor: mediumGrey, borderBottomWidth: 1 }]}>
+      <View style={styles.imageContainer}>
         <Image
           blurRadius={6}
           resizeMode="cover"
           source={
-            id < 2 ?
-            (
-              id < 1 ?
-              require('../../../../shared/assets/images/Traffic.jpeg') :
-              require('../../../../shared/assets/images/Infrastructure.jpeg')
-            ) : require('../../../../shared/assets/images/Police.png')
+            id < 2
+              ? (
+                id < 1
+                  ? require('../../../../shared/assets/images/Traffic.jpeg') : require('../../../../shared/assets/images/Infrastructure.jpeg')
+              ) : require('../../../../shared/assets/images/Police.png')
           }
           style={styles.image}
         />
@@ -47,7 +46,7 @@ export default (props) => {
         <View>
           <Text style={styles.titleText}>{title}</Text>
           <View style={[styles.linkDivider, {
-            backgroundColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6'
+            backgroundColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
           }]}
           />
           <Text style={styles.textWhite}>

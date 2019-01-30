@@ -21,7 +21,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: lightGrey, // '#F5FCFF',
+    backgroundColor: lightGrey,
   },
   flatList: {
     width,

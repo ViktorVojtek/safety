@@ -3,7 +3,7 @@ import { styles } from '../../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
 const computedHeight = (height - 140) / 3;
-const { colors: { white } } = styles;
+const { colors: { mediumGrey, white } } = styles;
 
 export default StyleSheet.create({
   chevron: {
@@ -14,11 +14,17 @@ export default StyleSheet.create({
     height: computedHeight,
     position: 'relative',
   },
-  image: {
+  imageContainer: {
+    borderBottomColor: mediumGrey,
+    borderBottomWidth: 1,
     height: computedHeight,
     left: 0,
     position: 'absolute',
     top: 0,
+    width,
+  },
+  image: {
+    height: computedHeight - 1,
     width,
   },
   imageOverlay: {
