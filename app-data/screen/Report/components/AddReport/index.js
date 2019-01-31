@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  ActivityIndicator,
   ScrollView,
   Text,
   TextInput,
@@ -8,9 +7,11 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { compose, graphql } from 'react-apollo';
-import getCategoryQuery from './graphql/getCategory.query';
-import getSubCategoryQuery from './graphql/getSubCategory.query';
+import { graphql } from 'react-apollo';
+import CategoryText from './components/CategoryText';
+import SubCategoryText from './components/SubCategoryText';
+// import getCategoryQuery from './graphql/getCategory.query';
+// import getSubCategoryQuery from './graphql/getSubCategory.query';
 import reportQuery from '../graphql/report.query';
 import Header from './components/Header';
 import { strings } from '../../../../shared/config';
@@ -42,25 +43,12 @@ class AddReport extends Component {
   }
 
   render() {
-    console.log('AddReport component');
-    const {
-      categoryName,
-      data: { error, loading, getSubCategory },
-    } = this.props;
+    // console.log('AddReport component');
+    // console.log(this.props);
+    const { navigation } = this.props;
     const { description } = this.state;
-
-    if (error) {
-      return (<View><Text>{error.message}</Text></View>);
-    }
-    if (loading) {
-      return <ActivityIndicator />;
-    }
-
-    const subCategoryName = getSubCategory.categoryName;
-
-    if (!categoryName || !subCategoryName) {
-      return <ActivityIndicator />;
-    }
+    const categoryId = navigation.getParam('categoryId');
+    const subCategoryId = navigation.getParam('subCategoryId');
 
     return (
       <View style={styles.container}>
@@ -84,12 +72,11 @@ class AddReport extends Component {
               style={styles.textInput}
               value={description}
             />
-            <View style={styles.textContainer}>
-              <Text>{categoryName}</Text>
-            </View>
-            <View style={styles.textContainer}>
-              <Text>{subCategoryName}</Text>
-            </View>
+            <CategoryText categoryId={categoryId} />
+            <SubCategoryText
+              categoryId={categoryId}
+              subCategoryId={subCategoryId}
+            />
             <View style={styles.textContainer}>
               <Text>Lokácia</Text>
             </View>
@@ -103,33 +90,10 @@ class AddReport extends Component {
   }
 }
 
-export default compose(
-  graphql(reportQuery, {
-    props: (props) => {
-      const { data: { report: { categoryId, subCategoryId } } } = props;
+export default graphql(reportQuery, {
+  props: (props) => {
+    const { data: { report: { categoryId, subCategoryId } } } = props;
 
-      return { ...props, categoryId, subCategoryId };
-    },
-  }),
-  graphql(getCategoryQuery, {
-    options: ({ categoryId }) => {
-      const id = categoryId;
-
-      return { variables: { id } };
-    },
-    props: (props) => {
-      const { data } = props;
-
-      if (data.getCategory) {
-        const { getCategory: { categoryName } } = data;
-
-        return { ...props, categoryName };
-      }
-
-      return props;
-    },
-  }),
-  graphql(getSubCategoryQuery, {
-    options: ({ categoryId, subCategoryId }) => ({ variables: { categoryId, subCategoryId } }),
-  }),
-)(AddReport);
+    return { ...props, categoryId, subCategoryId };
+  },
+})(AddReport);
