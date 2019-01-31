@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Animated,
+  Image,
   TouchableOpacity,
   Text,
   TextInput,
@@ -9,6 +9,7 @@ import {
 import { graphql } from 'react-apollo';
 import createUserMutation from './graphql/createUser.mutation';
 import Header from './components/Header';
+import Modal from '../../../shared/components/Modal';
 import styles from './styles';
 
 const initialState = {
@@ -18,7 +19,6 @@ const initialState = {
     lastName: '',
     password: '',
   },
-  fadeAnim: new Animated.Value(0),
   errorVisible: false,
 };
 
@@ -34,7 +34,6 @@ class Register extends Component {
 
     this.registerAsync = this.registerAsync.bind(this);
     this.handleUserData = this.handleUserData.bind(this);
-    this.startAnimation = this.startAnimation.bind(this);
     this.toggleError = this.toggleError.bind(this);
   }
 
@@ -43,68 +42,62 @@ class Register extends Component {
   }
 
   async registerAsync() {
-    const { mutate } = this.props;
-    const {
-      data: {
-        email, firstName, lastName, password,
-      },
-    } = this.state;
-    const user = {
-      email, firstName, lastName, password,
-    };
-
     try {
-      const resp = await mutate({ variables: { user } });
-      console.log(resp);
+      const { mutate } = this.props;
+      const {
+        data: {
+          email, firstName, lastName, password,
+        },
+      } = this.state;
+      const user = {
+        email, firstName, lastName, password,
+      };
+
+      await mutate({ variables: { user } });
     } catch (err) {
-      /* const error = err.graphQLErrors.map((i) => ({
-        message: i.message, statusCode: i.statusCode})); */
       this.toggleError();
     }
   }
 
-  startAnimation() {
-    const { errorVisible, fadeAnim } = this.state;
-    Animated.timing(
-      fadeAnim,
-      {
-        toValue: errorVisible ? 0 : 1,
-        duration: 1000,
-      },
-    ).start(() => {
-      if (!errorVisible) {
-        this.setState({ errorVisible: true }, () => {
-          if (errorVisible) {
-            setTimeout(() => {
-              this.startAnimation();
-            }, 3000);
-          }
-        });
-      } else {
-        this.setState({ errorVisible: false });
-      }
-    });
-  }
-
   toggleError() {
-    this.startAnimation();
+    const { errorVisible } = this.state;
+
+    this.setState({ errorVisible: errorVisible !== true });
   }
 
   render() {
     const {
       data: {
         email, firstName, lastName, password,
-      }, fadeAnim,
+      },
+      errorVisible,
     } = this.state;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.errorContainer, { opacity: fadeAnim }]}>
-          <Text style={styles.textWhite}>
-            Chyba! Užívateľ s danou e-mailovou adresou už existuje.
-          </Text>
-        </Animated.View>
-        <View style={styles.subContainerTwoThird}>
+        <Modal
+          close={this.toggleError}
+          text="Užívateľ s danou e-mailovou adresou už existuje."
+          visible={errorVisible}
+        />
+
+        <View style={styles.backgroundImageContainer}>
+          <Image
+            blurRadius={6}
+            source={require('../../../shared/assets/images/Infrastructure.jpeg')}
+            style={styles.backgroundImage}
+          />
+        </View>
+        <View style={styles.erbContainer}>
+          <Image
+            source={require('../../../shared/assets/images/erb.png')}
+            style={styles.erbImage}
+          />
+        </View>
+
+        <View style={styles.subContainer}>
+          <Text style={styles.loginTitleText}>Registrácia</Text>
           <TextInput
             onChangeText={(firstNameText) => {
               const { data } = this.state;
@@ -152,8 +145,7 @@ class Register extends Component {
             secureTextEntry
             value={password}
           />
-        </View>
-        <View style={styles.subContainerOneThird}>
+
           <TouchableOpacity style={styles.button} onPress={this.registerAsync}>
             <Text style={styles.textWhite}>Registrovať</Text>
           </TouchableOpacity>
@@ -163,6 +155,4 @@ class Register extends Component {
   }
 }
 
-const withGraphql = graphql(createUserMutation)(Register);
-
-export default withGraphql;
+export default graphql(createUserMutation)(Register);

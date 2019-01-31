@@ -4,9 +4,9 @@ export const strings = {
       home: 'Posledné oznámenia',
       quickDial: 'Rýchla voľba',
       report: 'Pridať oznámenie',
-      map: 'Lokácia udalosti'
-    }
-  }
+      map: 'Lokácia udalosti',
+    },
+  },
 };
 
 export const styles = {
@@ -14,6 +14,6 @@ export const styles = {
     darkGrey: '#4a4a4a',
     lightGrey: '#f5f5f5',
     mediumGrey: '#dcdcdc',
-    white: '#fff'
-  }
+    white: '#fff',
+  },
 };

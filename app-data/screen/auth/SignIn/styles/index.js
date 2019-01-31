@@ -1,6 +1,8 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+import { styles } from '../../../../shared/config';
 
-const {height, width} = Dimensions.get('screen');
+const { height, width } = Dimensions.get('screen');
+const { colors: { darkGrey, lightGrey, white } } = styles;
 
 export default StyleSheet.create({
   button: {
@@ -9,33 +11,46 @@ export default StyleSheet.create({
     color: '#fff',
     marginBottom: 20,
     paddingBottom: 20,
-    paddingTop:20,
+    paddingTop: 20,
     width: width * 0.8,
   },
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00bcff',
+    flex: 1,
+    justifyContent: 'flex-start',
   },
-  errorContainer: {
-    backgroundColor: '#ff7668',
-    borderWidth: 1,
-    borderColor: '#ff4136',
-    borderRadius: 4,
-    left: (width / 2) - ((width * 0.8) / 2),
-    padding: 10,
-    position: 'absolute',
-    top: height * 0.1,
-    width: width * 0.8,
+  backgroundImage: {
+    height,
+    width,
+  },
+  backgroundImageContainer: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  erbContainer: {
+    flex: 0.3,
+    justifyContent: 'flex-start',
+  },
+  erbImage: {
+    height: 85,
+    width: 75,
   },
   link: {
-    color: '#fff',
+    color: darkGrey,
+    marginBottom: 20,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+  loginTitleText: {
+    fontSize: 30,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
   subContainer: {
-    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    flex: 0.6,
+    padding: 20,
+    marginHorizontal: 5,
   },
   text: {
     fontSize: 20,
@@ -43,7 +58,7 @@ export default StyleSheet.create({
     margin: 10,
   },
   textInput: {
-    backgroundColor: '#fff',
+    backgroundColor: lightGrey,
     borderRadius: 4,
     marginBottom: 20,
     paddingBottom: 20,
@@ -52,7 +67,7 @@ export default StyleSheet.create({
     width: width * 0.8,
   },
   textWhite: {
-    color: '#fff',
+    color: white,
     textAlign: 'center',
   },
 });

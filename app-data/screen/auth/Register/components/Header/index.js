@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   StatusBar,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,10 +18,6 @@ const Header = (props) => {
           <Icon name="chevron-left" color="#fff" size={25} style={styles.chevronLeft} />
         </TouchableOpacity>
       </View>
-      <View style={styles.partContainer}>
-        <Text style={styles.registerText}>Registrácia</Text>
-      </View>
-      <View style={styles.partContainer} />
     </View>
   );
 };

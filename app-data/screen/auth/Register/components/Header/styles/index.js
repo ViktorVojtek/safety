@@ -1,15 +1,13 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#00bcff',
-    borderBottomColor: '#21c6fb',
-    borderBottomWidth: 1,
+    backgroundColor: '#003360',
     flex: 1,
     flexDirection: 'row',
-    height: 80,
-    justifyContent: 'space-between',
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
+    height: 60,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20,
   },
   partContainer: {
     justifyContent: 'center',
