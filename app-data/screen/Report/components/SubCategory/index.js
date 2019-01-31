@@ -13,7 +13,7 @@ import styles from './styles';
 
 const SubCategory = (props) => {
   const { navigation } = props;
-  const categoryId = navigation.getParam('id');
+  const categoryId = navigation.getParam('categoryId');
   const categoryName = navigation.getParam('categoryName');
   const data = navigation.getParam('data');
   const otherItem = {
@@ -56,7 +56,8 @@ const SubCategory = (props) => {
         renderItem={({ item, index }) => (
           <FlatListItem
             data={item}
-            categoryId={item.id}
+            categoryId={categoryId}
+            subCategoryId={item.id}
             navigation={navigation}
             title={item.categoryName}
             lastItem={index === list.length - 1}

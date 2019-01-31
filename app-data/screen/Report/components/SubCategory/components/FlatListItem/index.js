@@ -15,14 +15,15 @@ const { colors: { darkGrey } } = styleConfig;
 export default graphql(setReportData)((props) => {
   const {
     categoryId,
+    subCategoryId,
     data: {
-      categoryName, id,
+      categoryName,
     },
     lastItem,
     mutate,
     navigation,
   } = props;
-  const subCategoryId = id;
+  // const subCategoryId = id;
 
   return (
     <TouchableOpacity onPress={async () => {
@@ -30,7 +31,7 @@ export default graphql(setReportData)((props) => {
         const reportData = {
           subCategoryId,
         };
-        
+
         await mutate({ variables: { reportData } });
 
         navigation.navigate('AddReport', {

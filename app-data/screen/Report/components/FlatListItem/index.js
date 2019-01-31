@@ -50,6 +50,7 @@ export default graphql(setReportData)((props) => {
 
             navigation.navigate('SubCategory', {
               id,
+              categoryId,
               categoryName: title,
               data: subCategories,
             });
@@ -59,7 +60,7 @@ export default graphql(setReportData)((props) => {
         }}
         style={styles.link}
       >
-        <View>
+        <View style={styles.itemTextContainer}>
           <Text style={styles.titleText}>{title}</Text>
           <View style={[styles.linkDivider, {
             backgroundColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6',

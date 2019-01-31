@@ -31,6 +31,9 @@ export default StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+  itemTextContainer: {
+    width,
+  },
   link: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -42,7 +45,7 @@ export default StyleSheet.create({
   linkDivider: {
     borderRadius: 4,
     height: 5,
-    left: (width / 2) - (((width / 2) + 40) / 2),
+    left: (width / 2) - ((width / 2) / 2),
     marginVertical: 10,
     position: 'relative',
     width: width / 2,
