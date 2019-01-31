@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  ActivityIndicator,
   ScrollView,
   Text,
   TextInput,
@@ -7,6 +8,10 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { compose, graphql } from 'react-apollo';
+import getCategoryQuery from './graphql/getCategory.query';
+import getSubCategoryQuery from './graphql/getSubCategory.query';
+import reportQuery from '../graphql/report.query';
 import Header from './components/Header';
 import { strings } from '../../../../shared/config';
 import styles from './styles';
@@ -37,10 +42,25 @@ class AddReport extends Component {
   }
 
   render() {
-    // const { navigation } = this.props;
-    // const categoryId = navigation.getParam('categoryId');
-    // const subCategoryId = navigation.getParam('subCategoryId');
+    console.log('AddReport component');
+    const {
+      categoryName,
+      data: { error, loading, getSubCategory },
+    } = this.props;
     const { description } = this.state;
+
+    if (error) {
+      return (<View><Text>{error.message}</Text></View>);
+    }
+    if (loading) {
+      return <ActivityIndicator />;
+    }
+
+    const subCategoryName = getSubCategory.categoryName;
+
+    if (!categoryName || !subCategoryName) {
+      return <ActivityIndicator />;
+    }
 
     return (
       <View style={styles.container}>
@@ -65,10 +85,10 @@ class AddReport extends Component {
               value={description}
             />
             <View style={styles.textContainer}>
-              <Text>Kategória</Text>
+              <Text>{categoryName}</Text>
             </View>
             <View style={styles.textContainer}>
-              <Text>Podkategória</Text>
+              <Text>{subCategoryName}</Text>
             </View>
             <View style={styles.textContainer}>
               <Text>Lokácia</Text>
@@ -83,4 +103,33 @@ class AddReport extends Component {
   }
 }
 
-export default AddReport;
+export default compose(
+  graphql(reportQuery, {
+    props: (props) => {
+      const { data: { report: { categoryId, subCategoryId } } } = props;
+
+      return { ...props, categoryId, subCategoryId };
+    },
+  }),
+  graphql(getCategoryQuery, {
+    options: ({ categoryId }) => {
+      const id = categoryId;
+
+      return { variables: { id } };
+    },
+    props: (props) => {
+      const { data } = props;
+
+      if (data.getCategory) {
+        const { getCategory: { categoryName } } = data;
+
+        return { ...props, categoryName };
+      }
+
+      return props;
+    },
+  }),
+  graphql(getSubCategoryQuery, {
+    options: ({ categoryId, subCategoryId }) => ({ variables: { categoryId, subCategoryId } }),
+  }),
+)(AddReport);

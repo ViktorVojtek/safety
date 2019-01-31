@@ -4,6 +4,12 @@ export default `
     longitude: Float
   }
 
+  innput ReportDataInput {
+    categoryId: Int
+    subCategoryId: Int
+    content: String
+  } 
+
   type CategoryType {
     id: Int
     categoryType: String
@@ -15,18 +21,28 @@ export default `
     longitude: Float
   }
 
+  type ReportDataType {
+    categoryId: Int
+    subCategoryId: Int
+    content: String
+  }
+
   type SubCategoryType {
     id: Int
-    subCategories: [CategoryType]
+    categoryName
+    categoryType
   }
 
   type Mutation {
     setGPSCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
+    setReportData(reportData: ReportDataInput): ReportDataType
   }
 
   type Query {
     gps: GpsCoordsType
-    getSubCagegory(id: Int!): [SubCategoryType]
+    getCategory(id: Int!): CategoryType
+    getSubCategory(categoryId: Int!, subCategoryId: Int!): SubCategoryType
     categories: [CategoryType]
+    report: ReportDataType
   }
 `;

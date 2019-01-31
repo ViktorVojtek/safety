@@ -35,11 +35,10 @@ const SubCategory = (props) => {
           blurRadius={6}
           resizeMode="cover"
           source={
-            categoryId < 2 ?
-              (
-                categoryId < 1 ?
-                require('../../../../shared/assets/images/Traffic.jpeg') :
-                require('../../../../shared/assets/images/Infrastructure.jpeg')
+            categoryId < 2
+              ? (
+                categoryId < 1
+                  ? require('../../../../shared/assets/images/Traffic.jpeg') : require('../../../../shared/assets/images/Infrastructure.jpeg')
               ) : require('../../../../shared/assets/images/Police.png')
           }
           style={styles.image}

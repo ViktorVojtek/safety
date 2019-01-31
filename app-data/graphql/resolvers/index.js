@@ -2,21 +2,44 @@ import gql from 'graphql-tag';
 
 export default {
   Query: {
-    getSubCagegory: async (_, args, { cache }) => {
-      const fragment = gql`
-        fragment categoryItem on CategoryItem {
-          id
-          subCategories {
-            id
-            categoryType
-            categoryName
+    getCategory: (_, args, { cache }) => {
+      const { categories } = cache.readQuery({
+        query: gql`
+          query categories {
+            categories @client {
+              id
+              categoryType
+              categoryName
+            }
           }
-        }
-      `;
-      const id = `CategoryItem:${args.id}`;
-      const data = cache.readFragment({ fragment, id });
+        `,
+      });
 
-      return data;
+      const category = categories.filter(item => item.id === args.id);
+
+      return category[0];
+    },
+    getSubCategory: (_, args, { cache }) => {
+      const { categories } = cache.readQuery({
+        query: gql`
+          query categories {
+            categories @client {
+              id
+              subCategories {
+                id
+                categoryName
+                categoryType
+              }
+            }
+          }
+        `,
+      });
+      const subCategories = categories.filter(item => item.id === args.categoryId);
+      const subCategory = subCategories[0].subCategories.filter(
+        item => item.id === args.subCategoryId,
+      );
+
+      return subCategory[0];
     },
   },
   Mutation: {
@@ -27,6 +50,32 @@ export default {
           __typename: 'Gps',
           latitude,
           longitude,
+        },
+      };
+
+      cache.writeData({ data });
+
+      return null;
+    },
+    setReportData: (_, { reportData }, { cache }) => {
+      const { categoryId, subCategoryId, content } = reportData;
+      const { report } = cache.readQuery({
+        query: gql`
+          query GetReport {
+            report @client {
+              categoryId
+              subCategoryId
+              content
+            }
+          }
+        `,
+      });
+      const data = {
+        report: {
+          __typename: 'Report',
+          categoryId: categoryId || report.categoryId,
+          subCategoryId: subCategoryId || report.subCategoryId,
+          content: content || report.content,
         },
       };
 

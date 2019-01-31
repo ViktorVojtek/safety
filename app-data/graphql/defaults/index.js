@@ -77,6 +77,7 @@ export default {
     }],
   }],
   report: {
+    __typename: 'Report',
     categoryId: null,
     subCategoryId: null,
     content: '',

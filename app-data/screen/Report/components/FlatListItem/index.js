@@ -5,17 +5,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { graphql } from 'react-apollo';
 import Icon from 'react-native-vector-icons/Feather';
+import setReportData from '../graphql/setReportData.mutation';
 import styles from './styles';
 import { styles as styleConfig } from '../../../../shared/config';
 
-const { colors: { mediumGrey, white } } = styleConfig;
+const { colors: { white } } = styleConfig;
 
-export default (props) => {
+export default graphql(setReportData)((props) => {
   const {
+    categoryId,
     data: { id, subCategories },
-    title,
+    mutate,
     navigation,
+    title,
   } = props;
 
   return (
@@ -36,11 +40,23 @@ export default (props) => {
         <View style={styles.imageOverlay} />
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SubCategory', {
-          id,
-          categoryName: title,
-          data: subCategories,
-        })}
+        onPress={async () => {
+          try {
+            const reportData = {
+              categoryId,
+            };
+
+            await mutate({ variables: { reportData } });
+
+            navigation.navigate('SubCategory', {
+              id,
+              categoryName: title,
+              data: subCategories,
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }}
         style={styles.link}
       >
         <View>
@@ -59,4 +75,4 @@ export default (props) => {
       </TouchableOpacity>
     </View>
   );
-};
+});
