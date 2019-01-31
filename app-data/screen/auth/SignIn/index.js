@@ -31,9 +31,23 @@ class SignIn extends Component {
 
     this.state = initialState;
 
+    this.checkFields = this.checkFields.bind(this);
     this.handleUserData = this.handleUserData.bind(this);
     this.signInAsync = this.signInAsync.bind(this);
     this.toggleError = this.toggleError.bind(this);
+  }
+
+  checkFields = (data) => {
+    const { email, password } = data;
+
+    if (!email || email.length < 1) {
+      return false;
+    }
+    if (!password || password.length < 1) {
+      return false;
+    }
+
+    return true;
   }
 
   handleUserData(data) {
@@ -45,30 +59,36 @@ class SignIn extends Component {
       const { data: { email, password } } = this.state;
       const user = { email, password };
 
-      const resp = await mutate({ variables: { user } });
+      const checked = this.checkFields(user);
 
-      const {
-        data: {
-          loginUser: {
-            firstName, id, jwt, lastName, role,
+      if (checked) {
+        const resp = await mutate({ variables: { user } });
+        const {
+          data: {
+            loginUser: {
+              firstName, id, jwt, lastName, role,
+            },
           },
-        },
-      } = resp;
+        } = resp;
 
-      await AsyncStorage.multiSet([
-        ['firstName', firstName],
-        ['id', id],
-        ['jwt', jwt],
-        ['lastName', lastName],
-        ['role', String(role)],
-      ], (error) => {
-        if (error) {
-          return;
-        }
+        await AsyncStorage.multiSet([
+          ['firstName', firstName],
+          ['id', id],
+          ['jwt', jwt],
+          ['lastName', lastName],
+          ['role', String(role)],
+        ], (error) => {
+          if (error) {
+            return;
+          }
 
-        navigation.navigate('App');
-      });
+          navigation.navigate('App');
+        });
+      } else {
+        throw new Error('Skontrolujte zadané informácie');
+      }
     } catch (err) {
+      // console.log(err);
       this.toggleError();
     }
   }
