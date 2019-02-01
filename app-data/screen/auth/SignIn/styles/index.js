@@ -27,12 +27,14 @@ export default StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   erbContainer: {
-    flex: 0.3,
+    flex: 0.2,
     justifyContent: 'flex-start',
   },
   erbImage: {
-    height: 85,
-    width: 75,
+    flex: 1,
+    height: 50, // 85,
+    width: 50, // 75,
+    resizeMode: 'contain',
   },
   link: {
     color: darkGrey,
@@ -48,7 +50,7 @@ export default StyleSheet.create({
   subContainer: {
     backgroundColor: '#fff',
     borderRadius: 6,
-    flex: 0.6,
+    flex: 0.65,
     padding: 20,
     marginHorizontal: 5,
   },

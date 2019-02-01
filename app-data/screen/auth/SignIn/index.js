@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   AsyncStorage,
   Image,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -58,15 +59,10 @@ class SignIn extends Component {
     try {
       const { data: { email, password } } = this.state;
       const user = { email, password };
-
-      console.log(user);
       const checked = this.checkFields(user);
 
-      console.log(checked);
       if (checked) {
-        console.log('going to mutate');
         const resp = await mutate({ variables: { user } });
-        console.log(resp);
         const {
           data: {
             loginUser: {
@@ -92,7 +88,7 @@ class SignIn extends Component {
         throw new Error('Skontrolujte zadané informácie');
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       this.toggleError();
     }
   }
@@ -139,31 +135,34 @@ class SignIn extends Component {
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.link}>Nemáte účeť? Zaregistrujte sa.</Text>
           </TouchableOpacity>
-          <TextInput
-            autoCapitalize="none"
-            style={styles.textInput}
-            onChangeText={(emailText) => {
-              const { data } = this.state;
 
-              data.email = emailText;
-              this.handleUserData(data);
-            }}
-            value={email}
-            placeholder="Zadajte svoj e-mail"
-            keyboardType="email-address"
-          />
-          <TextInput
-            secureTextEntry
-            style={styles.textInput}
-            onChangeText={(passwordText) => {
-              const { data } = this.state;
+          <ScrollView>
+            <TextInput
+              autoCapitalize="none"
+              style={styles.textInput}
+              onChangeText={(emailText) => {
+                const { data } = this.state;
 
-              data.password = passwordText;
-              this.handleUserData(data);
-            }}
-            value={password}
-            placeholder="Zadajte heslo"
-          />
+                data.email = emailText;
+                this.handleUserData(data);
+              }}
+              value={email}
+              placeholder="Zadajte svoj e-mail"
+              keyboardType="email-address"
+            />
+            <TextInput
+              secureTextEntry
+              style={styles.textInput}
+              onChangeText={(passwordText) => {
+                const { data } = this.state;
+
+                data.password = passwordText;
+                this.handleUserData(data);
+              }}
+              value={password}
+              placeholder="Zadajte heslo"
+            />
+          </ScrollView>
 
           <TouchableOpacity
             style={styles.button}

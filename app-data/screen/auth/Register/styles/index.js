@@ -32,8 +32,10 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
   },
   erbImage: {
-    height: 85,
-    width: 75,
+    flex: 1,
+    height: 50, // 85,
+    width: 50, // 75,
+    resizeMode: 'contain',
   },
   link: {
     color: darkGrey,

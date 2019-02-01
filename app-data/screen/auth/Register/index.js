@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  ScrollView,
   TouchableOpacity,
   Text,
   TextInput,
@@ -72,7 +73,7 @@ class Register extends Component {
       },
       errorVisible,
     } = this.state;
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
 
     return (
       <View style={styles.container}>
@@ -98,53 +99,67 @@ class Register extends Component {
 
         <View style={styles.subContainer}>
           <Text style={styles.loginTitleText}>Registrácia</Text>
-          <TextInput
-            onChangeText={(firstNameText) => {
-              const { data } = this.state;
+          <ScrollView>
+            <TextInput
+              autofocus
+              onChangeText={(firstNameText) => {
+                const { data } = this.state;
 
-              data.firstName = firstNameText;
-              this.handleUserData(data);
-            }}
-            placeholder="Zadajte svoje krstné meno"
-            style={styles.textInput}
-            value={firstName}
-          />
-          <TextInput
-            onChangeText={(lastNameText) => {
-              const { data } = this.state;
+                data.firstName = firstNameText;
+                this.handleUserData(data);
+              }}
+              placeholder="Zadajte svoje krstné meno"
+              returnKeyLabel="next"
+              returnKeyType="next"
+              style={styles.textInput}
+              value={firstName}
+            />
+            <TextInput
+              autofocus
+              onChangeText={(lastNameText) => {
+                const { data } = this.state;
 
-              data.lastName = lastNameText;
-              this.handleUserData(data);
-            }}
-            placeholder="Zadajte svoje priezvysko"
-            style={styles.textInput}
-            value={lastName}
-          />
-          <TextInput
-            autoCapitalize="none"
-            keyboardType="email-address"
-            onChangeText={(emailText) => {
-              const { data } = this.state;
+                data.lastName = lastNameText;
+                this.handleUserData(data);
+              }}
+              placeholder="Zadajte svoje priezvysko"
+              returnKeyLabel="next"
+              returnKeyType="next"
+              style={styles.textInput}
+              value={lastName}
+            />
+            <TextInput
+              autofocus
+              autoCapitalize="none"
+              keyboardType="email-address"
+              onChangeText={(emailText) => {
+                const { data } = this.state;
 
-              data.email = emailText;
-              this.handleUserData(data);
-            }}
-            placeholder="Zadajte svoj e-mail"
-            style={styles.textInput}
-            value={email}
-          />
-          <TextInput
-            onChangeText={(passwordText) => {
-              const { data } = this.state;
+                data.email = emailText;
+                this.handleUserData(data);
+              }}
+              returnKeyLabel="next"
+              returnKeyType="next"
+              placeholder="Zadajte svoj e-mail"
+              style={styles.textInput}
+              value={email}
+            />
+            <TextInput
+              autofocus
+              onChangeText={(passwordText) => {
+                const { data } = this.state;
 
-              data.password = passwordText;
-              this.handleUserData(data);
-            }}
-            placeholder="Zadajte heslo"
-            style={styles.textInput}
-            secureTextEntry
-            value={password}
-          />
+                data.password = passwordText;
+                this.handleUserData(data);
+              }}
+              placeholder="Zadajte heslo"
+              returnKeyLabel="send"
+              returnKeyType="send"
+              style={styles.textInput}
+              secureTextEntry
+              value={password}
+            />
+          </ScrollView>
 
           <TouchableOpacity style={styles.button} onPress={this.registerAsync}>
             <Text style={styles.textWhite}>Registrovať</Text>
