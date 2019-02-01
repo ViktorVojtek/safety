@@ -1,7 +1,12 @@
-import { ApolloClient } from 'apollo-boost'; // 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+} from 'apollo-boost'; // 'apollo-client';
+// import { ApolloLink } from 'apollo-link'; // apollo-link
+// import { HttpLink } from 'apollo-link-http';
+// import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 
 import defaults from './defaults';
@@ -18,7 +23,7 @@ const stateLink = withClientState({
   typeDefs,
 });
 
-const domain = '192.168.1.229'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
+const domain = 'localhost'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
 const protocol = 'http';
 const port = 3543;
 
