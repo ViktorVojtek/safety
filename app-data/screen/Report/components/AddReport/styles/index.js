@@ -1,7 +1,11 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../../shared/config';
 
-const { colors: { lightGrey, mediumGrey, white } } = styles;
+const {
+  colors: {
+    darkGrey, lightGrey, mediumGrey, white,
+  },
+} = styles;
 const { width } = Dimensions.get('screen');
 
 export default StyleSheet.create({
@@ -19,6 +23,30 @@ export default StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
   },
+  choosePhotoIconContainer: {
+    alignItems: 'center',
+    borderRadius: 25,
+    backgroundColor: '#ff0068',
+    height: 50,
+    justifyContent: 'center',
+    width: 50,
+  },
+  choosePhotoButton: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    width,
+  },
+  choosePhotoContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  choosePhotoText: {
+    color: darkGrey,
+    marginTop: 20,
+    textTransform: 'uppercase',
+  },
   container: {
     alignItems: 'center',
     backgroundColor: lightGrey,
@@ -32,13 +60,14 @@ export default StyleSheet.create({
   },
   cameraContainer: {
     alignItems: 'center',
-    borderWidth: 1,
+    // borderWidth: 1,
     flex: 0.45,
     flexDirection: 'column',
     width,
   },
   formContainer: {
     alignItems: 'center',
+    backgroundColor: white,
     flex: 0.55,
   },
   textContainer: {

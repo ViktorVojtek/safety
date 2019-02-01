@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
@@ -65,8 +66,8 @@ class AddReport extends Component {
 
   selectPhoto = () => {
     const options = {
-      title: 'Select Avatar',
-      customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+      title: 'Výber fotografie',
+      // customButtons: null,// [{ name: 'fb', title: 'Choose Photo from Facebook' }],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -74,7 +75,7 @@ class AddReport extends Component {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      console.log(response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -109,9 +110,17 @@ class AddReport extends Component {
         <View style={styles.cameraContainer}>
           {
             !cameraShow ? (
-              <TouchableOpacity onPress={this.selectPhoto}>
-                <Text>Choose Photo</Text>
-              </TouchableOpacity>
+              <View style={styles.choosePhotoContainer}>
+                <TouchableOpacity
+                  onPress={this.selectPhoto}
+                  style={styles.choosePhotoButton}
+                >
+                  <View style={styles.choosePhotoIconContainer}>
+                    <Icon name="image" color="#fff" size={35} />
+                  </View>
+                  <Text style={styles.choosePhotoText}>Pridaj fotografiu</Text>
+                </TouchableOpacity>
+              </View>
             ) : (
               <RNCamera
                 ref={(ref) => {
