@@ -8,10 +8,17 @@ import MapView from 'react-native-maps';
 import { compose, graphql } from 'react-apollo';
 import DeviceMarker from './components/DeviceMarker';
 import Header from '../../shared/components/Header';
-import setGPSCoords from './graphql/setGPSCoords.mutation';
-import getGps from './graphql/getGps.query';
+import setGPSCoords from '../../shared/graphql/setGPSCoords.mutation';
+import getGps from '../../shared/graphql/getGps.query';
+import { gpsLocation } from '../../shared/lib';
 import { strings } from '../../shared/config';
 import styles from './styles';
+
+const handleGps = async (mutate) => {
+  const gpsCoords = await gpsLocation();
+
+  await mutate({ variables: { gpsCoords } });
+};
 
 const Map = compose(
   graphql(setGPSCoords),
@@ -23,22 +30,7 @@ const Map = compose(
     }, mutate,
   } = props;
 
-  navigator.geolocation.getCurrentPosition(async (position) => {
-    try {
-      const {
-        coords: {
-          latitude, longitude,
-        },
-      } = position;
-      const gpsCoords = { latitude, longitude };
-
-      await mutate({ variables: { gpsCoords } });
-    } catch (err) {
-      console.log(err);
-    }
-  }, (gpsError) => {
-    console.log(gpsError.message);
-  }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+  handleGps(mutate);
 
   if (error) {
     return (<View><Text>{error.message}</Text></View>);

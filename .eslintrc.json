@@ -1,5 +1,9 @@
 {
     "extends": "airbnb",
+    "globals": {
+      "fetch": true,
+      "navigator": true
+    },
     "parser": "babel-eslint",
     "plugins": ["react"],
     "rules": {

@@ -1,3 +1,7 @@
+export const apis = {
+  googleApiKey: 'AIzaSyAmmWu22KRJjTYn8xd8e8iasXyt9jMc4x4',
+};
+
 export const strings = {
   header: {
     title: {

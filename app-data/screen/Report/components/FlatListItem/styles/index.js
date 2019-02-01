@@ -29,9 +29,10 @@ export default StyleSheet.create({
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   itemTextContainer: {
+    paddingHorizontal: 20,
     width,
   },
   link: {
@@ -45,7 +46,7 @@ export default StyleSheet.create({
   linkDivider: {
     borderRadius: 4,
     height: 5,
-    left: (width / 2) - ((width / 2) / 2),
+    left: (width / 2) - (((width / 2) + 40) / 2),
     marginVertical: 10,
     position: 'relative',
     width: width / 2,

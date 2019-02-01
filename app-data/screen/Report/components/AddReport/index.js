@@ -9,16 +9,20 @@ import {
 import { RNCamera } from 'react-native-camera';
 import { graphql } from 'react-apollo';
 import CategoryText from './components/CategoryText';
+import { geocode, gpsLocation } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
-// import getCategoryQuery from './graphql/getCategory.query';
-// import getSubCategoryQuery from './graphql/getSubCategory.query';
 import reportQuery from '../graphql/report.query';
 import Header from './components/Header';
 import { strings } from '../../../../shared/config';
 import styles from './styles';
 
 const initialState = {
+  address: '',
   description: '',
+  gpsCoords: {
+    latitude: 0.0,
+    longitude: 0.0,
+  },
 };
 
 class AddReport extends Component {
@@ -36,6 +40,18 @@ class AddReport extends Component {
     this.state = initialState;
 
     this.handleDescription = this.handleDescription.bind(this);
+    this.handleLocation = this.handleLocation.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleLocation();
+  }
+
+  handleLocation = async () => {
+    const gpsCoords = await gpsLocation();
+    const address = await geocode(gpsCoords);
+
+    this.setState({ address /* , gpsCoords, */ });
   }
 
   handleDescription(description) {
@@ -43,10 +59,8 @@ class AddReport extends Component {
   }
 
   render() {
-    // console.log('AddReport component');
-    // console.log(this.props);
     const { navigation } = this.props;
-    const { description } = this.state;
+    const { address, description } = this.state;
     const categoryId = navigation.getParam('categoryId');
     const subCategoryId = navigation.getParam('subCategoryId');
 
@@ -72,14 +86,18 @@ class AddReport extends Component {
               style={styles.textInput}
               value={description}
             />
+
             <CategoryText categoryId={categoryId} />
+
             <SubCategoryText
               categoryId={categoryId}
               subCategoryId={subCategoryId}
             />
+
             <View style={styles.textContainer}>
-              <Text>Lokácia</Text>
+              <Text>{address}</Text>
             </View>
+
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Pridať oznámenie</Text>
             </TouchableOpacity>

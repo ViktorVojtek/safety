@@ -55,7 +55,7 @@ export default graphql(setReportData)((props) => {
               data: subCategories,
             });
           } catch (err) {
-            console.log(err);
+            // console.log(err);
           }
         }}
         style={styles.link}
