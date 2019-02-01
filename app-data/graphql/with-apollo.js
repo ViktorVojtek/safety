@@ -3,19 +3,14 @@ import {
   ApolloLink,
   HttpLink,
   InMemoryCache,
-} from 'apollo-boost'; // 'apollo-client';
-// import { ApolloLink } from 'apollo-link'; // apollo-link
-// import { HttpLink } from 'apollo-link-http';
-// import { InMemoryCache } from 'apollo-cache-inmemory';
+} from 'apollo-boost';
 import { withClientState } from 'apollo-link-state';
 
 import defaults from './defaults';
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
-const cache = new InMemoryCache({
-  dataIdFromObject: (o) => { o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}` },
-});
+const cache = new InMemoryCache();
 const stateLink = withClientState({
   cache,
   defaults,

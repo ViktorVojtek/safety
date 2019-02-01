@@ -16,11 +16,13 @@ const { colors: { white } } = styleConfig;
 export default graphql(setReportData)((props) => {
   const {
     categoryId,
-    data: { id, subCategories },
+    data: { subCategories },
     mutate,
     navigation,
     title,
   } = props;
+
+  const id = parseInt(categoryId.split('-')[0], 10);
 
   return (
     <View style={styles.flatListItem}>
@@ -41,22 +43,16 @@ export default graphql(setReportData)((props) => {
       </View>
       <TouchableOpacity
         onPress={async () => {
-          try {
-            const reportData = {
-              categoryId,
-            };
+          const reportData = { categoryId };
 
-            await mutate({ variables: { reportData } });
+          await mutate({ variables: { reportData } });
 
-            navigation.navigate('SubCategory', {
-              id,
-              categoryId,
-              categoryName: title,
-              data: subCategories,
-            });
-          } catch (err) {
-            // console.log(err);
-          }
+          navigation.navigate('SubCategory', {
+            id,
+            categoryId,
+            categoryName: title,
+            data: subCategories,
+          });
         }}
         style={styles.link}
       >
@@ -68,7 +64,7 @@ export default graphql(setReportData)((props) => {
           />
           <Text style={styles.textWhite}>
             {
-              subCategories.map((item, i) => (i < subCategories.length - 1 ? `${item.categoryName}, ` : `${item.categoryName}, Iné...`))
+              subCategories.map((item, i) => (i < subCategories.length - 1 ? `${item.categoryName}, ` : `${item.categoryName}...`))
             }
           </Text>
         </View>

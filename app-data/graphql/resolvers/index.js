@@ -3,43 +3,30 @@ import gql from 'graphql-tag';
 export default {
   Query: {
     getCategory: (_, args, { cache }) => {
-      const { categories } = cache.readQuery({
-        query: gql`
-          query categories {
-            categories @client {
-              id
-              categoryType
-              categoryName
-            }
-          }
-        `,
-      });
+      const fragment = gql`
+        fragment categoryItem on CategoryItem {
+          id
+          categoryName
+          categoryType
+        }
+      `;
+      const id = `CategoryItem:${args.id}`;
+      const data = cache.readFragment({ fragment, id });
 
-      const category = categories.filter(item => item.id === args.id);
-
-      return category[0];
+      return data;
     },
     getSubCategory: (_, args, { cache }) => {
-      const { categories } = cache.readQuery({
-        query: gql`
-          query categories {
-            categories @client {
-              id
-              subCategories {
-                id
-                categoryName
-                categoryType
-              }
-            }
-          }
-        `,
-      });
-      const subCategories = categories.filter(item => item.id === args.categoryId);
-      const subCategory = subCategories[0].subCategories.filter(
-        item => item.id === args.subCategoryId,
-      );
+      const fragment = gql`
+        fragment subCategoryItem on SubCategoryItem {
+          id
+          categoryName
+          categoryType
+        }
+      `;
+      const id = `SubCategoryItem:${args.subCategoryId}`;
+      const data = cache.readFragment({ fragment, id });
 
-      return subCategory[0];
+      return data;
     },
   },
   Mutation: {

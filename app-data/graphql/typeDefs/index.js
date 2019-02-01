@@ -5,13 +5,13 @@ export default `
   }
 
   innput ReportDataInput {
-    categoryId: Int
-    subCategoryId: Int
+    categoryId: String
+    subCategoryId: String
     content: String
   } 
 
   type CategoryType {
-    id: Int
+    id: String
     categoryType: String
     categoryName: String
   }
@@ -22,13 +22,13 @@ export default `
   }
 
   type ReportDataType {
-    categoryId: Int
-    subCategoryId: Int
+    categoryId: String
+    subCategoryId: String
     content: String
   }
 
   type SubCategoryType {
-    id: Int
+    id: String
     categoryName
     categoryType
   }
@@ -40,8 +40,8 @@ export default `
 
   type Query {
     gps: GpsCoordsType
-    getCategory(id: Int!): CategoryType
-    getSubCategory(categoryId: Int!, subCategoryId: Int!): SubCategoryType
+    getCategory(id: String!): CategoryType
+    getSubCategory(categoryId: String!, subCategoryId: String!): SubCategoryType
     categories: [CategoryType]
     report: ReportDataType
   }

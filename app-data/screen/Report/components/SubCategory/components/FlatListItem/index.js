@@ -23,24 +23,17 @@ export default graphql(setReportData)((props) => {
     mutate,
     navigation,
   } = props;
-  // const subCategoryId = id;
 
   return (
     <TouchableOpacity onPress={async () => {
-      try {
-        const reportData = {
-          subCategoryId,
-        };
+      const reportData = { subCategoryId };
 
-        await mutate({ variables: { reportData } });
+      await mutate({ variables: { reportData } });
 
-        navigation.navigate('AddReport', {
-          categoryId,
-          subCategoryId,
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      navigation.navigate('AddReport', {
+        categoryId,
+        subCategoryId,
+      });
     }}
     >
       <View style={[styles.flatListItem, { borderBottomWidth: lastItem ? 0 : 1 }]}>
