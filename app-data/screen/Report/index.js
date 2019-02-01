@@ -5,24 +5,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { strings } from '../../shared/config';
 import Header from '../../shared/components/Header';
 import FlatListItem from './components/FlatListItem';
 import styles from './styles';
-import reportCategories from './graphql/categories.query';
+import { getCategoriesQuery } from '../../graphql/queries';
 
-const Report = compose(
-  graphql(reportCategories),
-)((props) => {
+const Report = graphql(getCategoriesQuery)((props) => {
   const { data: { error, loading, categories }, navigation } = props;
 
   if (error) {
-    return (
-      <View>
-        <Text>{ error.message }</Text>
-      </View>
-    );
+    return <View><Text>{error.message}</Text></View>;
   }
   if (loading) {
     return <ActivityIndicator />;
@@ -36,7 +30,6 @@ const Report = compose(
         renderItem={({ item }) => (
           <FlatListItem
             data={item}
-            categoryId={item.id}
             navigation={navigation}
             title={item.categoryName}
           />

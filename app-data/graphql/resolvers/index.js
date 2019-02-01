@@ -23,7 +23,24 @@ export default {
           categoryType
         }
       `;
-      const id = `SubCategoryItem:${args.subCategoryId}`;
+      const id = `SubCategoryItem:${args.id}`;
+      const data = cache.readFragment({ fragment, id });
+
+      return data;
+    },
+    getSubCategories: (_, args, { cache }) => {
+      const fragment = gql`
+        fragment subCategories on CategoryItem {
+          id
+          categoryName
+          subCategories {
+            id
+            categoryName
+            categoryType
+          }
+        }
+      `;
+      const id = `CategoryItem:${args.id}`;
       const data = cache.readFragment({ fragment, id });
 
       return data;
@@ -45,14 +62,13 @@ export default {
       return null;
     },
     setReportData: (_, { reportData }, { cache }) => {
-      const { categoryId, subCategoryId, content } = reportData;
+      const { categoryId, subCategoryId } = reportData;
       const { report } = cache.readQuery({
         query: gql`
           query GetReport {
             report @client {
               categoryId
               subCategoryId
-              content
             }
           }
         `,
@@ -62,7 +78,6 @@ export default {
           __typename: 'Report',
           categoryId: categoryId || report.categoryId,
           subCategoryId: subCategoryId || report.subCategoryId,
-          content: content || report.content,
         },
       };
 

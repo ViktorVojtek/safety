@@ -7,13 +7,18 @@ export default `
   innput ReportDataInput {
     categoryId: String
     subCategoryId: String
-    content: String
   } 
 
   type CategoryType {
     id: String
     categoryType: String
     categoryName: String
+  }
+
+  type CategoryWithSubCategoriesType {
+    id: String
+    categoryName
+    subCategories: [SubCategoryType]
   }
 
   type GpsCoordsType {
@@ -24,7 +29,6 @@ export default `
   type ReportDataType {
     categoryId: String
     subCategoryId: String
-    content: String
   }
 
   type SubCategoryType {
@@ -41,7 +45,8 @@ export default `
   type Query {
     gps: GpsCoordsType
     getCategory(id: String!): CategoryType
-    getSubCategory(categoryId: String!, subCategoryId: String!): SubCategoryType
+    getSubCategory(id: String!): SubCategoryType
+    getSubCategories(id: String!): CategoryWithSubCategoriesType
     categories: [CategoryType]
     report: ReportDataType
   }

@@ -9,10 +9,11 @@ import {
 import { RNCamera } from 'react-native-camera';
 import ImagePicker from 'react-native-image-picker';
 import { graphql } from 'react-apollo';
+import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
 import { geocode, gpsLocation } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
-import reportQuery from '../graphql/report.query';
+import { reportQuery } from '../../../../graphql/queries';
 import Header from './components/Header';
 import { strings } from '../../../../shared/config';
 import styles from './styles';
@@ -33,6 +34,11 @@ class AddReport extends Component {
       const { header: { title: { report } } } = strings;
       return <Header navigation={navigation} title={report} />;
     },
+  }
+
+  static propTypes = {
+    categoryId: PropTypes.string.isRequired,
+    subCategoryId: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -92,10 +98,11 @@ class AddReport extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const {
+      categoryId,
+      subCategoryId,
+    } = this.props;
     const { address, cameraShow, description } = this.state;
-    const categoryId = navigation.getParam('categoryId');
-    const subCategoryId = navigation.getParam('subCategoryId');
 
     return (
       <View style={styles.container}>

@@ -8,8 +8,8 @@ import MapView from 'react-native-maps';
 import { compose, graphql } from 'react-apollo';
 import DeviceMarker from './components/DeviceMarker';
 import Header from '../../shared/components/Header';
-import setGPSCoords from '../../shared/graphql/setGPSCoords.mutation';
-import getGps from '../../shared/graphql/getGps.query';
+import { setGpsMutation } from '../../graphql/mutations';
+import { getGpsQuery } from '../../graphql/queries';
 import { gpsLocation } from '../../shared/lib';
 import { strings } from '../../shared/config';
 import styles from './styles';
@@ -21,8 +21,8 @@ const handleGps = async (mutate) => {
 };
 
 const Map = compose(
-  graphql(setGPSCoords),
-  graphql(getGps),
+  graphql(setGpsMutation),
+  graphql(getGpsQuery),
 )((props) => {
   const {
     data: {

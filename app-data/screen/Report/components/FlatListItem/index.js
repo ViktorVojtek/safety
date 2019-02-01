@@ -7,22 +7,21 @@ import {
 } from 'react-native';
 import { graphql } from 'react-apollo';
 import Icon from 'react-native-vector-icons/Feather';
-import setReportData from '../graphql/setReportData.mutation';
+import { setReportDataMutation } from '../../../../graphql/mutations';
 import styles from './styles';
 import { styles as styleConfig } from '../../../../shared/config';
 
 const { colors: { white } } = styleConfig;
 
-export default graphql(setReportData)((props) => {
+export default graphql(setReportDataMutation)((props) => {
   const {
-    categoryId,
-    data: { subCategories },
+    data: { id, subCategories },
     mutate,
     navigation,
     title,
   } = props;
 
-  const id = parseInt(categoryId.split('-')[0], 10);
+  const cId = parseInt(id.split('-')[0], 10);
 
   return (
     <View style={styles.flatListItem}>
@@ -31,9 +30,9 @@ export default graphql(setReportData)((props) => {
           blurRadius={6}
           resizeMode="cover"
           source={
-            id < 2
+            cId < 2
               ? (
-                id < 1
+                cId < 1
                   ? require('../../../../shared/assets/images/Traffic.jpeg') : require('../../../../shared/assets/images/Infrastructure.jpeg')
               ) : require('../../../../shared/assets/images/Police.png')
           }
@@ -43,23 +42,18 @@ export default graphql(setReportData)((props) => {
       </View>
       <TouchableOpacity
         onPress={async () => {
-          const reportData = { categoryId };
+          const reportData = { categoryId: id };
 
           await mutate({ variables: { reportData } });
 
-          navigation.navigate('SubCategory', {
-            id,
-            categoryId,
-            categoryName: title,
-            data: subCategories,
-          });
+          navigation.navigate('SubCategory');
         }}
         style={styles.link}
       >
         <View style={styles.itemTextContainer}>
           <Text style={styles.titleText}>{title}</Text>
           <View style={[styles.linkDivider, {
-            backgroundColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
+            backgroundColor: cId < 2 ? (cId < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
           }]}
           />
           <Text style={styles.textWhite}>

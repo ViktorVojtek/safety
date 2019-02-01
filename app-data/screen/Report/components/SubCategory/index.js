@@ -1,28 +1,45 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StatusBar,
   Text,
   View,
 } from 'react-native';
+import { compose, graphql } from 'react-apollo';
 import { strings } from '../../../../shared/config';
 import FlatListItem from './components/FlatListItem';
 import Header from './components/Header';
+import { reportQuery, getSubCategoriesQuery } from '../../../../graphql/queries';
 import styles from './styles';
 
-const SubCategory = (props) => {
-  const { navigation } = props;
-  const categoryId = navigation.getParam('categoryId');
-  const id = parseInt(categoryId.split('-')[0], 10);
-  const categoryName = navigation.getParam('categoryName');
-  const data = navigation.getParam('data');
+const SubCategory = compose(
+  graphql(reportQuery),
+  graphql(getSubCategoriesQuery, {
+    options: ({ data: { report: { categoryId } } }) => ({ variables: { id: categoryId } }),
+  }),
+)((props) => {
+  const {
+    data: { error, loading, getSubCategories },
+    navigation,
+  } = props;
+
+  if (error) {
+    return <View><Text>{error.message}</Text></View>;
+  }
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  const { categoryName, id, subCategories } = getSubCategories;
+  const cId = parseInt(id.split('-')[0], 10);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="default" />
       <View style={{
-        borderBottomColor: id < 2 ? (id < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
+        borderBottomColor: cId < 2 ? (cId < 1 ? '#ffb21f' : '#ff0057') : '#006de6',
         borderBottomWidth: 5,
       }}
       >
@@ -30,9 +47,9 @@ const SubCategory = (props) => {
           blurRadius={6}
           resizeMode="cover"
           source={
-            id < 2
+            cId < 2
               ? (
-                id < 1
+                cId < 1
                   ? require('../../../../shared/assets/images/Traffic.jpeg') : require('../../../../shared/assets/images/Infrastructure.jpeg')
               ) : require('../../../../shared/assets/images/Police.png')
           }
@@ -46,23 +63,20 @@ const SubCategory = (props) => {
         <Text>Zvoľte podkategóriu</Text>
       </View>
       <FlatList
-        data={data}
+        data={subCategories}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <FlatListItem
             data={item}
-            categoryId={categoryId}
-            subCategoryId={item.id}
             navigation={navigation}
-            title={item.categoryName}
-            lastItem={index === data.length - 1}
+            lastItem={index === subCategories.length - 1}
           />
         )}
         style={styles.flatList}
       />
     </View>
   );
-};
+});
 
 SubCategory.navigationOptions = {
   header: ({ navigation }) => {

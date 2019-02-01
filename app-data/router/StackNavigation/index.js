@@ -1,4 +1,3 @@
-import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 
 import HomeScreen from '../../screen/Home';
@@ -14,28 +13,28 @@ export const AuthStack = createStackNavigator({
   SignIn: SignScreen,
   Register: RegisterScreen,
 }, {
-  initialRouteName: 'SignIn'
+  initialRouteName: 'SignIn',
 });
 
 export const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  QuickDial: QuickDialScreen
+  QuickDial: QuickDialScreen,
 }, {
-  initialRouteName: 'Home'
+  initialRouteName: 'Home',
 });
 
 export const MapStack = createStackNavigator({
   Map: MapScreen,
-  QuickDial: QuickDialScreen
+  QuickDial: QuickDialScreen,
 }, {
-  initialRouteName: 'Map'
+  initialRouteName: 'Map',
 });
 
 export const ReportStack = createStackNavigator({
   QuickDial: QuickDialScreen,
   Report: ReportScreen,
   SubCategory: SubCategoryScreen,
-  AddReport: AddReportScreen
+  AddReport: AddReportScreen,
 }, {
   initialRouteName: 'Report',
 });

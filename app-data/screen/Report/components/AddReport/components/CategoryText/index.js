@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { graphql } from 'react-apollo';
-import getCategoryQuery from '../../graphql/getCategory.query';
+import { getCategoryQuery } from '../../../../../../graphql/queries';
 import styles from '../../styles';
 
 export default graphql(getCategoryQuery, {

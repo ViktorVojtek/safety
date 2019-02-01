@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { graphql } from 'react-apollo';
-import createUserMutation from './graphql/createUser.mutation';
+import { createUserMutation } from '../../../graphql/mutations';
 import Header from './components/Header';
 import Modal from '../../../shared/components/Modal';
 import styles from './styles';
@@ -73,7 +73,6 @@ class Register extends Component {
       },
       errorVisible,
     } = this.state;
-    // const { navigation } = this.props;
 
     return (
       <View style={styles.container}>

@@ -11,7 +11,7 @@ import {
 import { graphql } from 'react-apollo';
 import Modal from '../../../shared/components/Modal';
 import Header from './components/Header';
-import loginUser from './graphql/loginUser.mutation';
+import { loginUserMutation } from '../../../graphql/mutations';
 import styles from './styles';
 
 const initialState = {
@@ -176,4 +176,4 @@ class SignIn extends Component {
   }
 }
 
-export default graphql(loginUser)(SignIn);
+export default graphql(loginUserMutation)(SignIn);
