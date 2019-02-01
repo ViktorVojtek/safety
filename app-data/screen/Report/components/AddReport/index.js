@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import ImagePicker from 'react-native-image-picker';
 import { graphql } from 'react-apollo';
 import CategoryText from './components/CategoryText';
 import { geocode, gpsLocation } from '../../../../shared/lib';
@@ -18,6 +19,7 @@ import styles from './styles';
 
 const initialState = {
   address: '',
+  cameraShow: false,
   description: '',
   gpsCoords: {
     latitude: 0.0,
@@ -41,6 +43,7 @@ class AddReport extends Component {
 
     this.handleDescription = this.handleDescription.bind(this);
     this.handleLocation = this.handleLocation.bind(this);
+    this.selectPhoto = this.selectPhoto.bind(this);
   }
 
   componentDidMount() {
@@ -54,29 +57,67 @@ class AddReport extends Component {
     this.setState({ address /* , gpsCoords, */ });
   }
 
+  selectPhoto = () => {
+    const options = {
+      title: 'Select Avatar',
+      customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        console.log(source);
+      }
+    });
+  }
+
   handleDescription(description) {
     this.setState({ description });
   }
 
   render() {
     const { navigation } = this.props;
-    const { address, description } = this.state;
+    const { address, cameraShow, description } = this.state;
     const categoryId = navigation.getParam('categoryId');
     const subCategoryId = navigation.getParam('subCategoryId');
 
     return (
       <View style={styles.container}>
         <View style={styles.cameraContainer}>
-          <RNCamera
-            ref={(ref) => {
-              this.camera = ref;
-            }}
-            style={styles.camera}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.on}
-            permissionDialogTitle="Permission to use camera"
-            permissionDialogMessage="We need your permission to use your camera phone"
-          />
+          {
+            !cameraShow ? (
+              <TouchableOpacity onPress={this.selectPhoto}>
+                <Text>Choose Photo</Text>
+              </TouchableOpacity>
+            ) : (
+              <RNCamera
+                ref={(ref) => {
+                  this.camera = ref;
+                }}
+                style={styles.camera}
+                type={RNCamera.Constants.Type.back}
+                flashMode={RNCamera.Constants.FlashMode.on}
+                permissionDialogTitle="Permission to use camera"
+                permissionDialogMessage="We need your permission to use your camera phone"
+              />
+            )
+          }
         </View>
         <View style={styles.formContainer}>
           <ScrollView>

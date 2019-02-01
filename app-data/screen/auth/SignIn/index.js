@@ -59,10 +59,14 @@ class SignIn extends Component {
       const { data: { email, password } } = this.state;
       const user = { email, password };
 
+      console.log(user);
       const checked = this.checkFields(user);
 
+      console.log(checked);
       if (checked) {
+        console.log('going to mutate');
         const resp = await mutate({ variables: { user } });
+        console.log(resp);
         const {
           data: {
             loginUser: {
@@ -88,7 +92,7 @@ class SignIn extends Component {
         throw new Error('Skontrolujte zadané informácie');
       }
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       this.toggleError();
     }
   }

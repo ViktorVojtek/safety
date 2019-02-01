@@ -9,7 +9,7 @@ import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
 const cache = new InMemoryCache({
-  dataIdFromObject: (o) => { o.id ? `${o.__typename}-${o.id}`: `${o.__typename}-${o.cursor}` },
+  dataIdFromObject: (o) => { o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}` },
 });
 const stateLink = withClientState({
   cache,
@@ -18,7 +18,7 @@ const stateLink = withClientState({
   typeDefs,
 });
 
-const domain = 'localhost'; // '192.168.1.229'; 192.168.22.47;
+const domain = 'localhost'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
 const protocol = 'http';
 const port = 3543;
 

@@ -61,8 +61,8 @@ export default StyleSheet.create({
     backgroundColor: lightGrey,
     borderRadius: 4,
     marginBottom: 20,
-    paddingBottom: 20,
-    paddingTop: 20,
+    paddingBottom: 20, // 20
+    paddingTop: 20, // 20
     textAlign: 'center',
     width: width * 0.8,
   },
