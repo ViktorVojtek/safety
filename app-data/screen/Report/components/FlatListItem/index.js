@@ -27,14 +27,13 @@ export default graphql(setReportDataMutation)((props) => {
     <View style={styles.flatListItem}>
       <View style={styles.imageContainer}>
         <Image
-          blurRadius={6}
           resizeMode="cover"
           source={
             cId < 2
               ? (
                 cId < 1
-                  ? require('../../../../shared/assets/images/Traffic.jpeg') : require('../../../../shared/assets/images/Infrastructure.jpeg')
-              ) : require('../../../../shared/assets/images/Police.png')
+                  ? require('../../../../shared/assets/images/1.jpg') : require('../../../../shared/assets/images/2.jpg')
+              ) : require('../../../../shared/assets/images/3.jpg')
           }
           style={styles.image}
         />

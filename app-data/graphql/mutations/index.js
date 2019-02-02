@@ -1,5 +1,14 @@
 import gql from 'graphql-tag';
 
+export const createReportMutation = gql`
+  mutation createReport($report: ReportInput) {
+    createReport(report: $report) {
+      id
+      userId
+    }
+  }
+`;
+
 export const createUserMutation = gql`
   mutation createUser($user: UserInput) {
     createUser(user: $user) {

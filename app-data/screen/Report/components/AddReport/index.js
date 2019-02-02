@@ -1,30 +1,54 @@
 import React, { Component } from 'react';
 import {
+  ActivityIndicator,
+  AsyncStorage,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/EvilIcons';
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
 import { geocode, gpsLocation } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
 import { reportQuery } from '../../../../graphql/queries';
+import { createReportMutation } from '../../../../graphql/mutations';
 import Header from './components/Header';
-import { strings } from '../../../../shared/config';
+import AddPhoto from './components/AddPhoto';
+import ShowPhoto from './components/ShowPhoto';
+import Modal from '../../../../shared/components/Modal';
+import UploadingReportModal from './components/UploadingReportModal';
+import { strings, styles as stylesConfig } from '../../../../shared/config';
 import styles from './styles';
+
+const { colors: { mediumGrey } } = stylesConfig;
 
 const initialState = {
   address: '',
   description: '',
+  error: {
+    errorText: '',
+    errorVisible: false,
+  },
   gpsCoords: {
     latitude: 0.0,
     longitude: 0.0,
   },
+  image: {
+    data: '',
+    fileSize: 0,
+    height: 0,
+    showImage: false,
+    type: '',
+    uri: '',
+    width: 0,
+  },
+  photoActivity: false,
+  showUploadingModal: false,
 };
 
 class AddReport extends Component {
@@ -46,9 +70,11 @@ class AddReport extends Component {
     this.camera = undefined;
     this.state = initialState;
 
+    this.cancelPhoto = this.cancelPhoto.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
     this.handleLocation = this.handleLocation.bind(this);
     this.selectPhoto = this.selectPhoto.bind(this);
+    this.submitReport = this.submitReport.bind(this);
   }
 
   componentDidMount() {
@@ -59,34 +85,132 @@ class AddReport extends Component {
     const gpsCoords = await gpsLocation();
     const address = await geocode(gpsCoords);
 
-    this.setState({ address /* , gpsCoords, */ });
+    this.setState({ address, gpsCoords });
   }
 
   selectPhoto = () => {
     const options = {
       title: 'Výber fotografie',
+      maxHeight: 640,
+      maxWidth: 640,
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
+      quality: 0.6,
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
-      // console.log(response);
+    this.setState({ photoActivity: true });
 
+    ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        this.setState({ photoActivity: false });
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+        this.setState({ photoActivity: false });
       } else {
-        const source = { uri: response.uri };
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        console.log(source);
+        const {
+          data, fileSize, height, type, uri, width,
+        } = response;
+
+        this.setState({
+          image: {
+            data,
+            fileSize,
+            height,
+            showImage: true,
+            type,
+            uri,
+            width,
+          },
+          photoActivity: false,
+        });
       }
     });
+  }
+
+  cancelPhoto() {
+    this.setState({
+      image: {
+        data: '',
+        fileSize: 0,
+        height: 0,
+        showImage: false,
+        type: '',
+        uri: '',
+        width: 0,
+      },
+    });
+  }
+
+  submitReport() {
+    this.setState({ showUploadingModal: true }, async () => {
+      try {
+        const {
+          address,
+          description,
+          gpsCoords,
+          image: {
+            data, fileSize, height, type, width,
+          },
+        } = this.state;
+        const {
+          categoryId, mutate, navigation, subCategoryId,
+        } = this.props;
+        const reportDataToSubmit = {
+          address,
+          categoryId,
+          gpsCoords,
+          image: {
+            data, fileSize, height, type, width,
+          },
+          subCategoryId,
+        };
+
+        if (description.length > 0) {
+          reportDataToSubmit.description = description;
+        }
+
+        const userId = await AsyncStorage.getItem('id');
+
+        reportDataToSubmit.userId = userId;
+
+        await mutate({ variables: { report: reportDataToSubmit } });
+
+        this.setState({
+          address: '',
+          description: '',
+          error: {
+            errorText: '',
+            errorVisible: false,
+          },
+          gpsCoords: {
+            latitude: 0.0,
+            longitude: 0.0,
+          },
+          image: {
+            data: '',
+            fileSize: 0,
+            height: 0,
+            showImage: false,
+            type: '',
+            uri: '',
+            width: 0,
+          },
+          photoActivity: false,
+          showUploadingModal: false,
+        });
+
+        setTimeout(() => navigation.navigate('Report'), 500);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  toggleError() {
+    const { error: { errorVisible } } = this.state;
+
+    this.setState({ error: { errorVisible: errorVisible !== true } });
   }
 
   handleDescription(description) {
@@ -94,25 +218,39 @@ class AddReport extends Component {
   }
 
   render() {
+    console.log(this.props);
     const {
       categoryId,
       subCategoryId,
     } = this.props;
-    const { address, description } = this.state;
+    const {
+      address,
+      description,
+      error: { errorText, errorVisible },
+      image: { showImage, uri },
+      photoActivity,
+      showUploadingModal,
+    } = this.state;
 
     return (
       <View style={styles.container}>
+        <Modal
+          close={this.toggleError}
+          text={errorText}
+          visible={errorVisible}
+        />
+        <UploadingReportModal
+          visible={showUploadingModal}
+        />
         <View style={styles.cameraContainer}>
           <View style={styles.choosePhotoContainer}>
-            <TouchableOpacity
-              onPress={this.selectPhoto}
-              style={styles.choosePhotoButton}
-            >
-              <View style={styles.choosePhotoIconContainer}>
-                <Icon name="image" color="#fff" size={35} />
-              </View>
-              <Text style={styles.choosePhotoText}>Pridaj fotografiu</Text>
-            </TouchableOpacity>
+            {
+              photoActivity ? <ActivityIndicator />
+                : (
+                  showImage ? <ShowPhoto photoHandler={this.cancelPhoto} uri={uri} />
+                    : <AddPhoto photoHandler={this.selectPhoto} />
+                )
+            }
           </View>
         </View>
         <View style={styles.formContainer}>
@@ -133,7 +271,11 @@ class AddReport extends Component {
               <Text>{address}</Text>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              disabled={!showImage}
+              onPress={() => this.submitReport()}
+              style={[styles.button, { backgroundColor: showImage ? '#ff0068' : mediumGrey }]}
+            >
               <Text style={styles.buttonText}>Pridať oznámenie</Text>
             </TouchableOpacity>
           </ScrollView>
@@ -143,10 +285,13 @@ class AddReport extends Component {
   }
 }
 
-export default graphql(reportQuery, {
-  props: (props) => {
-    const { data: { report: { categoryId, subCategoryId } } } = props;
+export default compose(
+  graphql(reportQuery, {
+    props: (props) => {
+      const { data: { report: { categoryId, subCategoryId } } } = props;
 
-    return { ...props, categoryId, subCategoryId };
-  },
-})(AddReport);
+      return { ...props, categoryId, subCategoryId };
+    },
+  }),
+  graphql(createReportMutation),
+)(AddReport);

@@ -84,8 +84,7 @@ class Register extends Component {
 
         <View style={styles.backgroundImageContainer}>
           <Image
-            blurRadius={6}
-            source={require('../../../shared/assets/images/Infrastructure.jpeg')}
+            source={require('../../../shared/assets/images/2.jpg')}
             style={styles.backgroundImage}
           />
         </View>

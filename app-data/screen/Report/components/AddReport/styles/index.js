@@ -3,7 +3,7 @@ import { styles } from '../../../../../shared/config';
 
 const {
   colors: {
-    darkGrey, lightGrey, mediumGrey, white,
+    lightGrey, mediumGrey, white,
   },
 } = styles;
 const { width } = Dimensions.get('screen');
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
   },
-  choosePhotoIconContainer: {
+  /* choosePhotoIconContainer: {
     alignItems: 'center',
     borderRadius: 25,
     backgroundColor: '#ff0068',
@@ -36,17 +36,17 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     width,
-  },
+  }, */
   choosePhotoContainer: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
   },
-  choosePhotoText: {
+  /* choosePhotoText: {
     color: darkGrey,
     marginTop: 20,
     textTransform: 'uppercase',
-  },
+  }, */
   container: {
     alignItems: 'center',
     backgroundColor: lightGrey,
@@ -60,11 +60,22 @@ export default StyleSheet.create({
   },
   cameraContainer: {
     alignItems: 'center',
-    // borderWidth: 1,
     flex: 0.45,
     flexDirection: 'column',
     width,
   },
+  /* cameraImage: {
+    // height,
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    width,
+  },
+  cameraImageContainer: {
+    flex: 1,
+    left: 0,
+    position: 'relative',
+    width,
+  }, */
   formContainer: {
     alignItems: 'center',
     backgroundColor: white,
