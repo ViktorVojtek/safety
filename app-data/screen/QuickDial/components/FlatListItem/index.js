@@ -1,6 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {
+  Linking,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import PropTypes from 'prop-types';
 import { styles as stylesConfig } from '../../../../shared/config';
 import styles from './styles';
@@ -8,30 +13,32 @@ import styles from './styles';
 const { colors: { darkGrey, mediumGrey, white } } = stylesConfig;
 
 const FlatListItem = ({ data: { dialNumberItem, dialNumberItemTitle }, index, important }) => (
-  <View
-    style={[styles.container, {
-      backgroundColor: important ? '#f70004' : white,
-      marginTop: index === 0 ? 10 : 5,
-    }]}
-  >
-    <Text
-      style={[styles.itemText, {
-        color: important ? white : darkGrey,
-        fontWeight: 'bold',
+  <TouchableOpacity onPress={() => Linking.openURL(`tel://${dialNumberItem}`)}>
+    <View
+      style={[styles.container, {
+        backgroundColor: important ? '#f70004' : white,
+        marginTop: index === 0 ? 20 : 10,
       }]}
     >
-      {dialNumberItem}
-    </Text>
-    <Text
-      style={[styles.itemText, {
-        color: important ? white : darkGrey,
-        fontWeight: important ? 'bold' : 'normal',
-      }]}
-    >
-      {dialNumberItemTitle}
-    </Text>
-    <Icon color={important ? white : mediumGrey} name="chevron-right" size={30} />
-  </View>
+      <Text
+        style={[styles.itemText, {
+          color: important ? white : darkGrey,
+          fontWeight: 'bold',
+        }]}
+      >
+        {dialNumberItem}
+      </Text>
+      <Text
+        style={[styles.itemText, {
+          color: important ? white : darkGrey,
+          fontWeight: important ? 'bold' : 'normal',
+        }]}
+      >
+        {dialNumberItemTitle}
+      </Text>
+      <Icon color={important ? white : mediumGrey} name="phone" size={20} />
+    </View>
+  </TouchableOpacity>
 );
 
 FlatListItem.propTypes = {

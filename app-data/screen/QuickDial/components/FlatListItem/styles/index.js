@@ -10,9 +10,9 @@ export default StyleSheet.create({
     backgroundColor: white,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 5,
-    paddingLeft: 20,
-    paddingVertical: 10,
+    marginVertical: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     width: width - 20,
   },
   itemText: {
