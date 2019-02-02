@@ -1,14 +1,32 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {
+  ActivityIndicator, FlatList, Text, View,
+} from 'react-native';
+import { graphql } from 'react-apollo';
 import Header from '../../shared/components/Header';
+import { getReportsQuery } from '../../graphql/queries';
 import { strings } from '../../shared/config';
 import styles from './styles';
 
-const Home = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Home Screen</Text>
-  </View>
-);
+const Home = graphql(getReportsQuery)(({ data: { error, loading, reports } }) => {
+  if (error) {
+    return <View><Text>{error.message}</Text></View>;
+  }
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Home Screen</Text>
+      <FlatList
+        data={reports}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <Text>{item.address}</Text>}
+      />
+    </View>
+  );
+});
 
 Home.navigationOptions = {
   header: ({ navigation }) => {

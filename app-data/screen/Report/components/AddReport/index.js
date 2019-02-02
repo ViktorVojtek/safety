@@ -218,7 +218,6 @@ class AddReport extends Component {
   }
 
   render() {
-    console.log(this.props);
     const {
       categoryId,
       subCategoryId,

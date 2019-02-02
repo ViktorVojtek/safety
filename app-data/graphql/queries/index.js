@@ -77,3 +77,24 @@ export const reportQuery = gql`
     }
   }
 `;
+
+export const getReportsQuery = gql`
+  query GetReports {
+    reports {
+      id
+      address
+      categoryId
+      description
+      image {
+        id
+        data
+      }
+      gpsCoords {
+        latitude
+        longitude
+      }
+      subCategoryId
+      userId
+    }
+  }
+`;
