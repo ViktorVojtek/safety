@@ -1,4 +1,41 @@
 export default {
+  dialNumbers: [{
+    __typename: 'DialNumberItem',
+    id: '0-N1',
+    dialNumberItem: '112',
+    dialNumberItemTitle: 'Linka tiesňového volania',
+    dialNumberItemType: 'EMERGENCY_LINE',
+  }, {
+    __typename: 'DialNumberItem',
+    id: '1-N1',
+    dialNumberItem: '150',
+    dialNumberItemTitle: 'Hasiči',
+    dialNumberItemType: 'FIRE_FIGHTERS',
+  }, {
+    __typename: 'DialNumberItem',
+    id: '2-N1',
+    dialNumberItem: '158',
+    dialNumberItemTitle: 'Polícia',
+    dialNumberItemType: 'POLICE',
+  }, {
+    __typename: 'DialNumberItem',
+    id: '3-N1',
+    dialNumberItem: '159',
+    dialNumberItemTitle: 'Mestská polícia',
+    dialNumberItemType: 'CITY_POLICE',
+  }, {
+    __typename: 'DialNumberItem',
+    id: '4-N1',
+    dialNumberItem: '18 155',
+    dialNumberItemTitle: 'Letecká záchranná služba',
+    dialNumberItemType: 'AIR_AMBULANCE_SERVICE',
+  }, {
+    __typename: 'DialNumberItem',
+    id: '5-N1',
+    dialNumberItem: '18 300',
+    dialNumberItemTitle: 'Horská záchranná služba',
+    dialNumberItemType: 'MOUNTAIN_RESCUE_SERVICE',
+  }],
   gps: {
     __typename: 'Gps',
     latitude: 0.0,

@@ -1,17 +1,19 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { styles } from '../../../config';
 
-const { colors: {
-  darkGrey,
-  lightGrey,
-  mediumGrey,
-  white
-} } = styles;
+const {
+  colors: {
+    darkGrey,
+    lightGrey,
+    mediumGrey,
+    white,
+  },
+} = styles;
 
 export default StyleSheet.create({
   container: {
     backgroundColor: lightGrey,
-    flex: 1
+    flex: 1,
   },
   content: {
     paddingHorizontal: 20,
@@ -25,18 +27,20 @@ export default StyleSheet.create({
     height: 60,
     justifyContent: 'flex-end',
     paddingHorizontal: 15,
-    // paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   menuIcon: {
     height: 200,
-    width: 200
+    width: 200,
   },
   menuItem: {
     paddingVertical: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
   menuItemText: {
     color: darkGrey,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
+  logOutIcon: {
+    marginRight: 5,
+  },
 });

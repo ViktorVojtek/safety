@@ -25,6 +25,17 @@ export const getCategoriesQuery = gql`
   }
 `;
 
+export const getDialNumbersQuery = gql`
+  query GetDialNumbers {
+    dialNumbers @client {
+      id
+      dialNumberItem
+      dialNumberItemTitle
+      dialNumberItemType
+    }
+  }
+`;
+
 export const getGpsQuery = gql`
   query GetGps {
     gps @client {

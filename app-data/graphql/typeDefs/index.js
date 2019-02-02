@@ -7,7 +7,14 @@ export default `
   innput ReportDataInput {
     categoryId: String
     subCategoryId: String
-  } 
+  }
+
+  type DialNumberType {
+    id: String
+    dialNumberItem: String
+    dialNumberItemTitle: String
+    dialNumberItemType: String
+  }
 
   type CategoryType {
     id: String
@@ -43,6 +50,7 @@ export default `
   }
 
   type Query {
+    dialNumbers: [DialNumberType]
     gps: GpsCoordsType
     getCategory(id: String!): CategoryType
     getSubCategory(id: String!): SubCategoryType

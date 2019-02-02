@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RNCamera } from 'react-native-camera';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { graphql } from 'react-apollo';
@@ -21,7 +20,6 @@ import styles from './styles';
 
 const initialState = {
   address: '',
-  cameraShow: false,
   description: '',
   gpsCoords: {
     latitude: 0.0,
@@ -67,7 +65,6 @@ class AddReport extends Component {
   selectPhoto = () => {
     const options = {
       title: 'Výber fotografie',
-      // customButtons: null,// [{ name: 'fb', title: 'Choose Photo from Facebook' }],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -75,7 +72,7 @@ class AddReport extends Component {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log(response);
+      // console.log(response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -85,10 +82,8 @@ class AddReport extends Component {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         const source = { uri: response.uri };
-
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
         console.log(source);
       }
     });
@@ -103,37 +98,22 @@ class AddReport extends Component {
       categoryId,
       subCategoryId,
     } = this.props;
-    const { address, cameraShow, description } = this.state;
+    const { address, description } = this.state;
 
     return (
       <View style={styles.container}>
         <View style={styles.cameraContainer}>
-          {
-            !cameraShow ? (
-              <View style={styles.choosePhotoContainer}>
-                <TouchableOpacity
-                  onPress={this.selectPhoto}
-                  style={styles.choosePhotoButton}
-                >
-                  <View style={styles.choosePhotoIconContainer}>
-                    <Icon name="image" color="#fff" size={35} />
-                  </View>
-                  <Text style={styles.choosePhotoText}>Pridaj fotografiu</Text>
-                </TouchableOpacity>
+          <View style={styles.choosePhotoContainer}>
+            <TouchableOpacity
+              onPress={this.selectPhoto}
+              style={styles.choosePhotoButton}
+            >
+              <View style={styles.choosePhotoIconContainer}>
+                <Icon name="image" color="#fff" size={35} />
               </View>
-            ) : (
-              <RNCamera
-                ref={(ref) => {
-                  this.camera = ref;
-                }}
-                style={styles.camera}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                permissionDialogTitle="Permission to use camera"
-                permissionDialogMessage="We need your permission to use your camera phone"
-              />
-            )
-          }
+              <Text style={styles.choosePhotoText}>Pridaj fotografiu</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.formContainer}>
           <ScrollView>
@@ -145,12 +125,10 @@ class AddReport extends Component {
             />
 
             <CategoryText categoryId={categoryId} />
-
             <SubCategoryText
               categoryId={categoryId}
               subCategoryId={subCategoryId}
             />
-
             <View style={styles.textContainer}>
               <Text>{address}</Text>
             </View>
