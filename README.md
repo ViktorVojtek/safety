@@ -6,6 +6,7 @@ Cross platform mobile application that will track incidents in the city. Users c
 
 ## Used dependencies
 
+- [Eslint](https://github.com/eslint/eslint)
 - [Graphql](https://www.npmjs.com/package/graphql)
 - ~~[Lottie React Native](https://github.com/react-native-community/lottie-react-native)~~
 - [React Apollo](https://www.npmjs.com/package/react-apollo)
