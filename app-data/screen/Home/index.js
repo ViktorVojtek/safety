@@ -4,11 +4,12 @@ import {
 } from 'react-native';
 import { graphql } from 'react-apollo';
 import Header from '../../shared/components/Header';
+import FlatListItem from './components/FlatListItem';
 import { getReportsQuery } from '../../graphql/queries';
 import { strings } from '../../shared/config';
 import styles from './styles';
 
-const Home = graphql(getReportsQuery)(({ data: { error, loading, reports } }) => {
+const Home = graphql(getReportsQuery)(({ data: { error, loading, reports }, navigation }) => {
   if (error) {
     return <View><Text>{error.message}</Text></View>;
   }
@@ -18,11 +19,21 @@ const Home = graphql(getReportsQuery)(({ data: { error, loading, reports } }) =>
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
       <FlatList
         data={reports}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <Text>{item.address}</Text>}
+        renderItem={({ item }) => (
+          <FlatListItem
+            address={item.address}
+            categoryId={item.categoryId}
+            description={item.description}
+            navigation={navigation}
+            subCategoryId={item.subCategoryId}
+            imageURI={item.image.data}
+            gpsCoords={item.gpsCoords}
+            data={item}
+          />
+        )}
       />
     </View>
   );
