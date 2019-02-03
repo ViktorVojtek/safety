@@ -37,6 +37,6 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     textAlign: 'center',
-    textTransform: 'lowercase',
+    // textTransform: 'lowercase',
   },
 });

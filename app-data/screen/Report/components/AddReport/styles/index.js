@@ -21,7 +21,7 @@ export default StyleSheet.create({
     color: white,
     fontWeight: 'bold',
     textAlign: 'center',
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
   },
   /* choosePhotoIconContainer: {
     alignItems: 'center',

@@ -1,24 +1,63 @@
+import { PermissionsAndroid, Platform } from 'react-native';
 import { apis } from '../config';
 
-export const gpsLocation = () => new Promise(
-  (resolve, reject) => (
-    navigator.geolocation.getCurrentPosition((position) => {
-      const {
-        coords: {
-          latitude, longitude,
-        },
-      } = position;
-      const gpsCoords = { latitude, longitude };
+const getCurrentPosition = () => (
+  new Promise(
+    (resolve, reject) => (
+      navigator.geolocation.getCurrentPosition((position) => {
+        const {
+          coords: {
+            latitude, longitude,
+          },
+        } = position;
+        const gpsCoords = { latitude, longitude };
 
-      resolve(gpsCoords);
-    }, (gpsError) => {
-      reject(gpsError.message);
-    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 })
-  ),
+        console.warn(gpsCoords);
+
+        resolve(gpsCoords);
+      }, (gpsError) => {
+        reject(gpsError);
+      }, {
+        enableHighAccuracy: true, maximumAge: 5000, timeout: 100000,
+      })
+    ),
+  )
 );
 
-export const geocode = async (gpsCoords) => {
-  return new Promise(async (resolve, reject) => {
+export const gpsLocation = () => (
+  new Promise(async (result, reject) => {
+    try {
+      let position;
+
+      if (Platform.OS === 'ios') {
+        position = await getCurrentPosition();
+
+        result(position);
+      } else {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+            title: 'App',
+            message: 'are you sure you want to share your location with the app ?',
+          },
+        );
+
+        console.log(granted);
+
+        if (granted === 'granted') {
+          console.log('going to call get current position');
+          position = await getCurrentPosition();
+
+          result(position);
+        }
+      }
+    } catch (err) {
+      reject(err);
+    }
+  })
+);
+
+export const geocode = async gpsCoords => (
+  new Promise(async (resolve, reject) => {
     try {
       const { googleApiKey } = apis;
       const { latitude, longitude } = gpsCoords;
@@ -31,5 +70,5 @@ export const geocode = async (gpsCoords) => {
     } catch (err) {
       reject(err);
     }
-  });
-};
+  })
+);

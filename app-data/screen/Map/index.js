@@ -15,9 +15,15 @@ import { strings } from '../../shared/config';
 import styles from './styles';
 
 const handleGps = async (mutate) => {
-  const gpsCoords = await gpsLocation();
+  try {
+    const gpsCoords = await gpsLocation();
+    console.log('Map');
+    console.log(gpsCoords);
 
-  await mutate({ variables: { gpsCoords } });
+    await mutate({ variables: { gpsCoords } });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const Map = compose(

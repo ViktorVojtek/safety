@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { styles } from '../../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
@@ -59,6 +59,6 @@ export default StyleSheet.create({
     color: white,
     fontSize: 30,
     textAlign: 'center',
-    textTransform: 'lowercase',
+    // textTransform: Platform.OS === 'ios' ? 'lowercase' : null,
   },
 });

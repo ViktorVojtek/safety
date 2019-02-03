@@ -28,14 +28,15 @@ export default StyleSheet.create({
     borderTopRightRadius: 6,
     flex: 1,
     height: computedHeight / 2,
-    width: null,
+    width: null, // width - 40,
+    // resizeMode: 'cover', // resizeMode={FastImage.resizeMode.cover}
   },
   textCategory: {
     color: '#00b5cd',
     // marginBottom: 10,
     // marginTop: 5,
     fontWeight: 'bold',
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
   },
   textDescription: {
     color: darkGrey,

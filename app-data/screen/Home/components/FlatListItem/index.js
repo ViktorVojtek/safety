@@ -11,35 +11,37 @@ const { serverURI } = apis;
 
 const FlatListItem = ({
   address, categoryId, description, /* gpsCoords, */ imageURI, navigation, subCategoryId,
-}) => (
-  <TouchableOpacity
-    onPress={() => {
-      navigation.navigate('ReportDetail', {
-        address,
-        categoryId,
-        description,
-        imageURI,
-        subCategoryId,
-      });
-    }}
-  >
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <FastImage
-          source={{ uri: `${serverURI}/${imageURI}` }}
-          style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+}) => {
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('ReportDetail', {
+          address,
+          categoryId,
+          description,
+          imageURI,
+          subCategoryId,
+        });
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <FastImage
+            source={{ uri: 'https://www.w3schools.com/w3css/img_lights.jpg'/* `${serverURI}/${imageURI}` */ }}
+            style={[styles.image, { borderColor: 'red', borderWidth: 1 }]}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </View>
+        <View style={styles.containerHalf}>
+          <CategoryTitle categoryId={categoryId} />
+          <SubCategoryTitle subCategoryId={subCategoryId} />
+          <Text style={styles.textDescription}>{description}</Text>
+          <Text style={styles.textDescription}>{address}</Text>
+        </View>
       </View>
-      <View style={styles.containerHalf}>
-        <CategoryTitle categoryId={categoryId} />
-        <SubCategoryTitle subCategoryId={subCategoryId} />
-        <Text style={styles.textDescription}>{description}</Text>
-        <Text style={styles.textDescription}>{address}</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+  );
+};
 
 FlatListItem.defaultProps = {
   description: '',
