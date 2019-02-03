@@ -7,22 +7,23 @@ import Header from '../../shared/components/Header';
 import FlatListItem from './components/FlatListItem';
 import { getReportsQuery } from '../../graphql/queries';
 import { strings } from '../../shared/config';
+import { sortDateDescending } from '../../shared/lib';
 import styles from './styles';
 
 const Home = graphql(getReportsQuery)(({ data: { error, loading, reports }, navigation }) => {
   if (error) {
-    return <View><Text>{error.message}</Text></View>;
+    return <View style={styles.container}><Text>{error.message}</Text></View>;
   }
   if (loading) {
-    return <ActivityIndicator />;
+    return <View style={styles.container}><ActivityIndicator /></View>;
   }
 
-  console.log(reports);
+  const sortedReportList = sortDateDescending(reports);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={reports}
+        data={sortedReportList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <FlatListItem

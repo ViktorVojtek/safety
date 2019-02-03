@@ -68,3 +68,8 @@ export const geocode = async gpsCoords => (
     }
   })
 );
+
+export const sortDateDescending = array => (
+  array.sort((a, b) => (
+    parseInt(b.dateCreated, 10) - parseInt(a.dateCreated, 10)
+  )));

@@ -11,37 +11,35 @@ const { serverURI } = apis;
 
 const FlatListItem = ({
   address, categoryId, description, /* gpsCoords, */ imageURI, navigation, subCategoryId,
-}) => {
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('ReportDetail', {
-          address,
-          categoryId,
-          description,
-          imageURI,
-          subCategoryId,
-        });
-      }}
-    >
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <FastImage
-            source={{ uri: `${serverURI}/${imageURI}` /* 'https://www.w3schools.com/w3css/img_lights.jpg' */ }}
-            style={[styles.image, { borderColor: 'red', borderWidth: 1 }]}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-        </View>
-        <View style={styles.containerHalf}>
-          <CategoryTitle categoryId={categoryId} />
-          <SubCategoryTitle subCategoryId={subCategoryId} />
-          <Text style={styles.textDescription}>{description}</Text>
-          <Text style={styles.textDescription}>{address}</Text>
-        </View>
+}) => (
+  <TouchableOpacity
+    onPress={() => {
+      navigation.navigate('ReportDetail', {
+        address,
+        categoryId,
+        description,
+        imageURI,
+        subCategoryId,
+      });
+    }}
+  >
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <FastImage
+          source={{ uri: `${serverURI}/${imageURI}` /* 'https://www.w3schools.com/w3css/img_lights.jpg' */ }}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.cover}
+        />
       </View>
-    </TouchableOpacity>
-  );
-};
+      <View style={styles.containerHalf}>
+        <CategoryTitle categoryId={categoryId} />
+        <SubCategoryTitle subCategoryId={subCategoryId} />
+        <Text style={styles.textDescription}>{description}</Text>
+        <Text style={styles.textDescription}>{address}</Text>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
 
 FlatListItem.defaultProps = {
   description: '',
