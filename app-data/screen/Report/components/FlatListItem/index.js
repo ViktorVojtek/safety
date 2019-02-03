@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Image,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { graphql } from 'react-apollo';
 import Icon from 'react-native-vector-icons/Feather';
+import FastImage from 'react-native-fast-image';
 import { setReportDataMutation } from '../../../../graphql/mutations';
 import styles from './styles';
 import { styles as styleConfig } from '../../../../shared/config';
@@ -26,8 +26,8 @@ export default graphql(setReportDataMutation)((props) => {
   return (
     <View style={styles.flatListItem}>
       <View style={styles.imageContainer}>
-        <Image
-          resizeMode="cover"
+        <FastImage
+          resizeMode={FastImage.resizeMode.cover}
           source={
             cId < 2
               ? (

@@ -2,12 +2,13 @@ import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
+  // Image,
   StatusBar,
   Text,
   View,
 } from 'react-native';
 import { compose, graphql } from 'react-apollo';
+import FastImage from 'react-native-fast-image';
 import { strings } from '../../../../shared/config';
 import FlatListItem from './components/FlatListItem';
 import Header from './components/Header';
@@ -43,8 +44,8 @@ const SubCategory = compose(
         borderBottomWidth: 5,
       }}
       >
-        <Image
-          resizeMode="cover"
+        <FastImage
+          resizeMode={FastImage.resizeMode.cover}
           source={
             cId < 2
               ? (
