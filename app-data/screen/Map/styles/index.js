@@ -7,12 +7,17 @@ const { height, width } = Dimensions.get('screen');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightGrey, // '#F5FCFF',
+    backgroundColor: lightGrey,
+  },
+  halfContainer: {
+    flex: 0.5,
   },
   map: {
-    height: height - 140,
+    height: (height * 0.5) - 70,
     width,
+  },
+  mapContainer: {
+    flex: 0.5,
   },
 });

@@ -18,7 +18,7 @@ const stateLink = withClientState({
   typeDefs,
 });
 
-const domain = '192.168.1.229'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
+const domain = 'localhost'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
 const protocol = 'http';
 const port = 3543;
 
