@@ -4,7 +4,20 @@ export const createReportMutation = gql`
   mutation createReport($report: ReportInput) {
     createReport(report: $report) {
       id
+      address
+      categoryId
+      description
+      image {
+        id
+        data
+      }
+      gpsCoords {
+        latitude
+        longitude
+      }
+      subCategoryId
       userId
+      dateCreated
     }
   }
 `;

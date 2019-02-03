@@ -1,28 +1,24 @@
 import { PermissionsAndroid, Platform } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import { apis } from '../config';
 
-const getCurrentPosition = () => (
-  new Promise(
-    (resolve, reject) => (
-      navigator.geolocation.getCurrentPosition((position) => {
-        const {
-          coords: {
-            latitude, longitude,
-          },
-        } = position;
-        const gpsCoords = { latitude, longitude };
+const getCurrentPosition = () => (new Promise((resolve, reject) => (
+  Geolocation.getCurrentPosition(
+    (position) => {
+      const {
+        coords: {
+          latitude, longitude,
+        },
+      } = position;
+      const gpsCoords = { latitude, longitude };
 
-        console.warn(gpsCoords);
-
-        resolve(gpsCoords);
-      }, (gpsError) => {
-        reject(gpsError);
-      }, {
-        enableHighAccuracy: true, maximumAge: 5000, timeout: 100000,
-      })
-    ),
+      resolve(gpsCoords);
+    },
+    (error) => {
+      reject(error);
+    }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
   )
-);
+)));
 
 export const gpsLocation = () => (
   new Promise(async (result, reject) => {

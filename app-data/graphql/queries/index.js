@@ -95,6 +95,7 @@ export const getReportsQuery = gql`
       }
       subCategoryId
       userId
+      dateCreated
     }
   }
 `;

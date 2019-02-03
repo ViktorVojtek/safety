@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { StackActions, NavigationActions } from 'react-navigation';
+// import { StackActions, NavigationActions } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
 import { geocode, gpsLocation } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
-import { reportQuery } from '../../../../graphql/queries';
+import { reportQuery, getReportsQuery } from '../../../../graphql/queries';
 import { createReportMutation } from '../../../../graphql/mutations';
 import Header from './components/Header';
 import AddPhoto from './components/AddPhoto';
@@ -174,7 +174,22 @@ class AddReport extends Component {
 
         reportDataToSubmit.userId = userId;
 
-        await mutate({ variables: { report: reportDataToSubmit } });
+        await mutate({
+          variables: { report: reportDataToSubmit },
+          update: async (proxy, { data: { createReport } }) => {
+            try {
+              const reportListData = proxy.readQuery({
+                query: getReportsQuery,
+              });
+
+              reportListData.reports.push(createReport);
+
+              proxy.writeQuery({ query: getReportsQuery, data: reportListData });
+            } catch (err) {
+              console.log(err);
+            }
+          },
+        });
 
         this.setState({
           address: '',

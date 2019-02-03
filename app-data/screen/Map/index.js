@@ -17,8 +17,6 @@ import styles from './styles';
 const handleGps = async (mutate) => {
   try {
     const gpsCoords = await gpsLocation();
-    console.log('Map');
-    console.log(gpsCoords);
 
     await mutate({ variables: { gpsCoords } });
   } catch (err) {

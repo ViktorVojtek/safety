@@ -17,6 +17,8 @@ const Home = graphql(getReportsQuery)(({ data: { error, loading, reports }, navi
     return <ActivityIndicator />;
   }
 
+  console.log(reports);
+
   return (
     <View style={styles.container}>
       <FlatList

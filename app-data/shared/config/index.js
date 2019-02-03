@@ -1,6 +1,6 @@
 export const apis = {
   googleApiKey: 'AIzaSyAmmWu22KRJjTYn8xd8e8iasXyt9jMc4x4',
-  serverURI: 'http://localhost:3543',
+  serverURI: 'http://192.168.1.229:3543',
 };
 
 export const strings = {

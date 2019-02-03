@@ -27,7 +27,7 @@ const FlatListItem = ({
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <FastImage
-            source={{ uri: 'https://www.w3schools.com/w3css/img_lights.jpg'/* `${serverURI}/${imageURI}` */ }}
+            source={{ uri: `${serverURI}/${imageURI}` /* 'https://www.w3schools.com/w3css/img_lights.jpg' */ }}
             style={[styles.image, { borderColor: 'red', borderWidth: 1 }]}
             resizeMode={FastImage.resizeMode.cover}
           />
