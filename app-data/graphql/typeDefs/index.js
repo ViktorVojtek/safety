@@ -45,13 +45,15 @@ export default `
   }
 
   type Mutation {
-    setGPSCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
+    setGPSDeviceCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
+    setGPSReportMarkerCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
     setReportData(reportData: ReportDataInput): ReportDataType
   }
 
   type Query {
     dialNumbers: [DialNumberType]
-    gps: GpsCoordsType
+    gpsDevice: GpsCoordsType
+    gpsReportMarker: GpsCoordsType
     getCategory(id: String!): CategoryType
     getSubCategory(id: String!): SubCategoryType
     getSubCategories(id: String!): CategoryWithSubCategoriesType

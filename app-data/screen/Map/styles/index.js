@@ -13,11 +13,11 @@ export default StyleSheet.create({
   halfContainer: {
     flex: 0.5,
   },
-  map: {
+  /* map: {
     height: (height * 0.5) - 70,
     width,
   },
   mapContainer: {
     flex: 0.5,
-  },
+  }, */
 });

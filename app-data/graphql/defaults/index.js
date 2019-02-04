@@ -36,10 +36,15 @@ export default {
     dialNumberItemTitle: 'Horská záchranná služba',
     dialNumberItemType: 'MOUNTAIN_RESCUE_SERVICE',
   }],
-  gps: {
-    __typename: 'Gps',
-    latitude: 0.0,
-    longitude: 0.0,
+  gpsDevice: {
+    __typename: 'GpsDevice',
+    latitude: 0,
+    longitude: 0,
+  },
+  gpsReportMarker: {
+    __typename: 'GpsReportMarker',
+    latitude: 0,
+    longitude: 0,
   },
   categories: [{
     __typename: 'CategoryItem',

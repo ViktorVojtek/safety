@@ -51,9 +51,18 @@ export const setReportDataMutation = gql`
   }
 `;
 
-export const setGpsMutation = gql`
-  mutation setGPSCoords($gpsCoords: GpsCoordsInput) {
-    setGPSCoords(gpsCoords: $gpsCoords) @client {
+export const setGpsDeviceMutation = gql`
+  mutation setGPSDeviceCoords($gpsCoords: GpsCoordsInput) {
+    setGPSDeviceCoords(gpsCoords: $gpsCoords) @client {
+      latitude
+      longitude
+    }
+  }
+`;
+
+export const setGpsReportMarkerMutation = gql`
+  mutation setGPSReportMarkerCoords($gpsCoords: GpsCoordsInput) {
+    setGPSReportMarkerCoords(gpsCoords: $gpsCoords) @client {
       latitude
       longitude
     }

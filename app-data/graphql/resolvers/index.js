@@ -47,11 +47,25 @@ export default {
     },
   },
   Mutation: {
-    setGPSCoords: (_, { gpsCoords }, { cache }) => {
+    setGPSDeviceCoords: (_, { gpsCoords }, { cache }) => {
       const { latitude, longitude } = gpsCoords;
       const data = {
-        gps: {
-          __typename: 'Gps',
+        gpsDevice: {
+          __typename: 'GpsDevice',
+          latitude,
+          longitude,
+        },
+      };
+
+      cache.writeData({ data });
+
+      return null;
+    },
+    setGPSReportMarkerCoords: (_, { gpsCoords }, { cache }) => {
+      const { latitude, longitude } = gpsCoords;
+      const data = {
+        gpsReportMarker: {
+          __typename: 'GpsReportMarker',
           latitude,
           longitude,
         },

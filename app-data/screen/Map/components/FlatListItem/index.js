@@ -21,7 +21,11 @@ const FlatListItem = ({
   subCategoryId,
 }) => (
   <TouchableOpacity
-    onPressIn={() => handler(gpsCoords, mutate)}
+    onPressIn={() => {
+      handler({
+        latitude: gpsCoords.latitude, longitude: gpsCoords.longitude,
+      }, mutate);
+    }}
     onPress={() => {
       /* navigation.navigate('ReportDetail', {
         address,

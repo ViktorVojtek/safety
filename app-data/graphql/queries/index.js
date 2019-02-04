@@ -36,9 +36,18 @@ export const getDialNumbersQuery = gql`
   }
 `;
 
-export const getGpsQuery = gql`
-  query GetGps {
-    gps @client {
+export const getGpsDeviceQuery = gql`
+  query GetGpsDevice {
+    gpsDevice @client {
+      latitude
+      longitude
+    }
+  }
+`;
+
+export const getGpsReportMarkerQuery = gql`
+  query GetGpsReportMarker {
+    gpsReportMarker @client {
       latitude
       longitude
     }
