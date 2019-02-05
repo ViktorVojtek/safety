@@ -3,21 +3,42 @@ import {
   ActivityIndicator, Dimensions, Text, TouchableOpacity, View,
 } from 'react-native';
 import { compose, graphql } from 'react-apollo';
-import MapView from 'react-native-maps';
+import MapView from 'react-native-map-clustering';// 'react-native-map-clustering'; // 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import DeviceMarker from '../DeviceMarker';
-import ReportMarker from '../ReportMarker';
+// import ReportMarker from '../ReportMarker';
 import { setGpsDeviceMutation } from '../../../../graphql/mutations';
 import { getGpsDeviceQuery, getGpsReportMarkerQuery, getReportsQuery } from '../../../../graphql/queries';
 import { gpsLocation } from '../../../../shared/lib';
 import { styles as stylesConfig } from '../../../../shared/config';
 import styles from './styles';
 
+const { height, width } = Dimensions.get('screen');
+
 const { colors: { darkGrey } } = stylesConfig;
 const initialState = {
   resetGps: false,
 };
+
 class MapComponent extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      error: PropTypes.string,
+      loading: PropTypes.bool.isRequired,
+      reports: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    }).isRequired,
+    gpsDevice: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+    }).isRequired,
+    gpsReportMarker: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+    }).isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -28,7 +49,7 @@ class MapComponent extends Component {
     try {
       const gpsCoords = await gpsLocation();
 
-      console.log(gpsCoords);
+      // console.log(gpsCoords);
       await mutate({ variables: { gpsCoords } });
     } catch (err) {
       console.log(err);
@@ -40,7 +61,7 @@ class MapComponent extends Component {
       data: {
         error, loading, reports,
       },
-      gpsDevice, gpsReportMarker, mutate,
+      gpsDevice, /* gpsReportMarker, */ mutate,
     } = this.props;
     const { latitude, longitude } = gpsDevice;
 
@@ -59,14 +80,18 @@ class MapComponent extends Component {
       return <ActivityIndicator style={[styles.container, { justifyContent: 'center' }]} />;
     }
 
-    const { height, width } = Dimensions.get('screen');
     const latitudeDelta = 0.0025;
     const ASPECT_RATIO = (width / height) * 0.5;
     const longitudeDelta = ASPECT_RATIO * latitudeDelta;
 
-    let region;
+    const region = {
+      latitude: 48.712852,
+      longitude: 21.208989,
+      latitudeDelta,
+      longitudeDelta,
+    };
 
-    if (gpsReportMarker.latitude !== 0 && gpsReportMarker.longitude !== 0) {
+    /* if (gpsReportMarker.latitude !== 0 && gpsReportMarker.longitude !== 0) {
       region = {
         latitude: gpsReportMarker.latitude,
         longitude: gpsReportMarker.longitude,
@@ -80,18 +105,24 @@ class MapComponent extends Component {
         latitudeDelta,
         longitudeDelta,
       };
-    }
+    } */
+
+    // console.log('Map region:');
+    // console.log(region);
 
     return (
       <View style={styles.mapContainer}>
         <MapView
+          clustering
           style={styles.map}
+          initialRegion={region}
           region={region}
         >
           <DeviceMarker coordinate={{ latitude, longitude }} />
           {
+            // <ReportMarker coordinate={item.gpsCoords} key={item.id} />
             reports.map(item => ( // TODO Implement Map clusters
-              <ReportMarker coordinate={item.gpsCoords} key={item.id} />
+              <Marker cluster coordinate={item.gpsCoords} key={item.id} />
             ))
           }
         </MapView>
