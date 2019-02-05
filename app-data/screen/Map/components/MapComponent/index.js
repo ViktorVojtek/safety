@@ -4,11 +4,11 @@ import {
 } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 import MapView from 'react-native-map-clustering';// 'react-native-map-clustering'; // 'react-native-maps';
-import { Marker } from 'react-native-maps';
+// import { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import DeviceMarker from '../DeviceMarker';
-// import ReportMarker from '../ReportMarker';
+import ReportMarker from '../ReportMarker';
 import { setGpsDeviceMutation } from '../../../../graphql/mutations';
 import { getGpsDeviceQuery, getGpsReportMarkerQuery, getReportsQuery } from '../../../../graphql/queries';
 import { gpsLocation } from '../../../../shared/lib';
@@ -18,9 +18,7 @@ import styles from './styles';
 const { height, width } = Dimensions.get('screen');
 
 const { colors: { darkGrey } } = stylesConfig;
-const initialState = {
-  resetGps: false,
-};
+const initialState = { resetGps: false };
 
 class MapComponent extends Component {
   static propTypes = {
@@ -61,14 +59,8 @@ class MapComponent extends Component {
       data: {
         error, loading, reports,
       },
-      gpsDevice, /* gpsReportMarker, */ mutate,
+      gpsDevice, gpsReportMarker, mutate,
     } = this.props;
-    const { latitude, longitude } = gpsDevice;
-
-    if (latitude === 0 && longitude === 0) {
-      this.handleGps(mutate);
-    }
-
     if (error) {
       return (
         <View style={[styles.container, { justifyContent: 'center' }]}>
@@ -80,58 +72,49 @@ class MapComponent extends Component {
       return <ActivityIndicator style={[styles.container, { justifyContent: 'center' }]} />;
     }
 
+    const { latitude, longitude } = gpsDevice;
+
+    if (latitude === 0 && longitude === 0) {
+      this.handleGps(mutate);
+      return null;
+    }
+
     const latitudeDelta = 0.0025;
     const ASPECT_RATIO = (width / height) * 0.5;
     const longitudeDelta = ASPECT_RATIO * latitudeDelta;
 
     const region = {
-      latitude: 48.712852,
-      longitude: 21.208989,
+      latitude,
+      longitude,
       latitudeDelta,
       longitudeDelta,
     };
 
-    /* if (gpsReportMarker.latitude !== 0 && gpsReportMarker.longitude !== 0) {
-      region = {
-        latitude: gpsReportMarker.latitude,
-        longitude: gpsReportMarker.longitude,
-        latitudeDelta,
-        longitudeDelta,
-      };
-    } else {
-      region = {
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta,
-      };
-    } */
-
-    // console.log('Map region:');
-    // console.log(region);
+    if (gpsReportMarker.latitude !== 0 && gpsReportMarker.longitude !== 0) {
+      region.latitude = gpsReportMarker.latitude;
+      region.longitude = gpsReportMarker.longitude;
+    }
 
     return (
-      <View style={styles.mapContainer}>
-        <MapView
-          clustering
-          style={styles.map}
-          initialRegion={region}
-          region={region}
-        >
-          <DeviceMarker coordinate={{ latitude, longitude }} />
-          {
-            // <ReportMarker coordinate={item.gpsCoords} key={item.id} />
-            reports.map(item => ( // TODO Implement Map clusters
-              <Marker cluster coordinate={item.gpsCoords} key={item.id} />
-            ))
-          }
-        </MapView>
-        <View style={styles.resetToDevicePosition}>
-          <TouchableOpacity onPress={() => this.handleGps(mutate)}>
-            <Icon name="gps-fixed" color={darkGrey} size={20} />
-          </TouchableOpacity>
+      region.latitude > 0 ? (
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={region}
+            region={region}
+          >
+            <DeviceMarker coordinate={{ latitude, longitude }} />
+            {
+              reports.map(item => <ReportMarker coordinate={item.gpsCoords} key={item.id} />)
+            }
+          </MapView>
+          <View style={styles.resetToDevicePosition}>
+            <TouchableOpacity onPress={() => this.handleGps(mutate)}>
+              <Icon name="gps-fixed" color={darkGrey} size={20} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      ) : <ActivityIndicator />
     );
   }
 }

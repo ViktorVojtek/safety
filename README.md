@@ -15,6 +15,7 @@ Cross platform mobile application that will track incidents in the city. Users c
 - ~~[React Facebook SDK Wrapper](https://www.npmjs.com/package/react-native-fbsdk)~~
 - [React Navigation](https://www.npmjs.com/package/react-navigation)
 - [React Native Maps](https://github.com/react-native-community/react-native-maps)
+- [React Native Map CLustering](https://github.com/venits/react-native-map-clustering)
 
 ## App structure
 
