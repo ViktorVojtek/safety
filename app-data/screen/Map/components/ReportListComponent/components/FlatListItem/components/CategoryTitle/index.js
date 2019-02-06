@@ -1,8 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, Text } from 'react-native';
 import { graphql } from 'react-apollo';
-import { getCategoryQuery } from '../../../../graphql/queries';
-import styles from '../FlatListItem/styles';
+import { getCategoryQuery } from '../../../../../../../../graphql/queries';
+import styles from '../../styles';
 
 export default graphql(getCategoryQuery, {
   options: ({ categoryId }) => ({ variables: { id: categoryId } }),

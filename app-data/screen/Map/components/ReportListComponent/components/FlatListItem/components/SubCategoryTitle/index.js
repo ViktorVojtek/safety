@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActivityIndicator, Text } from 'react-native';
 import { graphql } from 'react-apollo';
-import { getSubCategoryQuery } from '../../../../graphql/queries';
-import styles from '../FlatListItem/styles';
-import { styles as stylesConfig } from '../../../../shared/config';
+import { getSubCategoryQuery } from '../../../../../../../../graphql/queries';
+import styles from '../../styles';
+import { styles as stylesConfig } from '../../../../../../../../shared/config';
 
 const { colors: { darkGrey } } = stylesConfig;
 

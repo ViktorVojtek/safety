@@ -41,11 +41,11 @@ export default {
     latitude: 0,
     longitude: 0,
   },
-  gpsReportMarker: {
+  /* gpsReportMarker: {
     __typename: 'GpsReportMarker',
     latitude: 0,
     longitude: 0,
-  },
+  }, */
   categories: [{
     __typename: 'CategoryItem',
     id: '0-C',

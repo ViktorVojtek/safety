@@ -45,14 +45,14 @@ export const getGpsDeviceQuery = gql`
   }
 `;
 
-export const getGpsReportMarkerQuery = gql`
+/* export const getGpsReportMarkerQuery = gql`
   query GetGpsReportMarker {
     gpsReportMarker @client {
       latitude
       longitude
     }
   }
-`;
+`; */
 
 export const getSubCategoryQuery = gql`
   query GetSubCategory($id: String!) {

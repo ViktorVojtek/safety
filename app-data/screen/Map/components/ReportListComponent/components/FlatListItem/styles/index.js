@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { styles } from '../../../../../shared/config';
+import { styles } from '../../../../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
 const computedHeight = height * 0.6;

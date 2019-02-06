@@ -13,6 +13,7 @@ export default StyleSheet.create({
     height: markerContainerSize,
     position: 'relative',
     width: markerContainerSize,
+    zIndex: 9999,
   },
   marker: {
     backgroundColor: '#0074D9',

@@ -1,15 +1,15 @@
 
 import React from 'react';
-import { Text, View } from 'react-native';
 import { Marker } from 'react-native-maps';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import PropTypes from 'prop-types';
-import styles from './styles';
+import { styles as stylesConfig } from '../../../../shared/config';
+
+const { colors: { lightBlue } } = stylesConfig;
 
 const ReportMarker = ({ coordinate }) => (
   <Marker coordinate={coordinate}>
-    <View style={styles.marker}>
-      <Text style={styles.text}>1</Text>
-    </View>
+    <Icon color={lightBlue} name="map-marker" size={30} />
   </Marker>
 );
 

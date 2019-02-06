@@ -2,12 +2,14 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
-import CategoryTitle from '../CategoryTitle';
-import SubCategoryTitle from '../SubCategoryTitle';
+import CategoryTitle from './components/CategoryTitle';
+import SubCategoryTitle from './components/SubCategoryTitle';
 import styles from './styles';
-import { apis } from '../../../../shared/config';
+import { apis } from '../../../../../../shared/config';
 
 const { serverURI } = apis;
+const LATITUDE_DELTA = 0.01;
+const LONGITUDE_DELTA = 0.01;
 
 const FlatListItem = ({
   address,
@@ -16,15 +18,17 @@ const FlatListItem = ({
   gpsCoords,
   handler,
   imageURI,
-  mutate,
-  /* navigation, */
+  // navigation,
   subCategoryId,
 }) => (
   <TouchableOpacity
     onPressIn={() => {
       handler({
-        latitude: gpsCoords.latitude, longitude: gpsCoords.longitude,
-      }, mutate);
+        latitude: gpsCoords.latitude,
+        longitude: gpsCoords.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      });
     }}
     onPress={() => {
       /* navigation.navigate('ReportDetail', {
@@ -39,7 +43,7 @@ const FlatListItem = ({
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <FastImage
-          source={{ uri: `${serverURI}/${imageURI}` /* 'https://www.w3schools.com/w3css/img_lights.jpg' */ }}
+          source={{ uri: `${serverURI}/${imageURI}` }}
           style={styles.image}
           resizeMode={FastImage.resizeMode.cover}
         />

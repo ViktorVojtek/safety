@@ -1,56 +1,117 @@
-import React from 'react';
-import {
-  // ActivityIndicator,
-  // Dimensions,
-  // FlatList,
-  // Text,
-  // TouchableOpacity,
-  View,
-} from 'react-native';
-// import FastImage from 'react-native-fast-image';
-// import MapView from 'react-native-maps';
-// import { compose, graphql } from 'react-apollo';
-// import PropTypes from 'prop-types';
-// import DeviceMarker from './components/DeviceMarker';
-// import FlatListItem from './components/FlatListItem';
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { graphql } from 'react-apollo';
+import { setGpsDeviceMutation } from '../../graphql/mutations';
 import ReportListComponent from './components/ReportListComponent';
 import Header from '../../shared/components/Header';
-// import ReportMarker from './components/ReportMarker';
 import MapComponent from './components/MapComponent';
-// import { setGpsDeviceMutation } from '../../graphql/mutations';
-// import { /* getGpsDeviceQuery, */ getReportsQuery } from '../../graphql/queries';
-// import { gpsLocation } from '../../shared/lib';
+import { gpsLocation } from '../../shared/lib';
 import { strings } from '../../shared/config';
 import styles from './styles';
 
-/* const handleGps = async (mutate) => {
-  try {
-    console.log('handle gps');
-    const gpsCoords = await gpsLocation();
-    console.log('New gps');
-    console.log(gpsCoords);
-    await mutate({ variables: { gpsCoords } });
-  } catch (err) {
-    console.log(err);
-  }
+const LATITUDE_DELTA = 0.01;
+const LONGITUDE_DELTA = 0.01;
+
+const initialRegion = {
+  latitude: 48.646900,
+  longitude: 21.575310,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
 };
 
-const handleMarkerRegion = async ({ latitude, longitude }, mutate) => {
-  try {
-    const gpsCoords = { latitude, longitude };
+class Map extends Component {
+  constructor(props) {
+    super(props);
 
-    await mutate({ variables: { gpsCoords } });
-  } catch (err) {
-    console.log(err);
+    this.map = null;
+    this.state = {
+      region: {
+        latitude: 48.646900,
+        longitude: 21.575310,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
+      ready: false,
+    };
+
+    this.handleFindMe = this.handleFindMe.bind(this);
+    this.handleMapInit = this.handleMapInit.bind(this);
+    this.getCurrentPosition = this.getCurrentPosition.bind(this);
+    this.getMarkerPosition = this.getMarkerPosition.bind(this);
+    this.onMapReady = this.onMapReady.bind(this);
+    this.setRegion = this.setRegion.bind(this);
   }
-}; */
 
-const Map = () => (
-  <View style={styles.container}>
-    <MapComponent />
-    <ReportListComponent />
-  </View>
-);
+  onMapReady() {
+    const { ready } = this.state;
+
+    if (!ready) {
+      this.setState({ ready: true }, () => {
+        this.getCurrentPosition();
+      });
+    }
+  }
+
+  setRegion(region) {
+    const { ready } = this.state;
+    if (ready) {
+      setTimeout(() => this.map.root.animateToRegion(region, 1000), 10);
+    }
+    // this.setState({ region });
+  }
+
+  getCurrentPosition = async () => {
+    const { mutate } = this.props;
+    const region = await gpsLocation();
+
+    await mutate({ variables: { gpsCoords: region } });
+
+    region.latitudeDelta = LATITUDE_DELTA;
+    region.longitudeDelta = LONGITUDE_DELTA;
+
+    this.setRegion(region);
+  }
+
+  getMarkerPosition = (region) => {
+    this.setRegion(region);
+  };
+
+  onRegionChange = (region) => {
+    // console.log('onRegionChange', region);
+  };
+
+  onRegionChangeComplete = (region) => {
+    // console.log('onRegionChangeComplete', region);
+  };
+
+  handleFindMe() {
+    this.getCurrentPosition();
+  }
+
+  handleMapInit(map) {
+    this.map = map;
+  }
+
+  render() {
+    const { region } = this.state;
+    return (
+      <View style={styles.container}>
+        <MapComponent
+          handleFindMe={this.handleFindMe}
+          handleMapInit={this.handleMapInit}
+          initialRegion={initialRegion}
+          onMapReady={this.onMapReady}
+          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          region={region}
+        />
+        <ReportListComponent
+          getMarkerPosition={this.getMarkerPosition}
+        />
+      </View>
+    );
+  }
+}
 
 Map.navigationOptions = {
   header: ({ navigation }) => {
@@ -60,43 +121,4 @@ Map.navigationOptions = {
   },
 };
 
-export default Map;
-
-/*
-<View style={styles.mapContainer}>
-  <MapView
-    style={styles.map}
-    region={{
-      latitude,
-      longitude,
-      latitudeDelta,
-      longitudeDelta,
-    }}
-  >
-    <DeviceMarker coordinate={{ latitude, longitude }} />
-    {
-      reports.map(item => ( // TODO Implement Map clusters
-        <ReportMarker coordinate={item.gpsCoords} key={item.id} />
-      ))
-    }
-  </MapView>
-</View>
-
-<FlatList
-  data={reports}
-  keyExtractor={(item, index) => index.toString()}
-  renderItem={({ item }) => (
-    <FlatListItem
-      address={item.address}
-      categoryId={item.categoryId}
-      description={item.description}
-      gpsCoords={item.gpsCoords}
-      handler={handleMarkerRegion}
-      imageURI={item.image.data}
-      mutate={mutate}
-      navigation={navigation}
-      subCategoryId={item.subCategoryId}
-    />
-  )}
-/>
-*/
+export default graphql(setGpsDeviceMutation)(Map);

@@ -60,11 +60,11 @@ export const setGpsDeviceMutation = gql`
   }
 `;
 
-export const setGpsReportMarkerMutation = gql`
+/* export const setGpsReportMarkerMutation = gql`
   mutation setGPSReportMarkerCoords($gpsCoords: GpsCoordsInput) {
     setGPSReportMarkerCoords(gpsCoords: $gpsCoords) @client {
       latitude
       longitude
     }
   }
-`;
+`; */

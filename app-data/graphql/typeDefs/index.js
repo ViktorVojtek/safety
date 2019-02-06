@@ -46,14 +46,12 @@ export default `
 
   type Mutation {
     setGPSDeviceCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
-    setGPSReportMarkerCoords(gpsCoords: GpsCoordsInput): GpsCoordsType
     setReportData(reportData: ReportDataInput): ReportDataType
   }
 
   type Query {
     dialNumbers: [DialNumberType]
     gpsDevice: GpsCoordsType
-    gpsReportMarker: GpsCoordsType
     getCategory(id: String!): CategoryType
     getSubCategory(id: String!): SubCategoryType
     getSubCategories(id: String!): CategoryWithSubCategoriesType

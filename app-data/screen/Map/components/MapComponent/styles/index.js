@@ -1,15 +1,17 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { height, width } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
 export default StyleSheet.create({
   map: {
-    height: (height * 0.5) - 70,
-    width,
+    ...StyleSheet.absoluteFillObject,
   },
   mapContainer: {
+    alignItems: 'flex-start',
     flex: 0.5,
+    justifyContent: 'flex-start',
     position: 'relative',
+    width,
   },
   resetToDevicePosition: {
     bottom: 10,

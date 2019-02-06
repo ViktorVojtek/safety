@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  // Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import AntPlusIcon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import { styles as stylesConfig } from '../../config';
+
+const { colors: { lightBlue, darkGrey } } = stylesConfig;
 
 export default (props) => {
   const { navigation } = props;
@@ -42,10 +41,10 @@ export default (props) => {
                       color="#fff"
                       name="plus"
                       size={iconSize}
-                      style={[styles.plusIcon, { backgroundColor: state.index === 1 ? '#00bdd8' : '#515253' }]}
+                      style={[styles.plusIcon, { backgroundColor: state.index === 1 ? lightBlue : darkGrey }]}
                     />
-                  ) : <Icon color={state.index === 2 ? '#00bdd8' : '#515253'} name="map" size={iconSize} />
-                ) : <Icon color={state.index === 0 ? '#00bdd8' : '#515253'} name="home" size={iconSize + 5} />
+                  ) : <Icon color={state.index === 2 ? lightBlue : darkGrey} name="map" size={iconSize} />
+                ) : <Icon color={state.index === 0 ? lightBlue : darkGrey} name="home" size={iconSize + 5} />
               }
             </TouchableOpacity>
           );

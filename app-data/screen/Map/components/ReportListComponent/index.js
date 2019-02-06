@@ -3,8 +3,8 @@ import {
   ActivityIndicator, FlatList, Text, View,
 } from 'react-native';
 import { compose, graphql } from 'react-apollo';
-import FlatListItem from '../FlatListItem';
-import { setGpsReportMarkerMutation } from '../../../../graphql/mutations';
+import FlatListItem from './components/FlatListItem';
+// import { setGpsReportMarkerMutation } from '../../../../graphql/mutations';
 import { getReportsQuery } from '../../../../graphql/queries';
 import styles from './styles';
 
@@ -19,12 +19,13 @@ const handleMarkerRegion = async ({ latitude, longitude }, mutate) => {
 };
 
 export default compose(
-  graphql(setGpsReportMarkerMutation),
+  // graphql(setGpsReportMarkerMutation),
   graphql(getReportsQuery),
 )(({
   data: {
     error, loading, reports,
-  }, mutate, navigation,
+  },
+  getMarkerPosition, /* mutate, */ navigation,
 }) => {
   if (error) {
     return (
@@ -48,9 +49,8 @@ export default compose(
             categoryId={item.categoryId}
             description={item.description}
             gpsCoords={item.gpsCoords}
-            handler={handleMarkerRegion}
+            handler={getMarkerPosition}
             imageURI={item.image.data}
-            mutate={mutate}
             navigation={navigation}
             subCategoryId={item.subCategoryId}
           />
