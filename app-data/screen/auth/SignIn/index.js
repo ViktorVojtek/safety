@@ -116,12 +116,6 @@ class SignIn extends Component {
           visible={errorVisible}
         />
 
-        <View style={styles.backgroundImageContainer}>
-          <Image
-            source={require('../../../shared/assets/images/2.jpg')}
-            style={styles.backgroundImage}
-          />
-        </View>
         <View style={styles.erbContainer}>
           <Image
             source={require('../../../shared/assets/images/erb.png')}
@@ -130,15 +124,16 @@ class SignIn extends Component {
         </View>
 
         <View style={styles.subContainer}>
-          <Text style={styles.loginTitleText}>Prihlásenie</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.link}>Nemáte účeť? Zaregistrujte sa.</Text>
-          </TouchableOpacity>
-
+          <Text style={styles.loginTitleText}>SAFETY / Trebišov</Text>
           <ScrollView>
             <TextInput
               autoCapitalize="none"
-              style={styles.textInput}
+              style={[styles.textInput, {
+                borderBottomWidth: 0,
+                marginBottom: 0,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              }]}
               onChangeText={(emailText) => {
                 const { data } = this.state;
 
@@ -151,7 +146,7 @@ class SignIn extends Component {
             />
             <TextInput
               secureTextEntry
-              style={styles.textInput}
+              style={[styles.textInput, { borderTopLeftRadius: 0, borderTopRightRadius: 0 }]}
               onChangeText={(passwordText) => {
                 const { data } = this.state;
 
@@ -168,6 +163,9 @@ class SignIn extends Component {
             onPress={() => this.signInAsync(mutate, navigation)}
           >
             <Text style={styles.textWhite}>Prihlásiť</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.link}>Nemáte účeť? Zaregistrujte sa.</Text>
           </TouchableOpacity>
         </View>
       </View>

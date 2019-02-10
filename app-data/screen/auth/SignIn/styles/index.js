@@ -2,7 +2,11 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
-const { colors: { darkGrey, lightGrey, white } } = styles;
+const {
+  colors: {
+    darkGrey, lightGrey, mediumGrey, white,
+  },
+} = styles;
 
 export default StyleSheet.create({
   button: {
@@ -44,7 +48,8 @@ export default StyleSheet.create({
   },
   loginTitleText: {
     fontSize: 30,
-    marginBottom: 15,
+    fontWeight: '200',
+    marginBottom: 25,
     textAlign: 'center',
   },
   subContainer: {
@@ -60,8 +65,10 @@ export default StyleSheet.create({
     margin: 10,
   },
   textInput: {
-    backgroundColor: lightGrey,
+    backgroundColor: white, // lightGrey,
+    borderColor: mediumGrey,
     borderRadius: 4,
+    borderWidth: 1,
     marginBottom: 20,
     paddingBottom: 20, // 20
     paddingTop: 20, // 20

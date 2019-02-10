@@ -31,18 +31,24 @@ export default ({ navigation }) => (
       </TouchableOpacity>
     </View>
     <View style={styles.content}>
+      {/*
       <TouchableOpacity style={styles.menuItem}>
         <Text style={styles.menuItemText}>Rodičovská ochrana</Text>
       </TouchableOpacity>
+      */
+      }
       <TouchableOpacity
         onPress={() => navigation.navigate('QuickDial')}
         style={styles.menuItem}
       >
         <Text style={styles.menuItemText}>Tiesňové linky</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuItemText}>Nastavenie účtu</Text>
-      </TouchableOpacity>
+      {/*
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuItemText}>Nastavenie účtu</Text>
+        </TouchableOpacity>
+        */
+      }
       <TouchableOpacity
         onPress={() => signOutAsync(navigation)}
         style={[styles.menuItem, { alignItems: 'center', flexDirection: 'row' }]}

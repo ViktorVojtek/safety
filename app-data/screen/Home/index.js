@@ -10,7 +10,9 @@ import { strings } from '../../shared/config';
 import { sortDateDescending } from '../../shared/lib';
 import styles from './styles';
 
-const Home = graphql(getReportsQuery)(({ data: { error, loading, reports }, navigation }) => {
+const Home = graphql(getReportsQuery, {
+  options: { variables: { reportQuery: { offset: 0, limit: 10 } } },
+})(({ data: { error, loading, reports }, navigation }) => {
   if (error) {
     return <View style={styles.container}><Text>{error.message}</Text></View>;
   }
@@ -18,7 +20,9 @@ const Home = graphql(getReportsQuery)(({ data: { error, loading, reports }, navi
     return <View style={styles.container}><ActivityIndicator /></View>;
   }
 
-  const sortedReportList = sortDateDescending(reports);
+  const { items } = reports;
+
+  const sortedReportList = sortDateDescending(items);
 
   return (
     <View style={styles.container}>
