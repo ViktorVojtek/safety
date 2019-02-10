@@ -82,19 +82,6 @@ class Register extends Component {
           visible={errorVisible}
         />
 
-        <View style={styles.backgroundImageContainer}>
-          <Image
-            source={require('../../../shared/assets/images/2.jpg')}
-            style={styles.backgroundImage}
-          />
-        </View>
-        <View style={styles.erbContainer}>
-          <Image
-            source={require('../../../shared/assets/images/erb.png')}
-            style={styles.erbImage}
-          />
-        </View>
-
         <View style={styles.subContainer}>
           <Text style={styles.loginTitleText}>Registrácia</Text>
           <ScrollView>
@@ -109,7 +96,11 @@ class Register extends Component {
               placeholder="Zadajte svoje krstné meno"
               returnKeyLabel="next"
               returnKeyType="next"
-              style={styles.textInput}
+              style={[styles.textInput, {
+                borderTopLeftRadius: 4,
+                borderTopRightRadius: 4,
+                borderBottomWidth: 0,
+              }]}
               value={firstName}
             />
             <TextInput
@@ -123,7 +114,7 @@ class Register extends Component {
               placeholder="Zadajte svoje priezvysko"
               returnKeyLabel="next"
               returnKeyType="next"
-              style={styles.textInput}
+              style={[styles.textInput, { borderBottomWidth: 0 }]}
               value={lastName}
             />
             <TextInput
@@ -139,7 +130,7 @@ class Register extends Component {
               returnKeyLabel="next"
               returnKeyType="next"
               placeholder="Zadajte svoj e-mail"
-              style={styles.textInput}
+              style={[styles.textInput, { borderBottomWidth: 0 }]}
               value={email}
             />
             <TextInput
@@ -153,7 +144,10 @@ class Register extends Component {
               placeholder="Zadajte heslo"
               returnKeyLabel="send"
               returnKeyType="send"
-              style={styles.textInput}
+              style={[styles.textInput, {
+                borderBottomLeftRadius: 4,
+                borderBottomRightRadius: 4,
+              }]}
               secureTextEntry
               value={password}
             />

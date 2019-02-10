@@ -2,7 +2,11 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { styles } from '../../../../shared/config';
 
 const { height, width } = Dimensions.get('screen');
-const { colors: { darkGrey, lightGrey } } = styles;
+const {
+  colors: {
+    darkGrey, lightGrey, mediumGrey, white,
+  },
+} = styles;
 
 export default StyleSheet.create({
   backgroundImage: {
@@ -25,7 +29,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: '#00bcff',
+    backgroundColor: '#fff', // '#00bcff',
   },
   erbContainer: {
     flex: 0.2,
@@ -39,12 +43,13 @@ export default StyleSheet.create({
   },
   link: {
     color: darkGrey,
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
   loginTitleText: {
     fontSize: 30,
+    fontWeight: '200',
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -61,9 +66,11 @@ export default StyleSheet.create({
     margin: 10,
   },
   textInput: {
-    backgroundColor: lightGrey,
-    borderRadius: 4,
-    marginBottom: 20,
+    backgroundColor: white,
+    borderColor: mediumGrey,
+    // borderRadius: 4,
+    borderWidth: 1,
+    // marginBottom: 20,
     paddingBottom: 20,
     paddingTop: 20,
     textAlign: 'center',
