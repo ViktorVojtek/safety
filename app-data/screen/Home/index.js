@@ -26,22 +26,31 @@ const Home = graphql(getReportsQuery, {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={sortedReportList}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <FlatListItem
-            address={item.address}
-            categoryId={item.categoryId}
-            description={item.description}
-            navigation={navigation}
-            subCategoryId={item.subCategoryId}
-            imageURI={item.image.data}
-            gpsCoords={item.gpsCoords}
-            data={item}
-          />
-        )}
-      />
+      {
+        sortedReportList.length > 0
+          ? (
+            <FlatList
+              data={sortedReportList}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <FlatListItem
+                  address={item.address}
+                  categoryId={item.categoryId}
+                  description={item.description}
+                  navigation={navigation}
+                  subCategoryId={item.subCategoryId}
+                  imageURI={item.image.data}
+                  gpsCoords={item.gpsCoords}
+                  data={item}
+                />
+              )}
+            />
+          ) : (
+            <View>
+              <Text>Neboli nájdené žiadne udalosti.</Text>
+            </View>
+          )
+      }
     </View>
   );
 });

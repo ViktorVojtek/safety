@@ -34,27 +34,51 @@ const MapComponent = ({
     return <ActivityIndicator style={[styles.container, { justifyContent: 'center' }]} />;
   }
 
+  const { items } = reports;
+
   return (
     <View style={styles.mapContainer}>
-      <MapView
-        initialRegion={initialRegion}
-        loadingEnabled
-        onMapReady={onMapReady}
-        ref={(map) => { handleMapInit(map); }}
-        onRegionChange={onRegionChange}
-        onRegionChangeComplete={onRegionChangeComplete}
-        region={region}
-        showsBuildings={false}
-        showsIndoors={false}
-        showsMyLocationButton
-        showsUserLocation
-        showsTraffic={false}
-        style={styles.map}
-      >
-        {
-          reports.map(item => <ReportMarker coordinate={item.gpsCoords} key={item.id} />)
-        }
-      </MapView>
+      {
+        items.length > 0 ? (
+          <MapView
+            initialRegion={initialRegion}
+            loadingEnabled
+            onMapReady={onMapReady}
+            ref={(map) => { handleMapInit(map); }}
+            onRegionChange={onRegionChange}
+            onRegionChangeComplete={onRegionChangeComplete}
+            region={region}
+            showsBuildings={false}
+            showsIndoors={false}
+            showsMyLocationButton
+            showsUserLocation
+            showsTraffic={false}
+            style={styles.map}
+          >
+            {
+              items.length > 0
+                ? items.map(item => <ReportMarker coordinate={item.gpsCoords} key={item.id} />)
+                : undefined
+            }
+          </MapView>
+        ) : (
+          <MapView
+            initialRegion={initialRegion}
+            loadingEnabled
+            onMapReady={onMapReady}
+            ref={(map) => { handleMapInit(map); }}
+            onRegionChange={onRegionChange}
+            onRegionChangeComplete={onRegionChangeComplete}
+            region={region}
+            showsBuildings={false}
+            showsIndoors={false}
+            showsMyLocationButton
+            showsUserLocation
+            showsTraffic={false}
+            style={styles.map}
+          />
+        )
+      }
       <TouchableOpacity
         onPress={handleFindMe}
         style={styles.resetToDevicePosition}
@@ -69,7 +93,7 @@ MapComponent.propTypes = {
   data: PropTypes.shape({
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
-    reports: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    reports: PropTypes.object.isRequired,
   }).isRequired,
   /* gpsDevice: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
@@ -99,4 +123,6 @@ MapComponent.propTypes = {
   }).isRequired,
 };
 
-export default graphql(getReportsQuery)(MapComponent);
+export default graphql(getReportsQuery, {
+  options: { variables: { reportQuery: { offset: 0, limit: 10 } } },
+})(MapComponent);

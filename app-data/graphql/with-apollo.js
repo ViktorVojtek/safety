@@ -19,9 +19,9 @@ const stateLink = withClientState({
   typeDefs,
 });
 
-const domain = 'localhost'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
-const protocol = 'http';
-const port = 3543;
+const domain = 'safetytrebisov.sk'; // 'localhost'; // '192.168.1.229'; 192.168.22.47; '127.0.0.1';
+const protocol = 'https';
+// const port = 3543;
 
 const customFetch = async (uri, options) => {
   const token = await AsyncStorage.getItem('jwt'); // getCookie('jwt', options);
@@ -39,7 +39,7 @@ const customFetch = async (uri, options) => {
 const client = new ApolloClient({
   cache,
   link: ApolloLink.from([stateLink, new HttpLink({
-    uri: `${protocol}://${domain}:${port}/graphql`,
+    uri: `${protocol}://${domain}/graphql`, // `${protocol}://${domain}:${port}/graphql`,
     fetch: customFetch,
   })]),
 });

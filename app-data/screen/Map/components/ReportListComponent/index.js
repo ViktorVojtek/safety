@@ -20,7 +20,9 @@ const handleMarkerRegion = async ({ latitude, longitude }, mutate) => {
 
 export default compose(
   // graphql(setGpsReportMarkerMutation),
-  graphql(getReportsQuery),
+  graphql(getReportsQuery, {
+    options: { variables: { reportQuery: { offset: 0, limit: 10 } } },
+  }),
 )(({
   data: {
     error, loading, reports,
@@ -38,24 +40,35 @@ export default compose(
     return <ActivityIndicator style={[styles.container, { justifyContent: 'center' }]} />;
   }
 
+  const { items } = reports;
+
   return (
     <View style={styles.halfContainer}>
-      <FlatList
-        data={reports}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <FlatListItem
-            address={item.address}
-            categoryId={item.categoryId}
-            description={item.description}
-            gpsCoords={item.gpsCoords}
-            handler={getMarkerPosition}
-            imageURI={item.image.data}
-            navigation={navigation}
-            subCategoryId={item.subCategoryId}
-          />
-        )}
-      />
+      {
+        items.length > 0
+          ? (
+            <FlatList
+              data={items}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <FlatListItem
+                  address={item.address}
+                  categoryId={item.categoryId}
+                  description={item.description}
+                  gpsCoords={item.gpsCoords}
+                  handler={getMarkerPosition}
+                  imageURI={item.image.data}
+                  navigation={navigation}
+                  subCategoryId={item.subCategoryId}
+                />
+              )}
+            />
+          ) : (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Text>Neboli nájdené žiadne udalosti.</Text>
+            </View>
+          )
+      }
     </View>
   );
 });
