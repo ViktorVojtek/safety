@@ -91,13 +91,13 @@ class AddReport extends Component {
   selectPhoto = () => {
     const options = {
       title: 'Výber fotografie',
-      maxHeight: 640,
-      maxWidth: 640,
+      maxHeight: 800,
+      maxWidth: 800,
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
-      quality: 0.6,
+      quality: 0.75,
     };
 
     this.setState({ photoActivity: true });
