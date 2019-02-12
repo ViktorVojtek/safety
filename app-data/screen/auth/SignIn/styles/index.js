@@ -38,7 +38,7 @@ export default StyleSheet.create({
     flex: 1,
     height: 50, // 85,
     width: 50, // 75,
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
   },
   link: {
     color: darkGrey,

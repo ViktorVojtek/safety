@@ -176,19 +176,38 @@ class AddReport extends Component {
 
         await mutate({
           variables: { report: reportDataToSubmit },
-          update: async (proxy, { data: { createReport } }) => {
+          refetchQueries: () => [
+            { query: getReportsQuery, variables: { reportQuery: { offset: 0, limit: 10 } } },
+          ],
+          /* update: async (proxy, updatedData) => {
+            [{
+              query: getReportsQuery,
+              variables: { reportQuery: { offset: 0, limit: 10 } },
+            }]
+
+
             try {
+              console.log(updatedData);
+              const { data: { createReport } } = updatedData;
+              console.log(createReport);
+
               const reportListData = proxy.readQuery({
                 query: getReportsQuery,
+                options: {
+                  variables: { variables: { reportQuery: { offset: 0, limit: 10 } } },
+                },
               });
 
               reportListData.reports.push(createReport);
 
-              proxy.writeQuery({ query: getReportsQuery, data: reportListData });
+              console.log(reportListData);
+
+              // proxy.writeQuery({ query: getReportsQuery, data: reportListData });
             } catch (err) {
               console.log(err);
+              // throw err;
             }
-          },
+          }, */
         });
 
         this.setState({

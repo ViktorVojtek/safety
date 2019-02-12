@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   AsyncStorage,
-  Image,
+  // Image,
   ScrollView,
   Text,
   TextInput,
@@ -11,6 +11,7 @@ import {
 import { graphql } from 'react-apollo';
 import Modal from '../../../shared/components/Modal';
 import Header from './components/Header';
+import FastImage from 'react-native-fast-image';
 import { loginUserMutation } from '../../../graphql/mutations';
 import styles from './styles';
 
@@ -117,9 +118,10 @@ class SignIn extends Component {
         />
 
         <View style={styles.erbContainer}>
-          <Image
+          <FastImage
             source={require('../../../shared/assets/images/erb.png')}
             style={styles.erbImage}
+            resizeMode="contain"
           />
         </View>
 

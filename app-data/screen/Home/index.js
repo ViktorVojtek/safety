@@ -5,6 +5,7 @@ import {
 import { graphql } from 'react-apollo';
 import Header from '../../shared/components/Header';
 import FlatListItem from './components/FlatListItem';
+import NoCollection from './components/NoCollection';
 import { getReportsQuery } from '../../graphql/queries';
 import { strings } from '../../shared/config';
 import { sortDateDescending } from '../../shared/lib';
@@ -45,11 +46,7 @@ const Home = graphql(getReportsQuery, {
                 />
               )}
             />
-          ) : (
-            <View>
-              <Text>Neboli nájdené žiadne udalosti.</Text>
-            </View>
-          )
+          ) : <NoCollection navigation={navigation} />
       }
     </View>
   );

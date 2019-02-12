@@ -22,6 +22,7 @@ export default (props) => {
           return (
             <TouchableOpacity
               onPress={() => {
+                console.log('ROUTENAME: ', item.routeName);
                 const { routeName } = navigation.state.routes[navigation.state.index];
                 const resetAction = StackActions.reset({
                   index: 0,
@@ -41,7 +42,10 @@ export default (props) => {
                       color="#fff"
                       name="plus"
                       size={iconSize}
-                      style={[styles.plusIcon, { backgroundColor: state.index === 1 ? lightBlue : darkGrey }]}
+                      style={[
+                        styles.plusIcon,
+                        { backgroundColor: state.index === 1 ? lightBlue : darkGrey },
+                      ]}
                     />
                   ) : <Icon color={state.index === 2 ? lightBlue : darkGrey} name="map" size={iconSize} />
                 ) : <Icon color={state.index === 0 ? lightBlue : darkGrey} name="home" size={iconSize + 5} />
