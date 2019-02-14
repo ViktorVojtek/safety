@@ -21,6 +21,7 @@ const MapComponent = ({
   handleFindMe,
   /* gpsDevice, gpsDeviceReset, gpsReportMarker, mutate, */
   handleMapInit, initialRegion,
+  navigation,
   onMapReady, onRegionChange, onRegionChangeComplete, region,
 }) => {
   if (error) {
@@ -56,9 +57,21 @@ const MapComponent = ({
             style={styles.map}
           >
             {
-              items.length > 0
-                ? items.map(item => <ReportMarker coordinate={item.gpsCoords} key={item.id} />)
-                : undefined
+              items.map(item => (
+                <ReportMarker
+                  address={item.address}
+                  categoryId={item.categoryId}
+                  date={item.dateCreated}
+                  description={item.description}
+                  subCategoryId={item.subCategoryId}
+                  imageURI={item.image.data}
+                  gpsCoords={item.gpsCoords}
+
+                  navigation={navigation}
+                  coordinate={item.gpsCoords}
+                  key={item.id}
+                />
+              ))
             }
           </MapView>
         ) : (

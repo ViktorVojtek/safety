@@ -1,4 +1,4 @@
-package com.safety;
+package com.safetytrebisov;
 
 import android.app.Application;
 

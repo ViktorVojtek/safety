@@ -33,6 +33,7 @@ export const createUserMutation = gql`
 export const loginUserMutation = gql`
   mutation loginUser($user: UserLoginInput) {
     loginUser(user: $user) {
+      confirmed
       firstName
       id
       jwt

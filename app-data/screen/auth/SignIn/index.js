@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native';
 import { graphql } from 'react-apollo';
+import FastImage from 'react-native-fast-image';
 import Modal from '../../../shared/components/Modal';
 import Header from './components/Header';
-import FastImage from 'react-native-fast-image';
 import { loginUserMutation } from '../../../graphql/mutations';
 import styles from './styles';
 
@@ -20,6 +20,7 @@ const initialState = {
     email: '',
     password: '',
   },
+  errorText: '',
   errorVisible: false,
 };
 
@@ -34,6 +35,7 @@ class SignIn extends Component {
     this.state = initialState;
 
     this.checkFields = this.checkFields.bind(this);
+    this.handleErrorText = this.handleErrorText.bind(this);
     this.handleUserData = this.handleUserData.bind(this);
     this.signInAsync = this.signInAsync.bind(this);
     this.toggleError = this.toggleError.bind(this);
@@ -67,31 +69,44 @@ class SignIn extends Component {
         const {
           data: {
             loginUser: {
-              firstName, id, jwt, lastName, role,
+              confirmed, firstName, id, jwt, lastName, role,
             },
           },
         } = resp;
 
-        await AsyncStorage.multiSet([
-          ['firstName', firstName],
-          ['id', id],
-          ['jwt', jwt],
-          ['lastName', lastName],
-          ['role', String(role)],
-        ], (error) => {
-          if (error) {
-            return;
-          }
+        if (confirmed) {
+          await AsyncStorage.multiSet([
+            ['firstName', firstName],
+            ['id', id],
+            ['jwt', jwt],
+            ['lastName', lastName],
+            ['role', String(role)],
+          ], (error) => {
+            if (error) {
+              return;
+            }
 
-          navigation.navigate('App');
-        });
+            navigation.navigate('App');
+          });
+        } else {
+          throw new Error('Potvrďte registráciu!');
+        }
       } else {
         throw new Error('Skontrolujte zadané informácie');
       }
     } catch (err) {
-      // console.log(err);
-      this.toggleError();
+      if (err.message.indexOf('NOT_FOUND') > -1) {
+        this.handleErrorText('Nesprávne prihlasovacie údaje');
+        this.toggleError();
+      } else {
+        this.handleErrorText(err.message);
+        this.toggleError();
+      }
     }
+  }
+
+  handleErrorText(errorText) {
+    this.setState({ errorText });
   }
 
   toggleError() {
@@ -106,6 +121,7 @@ class SignIn extends Component {
       data: {
         email, password,
       },
+      errorText,
       errorVisible,
     } = this.state;
 
@@ -113,7 +129,7 @@ class SignIn extends Component {
       <View style={styles.container}>
         <Modal
           close={this.toggleError}
-          text="Skontrolujte prihlasovacie údaje."
+          text={errorText}
           visible={errorVisible}
         />
 

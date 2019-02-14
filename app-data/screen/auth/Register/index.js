@@ -44,7 +44,7 @@ class Register extends Component {
 
   async registerAsync() {
     try {
-      const { mutate } = this.props;
+      const { mutate, navigation } = this.props;
       const {
         data: {
           email, firstName, lastName, password,
@@ -55,6 +55,8 @@ class Register extends Component {
       };
 
       await mutate({ variables: { user } });
+
+      navigation.navigate('SignIn');
     } catch (err) {
       this.toggleError();
     }

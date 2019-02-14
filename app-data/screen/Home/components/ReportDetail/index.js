@@ -5,6 +5,7 @@ import { apis, strings } from '../../../../shared/config';
 import Header from './components/Header';
 import CategoryTitle from '../CategoryTitle';
 import SubCategoryTitle from '../SubCategoryTitle';
+import { parseDate } from '../../../../shared/lib';
 import styles from './styles';
 
 const { serverURI } = apis;
@@ -12,6 +13,7 @@ const { serverURI } = apis;
 const ReportDetail = ({ navigation }) => {
   const address = navigation.getParam('address');
   const categoryId = navigation.getParam('categoryId');
+  const dateStamp = parseInt(navigation.getParam('date'), 10);
   const subCategoryId = navigation.getParam('subCategoryId');
   const imageURI = navigation.getParam('imageURI');
   const description = navigation.getParam('description');
@@ -26,9 +28,16 @@ const ReportDetail = ({ navigation }) => {
         />
       </View>
       <View style={styles.containerHalf}>
-        <Text>{description}</Text>
-        <CategoryTitle categoryId={categoryId} noStyle />
+        <View style={styles.containerColumn}>
+          <View style={styles.containerHorizontalHalf}>
+            <CategoryTitle categoryId={categoryId} noStyle />
+          </View>
+          <View style={styles.containerHorizontalHalf}>
+            <Text style={styles.textRight}>{parseDate(dateStamp)}</Text>
+          </View>
+        </View>
         <SubCategoryTitle subCategoryId={subCategoryId} noStyle />
+        <Text>{description}</Text>
         <Text>{address}</Text>
       </View>
     </View>

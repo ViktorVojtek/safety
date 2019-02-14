@@ -31,9 +31,12 @@ export default ({ navigation }) => (
       </TouchableOpacity>
     </View>
     <View style={styles.content}>
-      {/*
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuItemText}>Rodičovská ochrana</Text>
+      { /*
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => navigation.navigate('SafeZone')}
+      >
+        <Text style={styles.menuItemText}>Bezpečné zóny</Text>
       </TouchableOpacity>
       */
       }

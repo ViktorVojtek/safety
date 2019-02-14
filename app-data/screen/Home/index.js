@@ -37,6 +37,7 @@ const Home = graphql(getReportsQuery, {
                 <FlatListItem
                   address={item.address}
                   categoryId={item.categoryId}
+                  date={item.dateCreated}
                   description={item.description}
                   navigation={navigation}
                   subCategoryId={item.subCategoryId}

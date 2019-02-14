@@ -22,7 +22,6 @@ export default (props) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                console.log('ROUTENAME: ', item.routeName);
                 const { routeName } = navigation.state.routes[navigation.state.index];
                 const resetAction = StackActions.reset({
                   index: 0,

@@ -5,12 +5,14 @@ import {
   HomeStack,
   MapStack,
   ReportStack,
+  // SafeZoneStack,
 } from '../StackNavigation';
 
 const AppTabs = createBottomTabNavigator({
   Home: HomeStack,
   Report: ReportStack,
   Map: MapStack,
+  // SafeZone: SafeZoneStack,
 }, {
   tabBarComponent: props => <BottomTabBar {...props} />,
 });

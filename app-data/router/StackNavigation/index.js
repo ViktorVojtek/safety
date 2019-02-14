@@ -9,6 +9,7 @@ import SubCategoryScreen from '../../screen/Report/components/SubCategory';
 import AddReportScreen from '../../screen/Report/components/AddReport';
 import RegisterScreen from '../../screen/auth/Register';
 import SignScreen from '../../screen/auth/SignIn';
+import SafeZoneScreen from '../../screen/SafeZone';
 
 export const AuthStack = createStackNavigator({
   SignIn: SignScreen,
@@ -20,6 +21,7 @@ export const AuthStack = createStackNavigator({
 export const HomeStack = createStackNavigator({
   Home: HomeScreen,
   ReportDetail: ReportDetailScreen,
+  SafeZone: SafeZoneScreen,
   QuickDial: QuickDialScreen,
 }, {
   initialRouteName: 'Home',
@@ -27,16 +29,19 @@ export const HomeStack = createStackNavigator({
 
 export const MapStack = createStackNavigator({
   Map: MapScreen,
+  ReportDetail: ReportDetailScreen,
+  SafeZone: SafeZoneScreen,
   QuickDial: QuickDialScreen,
 }, {
   initialRouteName: 'Map',
 });
 
 export const ReportStack = createStackNavigator({
-  QuickDial: QuickDialScreen,
-  Report: ReportScreen,
-  SubCategory: SubCategoryScreen,
   AddReport: AddReportScreen,
+  Report: ReportScreen,
+  SafeZone: SafeZoneScreen,
+  SubCategory: SubCategoryScreen,
+  QuickDial: QuickDialScreen,
 }, {
   initialRouteName: 'Report',
 });

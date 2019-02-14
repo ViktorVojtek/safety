@@ -69,6 +69,24 @@ export const geocode = async gpsCoords => (
   })
 );
 
+export const parseDate = (date, format = 'all') => {
+  let result;
+  const timeStamp = new Date(date);
+
+  switch (format) {
+    case 'date':
+      result = timeStamp.toLocaleDateString('sk-Sk');
+      break;
+    case 'time':
+      result = `${timeStamp.toLocaleTimeString('sk-Sk').split(':')[0]}:${timeStamp.toLocaleTimeString('sk-Sk').split(':')[1]}`;
+      break;
+    default:
+      result = `${timeStamp.toLocaleDateString('sk-Sk')} ${timeStamp.toLocaleTimeString('sk-Sk').split(':')[0]}:${timeStamp.toLocaleTimeString('sk-Sk').split(':')[1]}`;
+  }
+
+  return result;
+};
+
 export const sortDateDescending = array => (
   array.sort((a, b) => (
     parseInt(b.dateCreated, 10) - parseInt(a.dateCreated, 10)

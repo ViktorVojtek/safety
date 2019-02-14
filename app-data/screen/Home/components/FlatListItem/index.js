@@ -10,13 +10,14 @@ import { apis } from '../../../../shared/config';
 const { serverURI } = apis;
 
 const FlatListItem = ({
-  address, categoryId, description, /* gpsCoords, */ imageURI, navigation, subCategoryId,
+  address, categoryId, date, description, /* gpsCoords, */ imageURI, navigation, subCategoryId,
 }) => (
   <TouchableOpacity
     onPress={() => {
       navigation.navigate('ReportDetail', {
         address,
         categoryId,
+        date,
         description,
         imageURI,
         subCategoryId,
@@ -48,6 +49,7 @@ FlatListItem.defaultProps = {
 FlatListItem.propTypes = {
   address: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
   description: PropTypes.string,
   /* gpsCoords: PropTypes.shape({
     latitude: PropTypes.number.isRequired,

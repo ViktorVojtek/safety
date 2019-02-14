@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   mapContainer: {
     alignItems: 'flex-start',
-    flex: 0.5,
+    flex: 1, // 0.5,
     justifyContent: 'flex-start',
     position: 'relative',
     width,
