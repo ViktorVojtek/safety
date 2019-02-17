@@ -56,7 +56,7 @@ export default StyleSheet.create({
   subContainer: {
     backgroundColor: '#fff',
     borderRadius: 6,
-    flex: 0.765,
+    flex: 0.9,
     padding: 20,
     marginHorizontal: 5,
   },

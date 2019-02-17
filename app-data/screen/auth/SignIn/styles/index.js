@@ -4,7 +4,7 @@ import { styles } from '../../../../shared/config';
 const { height, width } = Dimensions.get('screen');
 const {
   colors: {
-    darkGrey, lightGrey, mediumGrey, white,
+    darkGrey, /* lightGrey, */ mediumGrey, white,
   },
 } = styles;
 
@@ -55,7 +55,7 @@ export default StyleSheet.create({
   subContainer: {
     backgroundColor: '#fff',
     borderRadius: 6,
-    flex: 0.65,
+    flex: 0.75,
     padding: 20,
     marginHorizontal: 5,
   },
