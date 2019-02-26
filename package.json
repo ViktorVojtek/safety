@@ -10,6 +10,7 @@
     "apollo-boost": "^0.1.23",
     "apollo-link-state": "^0.4.2",
     "apollo-link-ws": "^1.0.14",
+    "apollo-utilities": "^1.2.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.1",
     "lottie-react-native": "^2.5.11",
