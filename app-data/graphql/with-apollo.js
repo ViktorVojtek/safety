@@ -1,11 +1,15 @@
 import { AsyncStorage } from 'react-native';
+import ApolloClient from 'apollo-client';
 import {
-  ApolloClient,
+  // ApolloClient,
   ApolloLink,
-  HttpLink,
-  InMemoryCache,
-  split,
+  // HttpLink,
+  // InMemoryCache,
+  // split,
 } from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
 import { withClientState } from 'apollo-link-state';
@@ -14,7 +18,7 @@ import defaults from './defaults';
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
-const domain = 'localhost'; // '192.168.1.10'; // 'safetytrebisov.sk'; '192.168.1.229'; 192.168.22.47; '127.0.0.1';
+const domain = '192.168.1.229'; // '192.168.1.10'; // 'safetytrebisov.sk'; '192.168.1.229'; 192.168.22.47; '127.0.0.1';
 const protocol = 'http'; // 'https';
 const port = 3543;
 
@@ -22,7 +26,7 @@ const cache = new InMemoryCache();
 const stateLink = withClientState({
   cache,
   defaults,
-  resolvers,
+  // resolvers,
   typeDefs,
 });
 
@@ -41,6 +45,7 @@ const customFetch = async (uri, options) => {
 
 const client = new ApolloClient({
   cache,
+  resolvers,
   link: ApolloLink.from([
     stateLink,
     split(
@@ -49,7 +54,7 @@ const client = new ApolloClient({
         return kind === 'OperationDefinition' && operation === 'subscription';
       },
       new WebSocketLink({
-        uri: `ws://${domain}:${port}/subscriptions`,
+        uri: `ws://${domain}:${port}/graphql`,
         options: { reconnect: true },
       }),
       new HttpLink({

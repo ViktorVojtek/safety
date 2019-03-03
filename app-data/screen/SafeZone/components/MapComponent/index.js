@@ -49,7 +49,11 @@ class SafeZone extends Component {
     const { ready } = this.state;
 
     if (ready) {
-      setTimeout(() => this.map.root.animateToRegion(region, 1000), 10);
+      if (this.map) {
+        setTimeout(() => this.map.animateToRegion(region, 1000), 100);
+      } else {
+        setTimeout(this.setRegion(region), 500);
+      }
     }
     // this.setState({ region });
   }

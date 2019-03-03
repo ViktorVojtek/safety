@@ -6,6 +6,7 @@ import QuickDialScreen from '../../screen/QuickDial';
 import ReportScreen from '../../screen/Report';
 import ReportDetailScreen from '../../screen/Home/components/ReportDetail';
 import SubCategoryScreen from '../../screen/Report/components/SubCategory';
+// import AddUserScreen from '../../screen/SafeZone/components/AddUserScreen';
 import AddReportScreen from '../../screen/Report/components/AddReport';
 import RegisterScreen from '../../screen/auth/Register';
 import SignScreen from '../../screen/auth/SignIn';

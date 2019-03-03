@@ -9,11 +9,14 @@ import NoCollection from './components/NoCollection';
 import { getReportsQuery } from '../../graphql/queries';
 import { strings } from '../../shared/config';
 import { sortDateDescending } from '../../shared/lib';
+import NotificationWrapper from '../../shared/components/Notification';
 import styles from './styles';
 
 const Home = graphql(getReportsQuery, {
   options: { variables: { reportQuery: { offset: 0, limit: 10 } } },
-})(({ data: { error, loading, reports }, navigation }) => {
+})((props) => {
+  const { data: { error, loading, reports }, navigation } = props;
+
   if (error) {
     return <View style={styles.container}><Text>{error.message}</Text></View>;
   }
@@ -27,6 +30,7 @@ const Home = graphql(getReportsQuery, {
 
   return (
     <View style={styles.container}>
+      <NotificationWrapper />
       {
         sortedReportList.length > 0
           ? (
@@ -50,6 +54,7 @@ const Home = graphql(getReportsQuery, {
           ) : <NoCollection navigation={navigation} />
       }
     </View>
+
   );
 });
 
