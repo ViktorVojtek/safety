@@ -29,13 +29,13 @@ export default {
     dialNumberItem: '18 155',
     dialNumberItemTitle: 'Letecká záchranná služba',
     dialNumberItemType: 'AIR_AMBULANCE_SERVICE',
-  }, {
+  }, /* , {
     __typename: 'DialNumberItem',
     id: '5-N1',
     dialNumberItem: '18 300',
     dialNumberItemTitle: 'Horská záchranná služba',
     dialNumberItemType: 'MOUNTAIN_RESCUE_SERVICE',
-  }],
+  } */],
   gpsDevice: {
     __typename: 'GpsDevice',
     latitude: 0,
@@ -126,12 +126,18 @@ export default {
     {
       __typename: 'SubCategoryItem',
       id: '3-2S',
+      categoryType: 'STRAY_DOMESTIC_ANIMAL',
+      categoryName: 'Túlavé domáce zviera',
+    },
+    {
+      __typename: 'SubCategoryItem',
+      id: '4-2S',
       categoryType: 'VANDALISM',
       categoryName: 'Vandalismus',
     },
     {
       __typename: 'SubCategoryItem',
-      id: '4-2S',
+      id: '5-2S',
       categoryType: 'OTHER',
       categoryName: 'Iné',
     }],

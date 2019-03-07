@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Animated,
+  Alert,
   // Image,
   Dimensions,
   Keyboard,
@@ -119,8 +120,17 @@ class Register extends Component {
 
       await mutate({ variables: { user } });
 
-      navigation.navigate('SignIn');
+      Alert.alert(
+        'Info',
+        'Skontrolujte emailovú schránku a potvrdte registráciu',
+        [
+          { text: 'OK', onPress: () => { navigation.navigate('SignIn'); } },
+        ],
+      );
+
+      // navigation.navigate('SignIn');
     } catch (err) {
+      // console.log(err);
       this.toggleError();
     }
   }
