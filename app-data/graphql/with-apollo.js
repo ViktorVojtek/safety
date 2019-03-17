@@ -18,7 +18,7 @@ import defaults from './defaults';
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
 
-const domain = '192.168.10.67'; // '192.168.1.10'; // 'safetytrebisov.sk'; '192.168.1.229'; 192.168.22.47; '127.0.0.1';
+const domain = '192.168.10.200'; // '192.168.1.10'; // 'safetytrebisov.sk'; '192.168.1.229'; 192.168.22.47; '127.0.0.1';
 const protocol = 'http'; // 'https';
 const port = 3543;
 

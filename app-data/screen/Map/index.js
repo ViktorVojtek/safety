@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { graphql } from 'react-apollo';
 import { setGpsDeviceMutation } from '../../graphql/mutations';
-import ReportListComponent from './components/ReportListComponent';
+// import ReportListComponent from './components/ReportListComponent';
 import Header from '../../shared/components/Header';
 import MapComponent from './components/MapComponent';
 import { gpsLocation } from '../../shared/lib';

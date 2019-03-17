@@ -28,13 +28,12 @@ export default StyleSheet.create({
   },
   addUserWrapper: {
     flexDirection: 'row',
+    paddingVertical: 15,
   },
   textInputContainer: {
     flex: 0.5,
   },
   textInput: {
-    borderBottomColor: mediumGrey,
-    borderBottomWidth: 1,
     flex: 1,
     paddingHorizontal: 10,
   },

@@ -54,6 +54,8 @@ class SafeZone extends Component {
               value={email}
               placeholder="Zadajte tel. číslo užívateľa"
               keyboardType="number-pad"
+              returnKeyLabel="Hotovo"
+              returnKeyType="done"
             />
           </View>
           <View style={[styles.textInputContainer, { alignItems: 'center', flex: 0.4 }]}>

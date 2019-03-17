@@ -1,6 +1,6 @@
 export const apis = {
   googleApiKey: 'AIzaSyAmmWu22KRJjTYn8xd8e8iasXyt9jMc4x4',
-  serverURI: 'http://192.168.10.67:3543', // 'https://safetytrebisov.sk', // 'http://192.168.1.10:3543', // 'https://safetytrebisov.sk', // localhost 192.168.22.47
+  serverURI: 'http://192.168.10.200:3543', // 'https://safetytrebisov.sk', // 'http://192.168.1.10:3543', // 'https://safetytrebisov.sk', // localhost 192.168.22.47
 };
 
 export const strings = {
