@@ -1,12 +1,12 @@
 export const apis = {
   googleApiKey: 'AIzaSyAmmWu22KRJjTYn8xd8e8iasXyt9jMc4x4',
-  serverURI: 'http://192.168.1.229:3543', // 'http://192.168.1.10:3543', // 'https://safetytrebisov.sk', // localhost 192.168.22.47
+  serverURI: 'http://192.168.10.67:3543', // 'https://safetytrebisov.sk', // 'http://192.168.1.10:3543', // 'https://safetytrebisov.sk', // localhost 192.168.22.47
 };
 
 export const strings = {
   header: {
     title: {
-      detailReport: 'Deteil oznámenia',
+      detailReport: 'Detail oznámenia',
       home: 'Posledné oznámenia',
       map: 'Lokácia udalosti',
       quickDial: 'Rýchla voľba',

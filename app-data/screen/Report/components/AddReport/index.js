@@ -13,7 +13,7 @@ import ImagePicker from 'react-native-image-picker';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
-import { geocode, gpsLocation } from '../../../../shared/lib';
+import { geocode /* , gpsLocation */ } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
 import { reportQuery, getReportsQuery } from '../../../../graphql/queries';
 import { createReportMutation } from '../../../../graphql/mutations';
@@ -28,7 +28,7 @@ import styles from './styles';
 const { colors: { mediumGrey } } = stylesConfig;
 
 const initialState = {
-  address: '',
+  address: 'Adresa oznámenia',
   description: '',
   error: {
     errorText: '',
@@ -77,12 +77,12 @@ class AddReport extends Component {
     this.submitReport = this.submitReport.bind(this);
   }
 
-  componentDidMount() {
+  /* componentDidMount() {
     this.handleLocation();
-  }
+  } */
 
-  handleLocation = async () => {
-    const gpsCoords = await gpsLocation();
+  handleLocation = async (gpsCoords) => {
+    // const gpsCoords = await gpsLocation();
     const address = await geocode(gpsCoords);
 
     this.setState({ address, gpsCoords });
@@ -103,6 +103,10 @@ class AddReport extends Component {
     this.setState({ photoActivity: true });
 
     ImagePicker.showImagePicker(options, (response) => {
+      const { longitude, latitude } = response;
+
+      this.handleLocation({ longitude, latitude });
+
       if (response.didCancel) {
         this.setState({ photoActivity: false });
       } else if (response.error) {
@@ -289,19 +293,22 @@ class AddReport extends Component {
         <View style={styles.formContainer}>
           <ScrollView>
             <TextInput
+              multiline
+              numberOfLines={4}
               onChangeText={descriptionText => this.handleDescription(descriptionText)}
               placeholder="Sem zadajte popis"
-              style={styles.textInput}
+              style={[styles.textInput]}
+              returnKeyLabel="Hotovo"
+              returnKeyType="done"
               value={description}
             />
-
             <CategoryText categoryId={categoryId} />
             <SubCategoryText
               categoryId={categoryId}
               subCategoryId={subCategoryId}
             />
             <View style={styles.textContainer}>
-              <Text>{address}</Text>
+              <Text style={{ color: (address.indexOf('Adresa') > -1) ? 'silver' : 'black' }}>{address}</Text>
             </View>
 
             <TouchableOpacity

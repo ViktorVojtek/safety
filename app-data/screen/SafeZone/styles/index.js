@@ -30,8 +30,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   textInputContainer: {
-    borderColor: 'red',
-    borderWidth: 1,
     flex: 0.5,
   },
   textInput: {

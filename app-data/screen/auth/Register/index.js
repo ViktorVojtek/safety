@@ -24,6 +24,7 @@ const initialState = {
     email: '',
     firstName: '',
     lastName: '',
+    number: '',
     password: '',
   },
   errorVisible: false,
@@ -109,28 +110,17 @@ class Register extends Component {
   async registerAsync() {
     try {
       const { mutate, navigation } = this.props;
-      const {
-        data: {
-          email, firstName, lastName, password,
-        },
-      } = this.state;
-      const user = {
-        email, firstName, lastName, password,
-      };
+      const { data } = this.state;
+      const user = data;
 
       await mutate({ variables: { user } });
 
       Alert.alert(
         'Info',
         'Skontrolujte emailovú schránku a potvrdte registráciu',
-        [
-          { text: 'OK', onPress: () => { navigation.navigate('SignIn'); } },
-        ],
+        [{ text: 'OK', onPress: () => { navigation.navigate('SignIn'); } }],
       );
-
-      // navigation.navigate('SignIn');
     } catch (err) {
-      // console.log(err);
       this.toggleError();
     }
   }
@@ -144,7 +134,7 @@ class Register extends Component {
   render() {
     const {
       data: {
-        email, firstName, lastName, password,
+        email, firstName, lastName, number, password,
       },
       errorVisible,
       shift,
@@ -225,16 +215,35 @@ class Register extends Component {
                   this.handleUserData(data);
                 }}
                 onFocus={this.handleKeyboardDidShow}
+                onSubmitEditing={() => this.fiveTextInput.focus()}
                 ref={(input) => { this.fourthTextInput = input; }}
                 placeholder="Zadajte heslo"
-                returnKeyLabel="hotovo"
+                returnKeyLabel="ďalej"
+                returnKeyType="next"
+                style={[styles.textInput, { borderBottomWidth: 0 }]}
+                secureTextEntry
+                value={password}
+              />
+              <TextInput
+                autofocus
+                autoCapitalize="none"
+                keyboardType="number-pad"
+                onChangeText={(numberText) => {
+                  const { data } = this.state;
+
+                  data.number = numberText;
+                  this.handleUserData(data);
+                }}
+                onFocus={this.handleKeyboardDidShow}
+                ref={(input) => { this.fiveTextInput = input; }}
+                returnKeyLabel="Hotovo"
                 returnKeyType="done"
+                placeholder="Zadajte svoje tel. číslo"
                 style={[styles.textInput, {
                   borderBottomLeftRadius: 4,
                   borderBottomRightRadius: 4,
                 }]}
-                secureTextEntry
-                value={password}
+                value={number}
               />
             </Animated.View>
           </ScrollView>

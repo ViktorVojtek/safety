@@ -8,7 +8,7 @@ import { strings } from '../../shared/config';
 import styles from './styles';
 
 const initialState = {
-  data: { email: '' },
+  data: { number: '' },
 };
 
 class SafeZone extends Component {
@@ -41,22 +41,22 @@ class SafeZone extends Component {
           <MapComponent />
         </View>
         <View style={styles.addUserWrapper}>
-          <View style={styles.textInputContainer}>
+          <View style={[styles.textInputContainer, { flex: 0.6 }]}>
             <TextInput
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText={(emailText) => {
+              onChangeText={(numberText) => {
                 const { data } = this.state;
 
-                data.email = emailText;
+                data.number = numberText;
                 this.handleUserData(data);
               }}
               value={email}
-              placeholder="Zadajte svoj e-mail"
-              keyboardType="email-address"
+              placeholder="Zadajte tel. číslo užívateľa"
+              keyboardType="number-pad"
             />
           </View>
-          <View style={[styles.textInputContainer, { alignItems: 'center' }]}>
+          <View style={[styles.textInputContainer, { alignItems: 'center', flex: 0.4 }]}>
             <TouchableOpacity style={styles.addButton}>
               <Text style={styles.textWhite}>PRIDAŤ</Text>
             </TouchableOpacity>
