@@ -109,11 +109,9 @@ class Map extends Component {
           region={region}
         />
         {
-          /*
-          <ReportListComponent
+          /* <ReportListComponent
             getMarkerPosition={this.getMarkerPosition}
-          />
-          */
+          /> */
         }
       </View>
     );

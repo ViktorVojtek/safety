@@ -31,12 +31,14 @@ export default ({ navigation }) => (
       </TouchableOpacity>
     </View>
     <View style={styles.content}>
-      <TouchableOpacity
+      {
+      /* <TouchableOpacity
         style={styles.menuItem}
         onPress={() => navigation.navigate('SafeZone')}
       >
         <Text style={styles.menuItemText}>Bezpečné zóny</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */
+      }
       <TouchableOpacity
         onPress={() => navigation.navigate('QuickDial')}
         style={styles.menuItem}

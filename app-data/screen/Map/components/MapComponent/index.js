@@ -14,7 +14,11 @@ import styles from './styles';
 
 const { colors: { darkGrey } } = stylesConfig;
 
-const MapComponent = ({
+const MapComponent = graphql(getReportsQuery, {
+  options: {
+    variables: { reportQuery: { category: 'mobile' } }, // , offset: 0, limit: 10
+  },
+})(({
   data: {
     error, loading, reports,
   },
@@ -100,7 +104,7 @@ const MapComponent = ({
       </TouchableOpacity>
     </View>
   );
-};
+});
 
 MapComponent.propTypes = {
   data: PropTypes.shape({
@@ -136,6 +140,8 @@ MapComponent.propTypes = {
   }).isRequired,
 };
 
-export default graphql(getReportsQuery, {
-  options: { variables: { reportQuery: { offset: 0, limit: 10 } } },
-})(MapComponent);
+export default MapComponent; /* graphql(getReportsQuery, {
+  options: {
+    variables: { reportQuery: { category: 'mobile' } }, // , offset: 0, limit: 10
+  },
+})(MapComponent); */

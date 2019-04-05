@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   Text,
-  TouchableOpacity,
+  // TouchableOpacity,
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';

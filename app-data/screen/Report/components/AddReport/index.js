@@ -9,11 +9,12 @@ import {
   View,
 } from 'react-native';
 // import { StackActions, NavigationActions } from 'react-navigation';
+import Icon from 'react-native-vector-icons/AntDesign';
 import ImagePicker from 'react-native-image-picker';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import CategoryText from './components/CategoryText';
-import { geocode /* , gpsLocation */ } from '../../../../shared/lib';
+import { geocode, gpsLocation } from '../../../../shared/lib';
 import SubCategoryText from './components/SubCategoryText';
 import { reportQuery, getReportsQuery } from '../../../../graphql/queries';
 import { createReportMutation } from '../../../../graphql/mutations';
@@ -77,15 +78,15 @@ class AddReport extends Component {
     this.submitReport = this.submitReport.bind(this);
   }
 
-  /* componentDidMount() {
-    this.handleLocation();
-  } */
+  handleLocation = async (gpsCoords, fromGPS) => {
+    try {
+      const coords = !fromGPS ? await gpsLocation() : gpsCoords;
+      const address = await geocode(coords);
 
-  handleLocation = async (gpsCoords) => {
-    // const gpsCoords = await gpsLocation();
-    const address = await geocode(gpsCoords);
-
-    this.setState({ address, gpsCoords });
+      this.setState({ address, gpsCoords });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   selectPhoto = () => {
@@ -105,7 +106,7 @@ class AddReport extends Component {
     ImagePicker.showImagePicker(options, (response) => {
       const { longitude, latitude } = response;
 
-      this.handleLocation({ longitude, latitude });
+      this.handleLocation({ longitude, latitude }, (longitude || latitude) === true);
 
       if (response.didCancel) {
         this.setState({ photoActivity: false });
@@ -255,6 +256,10 @@ class AddReport extends Component {
     this.setState({ description });
   }
 
+  handleAddress(address) {
+    this.setState({ address });
+  }
+
   render() {
     const {
       categoryId,
@@ -293,6 +298,7 @@ class AddReport extends Component {
         <View style={styles.formContainer}>
           <ScrollView>
             <TextInput
+              blurOnSubmit
               multiline
               numberOfLines={4}
               onChangeText={descriptionText => this.handleDescription(descriptionText)}
@@ -307,8 +313,39 @@ class AddReport extends Component {
               categoryId={categoryId}
               subCategoryId={subCategoryId}
             />
-            <View style={styles.textContainer}>
-              <Text style={{ color: (address.indexOf('Adresa') > -1) ? 'silver' : 'black' }}>{address}</Text>
+            <View style={[styles.textContainer, { position: 'relative' }]}>
+              <TextInput
+                blurOnSubmit
+                onChangeText={addressText => this.handleAddress(addressText)}
+                value={address}
+                style={{
+                  color: (address.indexOf('Adresa') > -1) ? 'silver' : 'black',
+                }}
+                placeholder={(address.indexOf('Adresa') > -1) ? 'Adresa' : ''}
+              />
+              {
+                address.indexOf('Adresa') < 0 ? (
+                  <TouchableOpacity
+                    style={{
+                      position: 'absolute',
+                      right: 10,
+                      top: '50%',
+                    }}
+                    onPress={() => {
+                      this.handleAddress('');
+                    }}
+                  >
+                    <Icon name="closecircle" color="silver" size={20} />
+                  </TouchableOpacity>
+                ) : null
+              }
+              {
+                /* <Text
+                  style={{ color: (address.indexOf('Adresa') > -1) ? 'silver' : 'black' }}
+                >
+                  {address}
+                </Text> */
+              }
             </View>
 
             <TouchableOpacity

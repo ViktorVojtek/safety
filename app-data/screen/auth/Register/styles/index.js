@@ -65,6 +65,31 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
+  textInputPrefixWrapper: {
+    backgroundColor: white,
+    borderColor: mediumGrey,
+    borderWidth: 1,
+    position: 'relative',
+    width: width * 0.8,
+  },
+  textPrefixContainer: {
+    backgroundColor: mediumGrey,
+    // flex: 1,
+    height: '100%',
+    left: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+  },
+  textPrefix: {
+    color: darkGrey,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  textInputNumber: {
+    paddingBottom: 20,
+    paddingTop: 20,
+    textAlign: 'center',
+  },
   textInput: {
     backgroundColor: white,
     borderColor: mediumGrey,

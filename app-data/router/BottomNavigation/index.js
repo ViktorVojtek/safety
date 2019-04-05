@@ -7,6 +7,7 @@ import {
   ReportStack,
   // SafeZoneStack,
 } from '../StackNavigation';
+// import Notification from '../../shared/components/Notification';
 
 const AppTabs = createBottomTabNavigator({
   Home: HomeStack,
@@ -14,6 +15,7 @@ const AppTabs = createBottomTabNavigator({
   Map: MapStack,
   // SafeZone: SafeZoneStack,
 }, {
+  initialRouteName: 'Home',
   tabBarComponent: props => <BottomTabBar {...props} />,
 });
 

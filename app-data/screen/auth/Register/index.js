@@ -26,6 +26,7 @@ const initialState = {
     lastName: '',
     number: '',
     password: '',
+    role: 3,
   },
   errorVisible: false,
   keyboardHeight: 0,
@@ -117,7 +118,7 @@ class Register extends Component {
 
       Alert.alert(
         'Info',
-        'Skontrolujte emailovú schránku a potvrdte registráciu',
+        'Skontrolujte emailovú schránku, poprípade "spam" a potvrdte registráciu',
         [{ text: 'OK', onPress: () => { navigation.navigate('SignIn'); } }],
       );
     } catch (err) {
@@ -150,7 +151,8 @@ class Register extends Component {
 
         <View style={styles.subContainer}>
           <Text style={styles.loginTitleText}>Registrácia</Text>
-          <ScrollView>
+
+          <ScrollView overScrollMode="always">
             <Animated.View style={{ transform: [{ translateY: shift }] }}>
               <TextInput
                 onChangeText={(firstNameText) => {
@@ -180,7 +182,7 @@ class Register extends Component {
                 onFocus={this.handleKeyboardDidShow}
                 ref={(input) => { this.secondTextInput = input; }}
                 onSubmitEditing={() => this.thirdTextInput.focus()}
-                placeholder="Zadajte svoje priezvysko"
+                placeholder="Zadajte svoje priezvisko"
                 returnKeyLabel="ďalej"
                 returnKeyType="next"
                 style={[styles.textInput, { borderBottomWidth: 0 }]}
@@ -224,27 +226,41 @@ class Register extends Component {
                 secureTextEntry
                 value={password}
               />
-              <TextInput
-                autofocus
-                autoCapitalize="none"
-                keyboardType="number-pad"
-                onChangeText={(numberText) => {
-                  const { data } = this.state;
-
-                  data.number = numberText;
-                  this.handleUserData(data);
+              <View style={[styles.textInputPrefixWrapper, {
+                alignItems: 'center',
+                borderBottomLeftRadius: 4,
+                borderBottomRightRadius: 4,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }]}
+              >
+                <View style={styles.textPrefixContainer}>
+                  <Text style={styles.textPrefix}>+421</Text>
+                </View>
+                <View style={{
+                  alignContent: 'flex-end', width: '75%',
                 }}
-                onFocus={this.handleKeyboardDidShow}
-                ref={(input) => { this.fiveTextInput = input; }}
-                returnKeyLabel="Hotovo"
-                returnKeyType="done"
-                placeholder="Zadajte svoje tel. číslo"
-                style={[styles.textInput, {
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                }]}
-                value={number}
-              />
+                >
+                  <TextInput
+                    autofocus
+                    autoCapitalize="none"
+                    keyboardType="number-pad"
+                    onChangeText={(numberText) => {
+                      const { data } = this.state;
+
+                      data.number = numberText;
+                      this.handleUserData(data);
+                    }}
+                    onFocus={this.handleKeyboardDidShow}
+                    ref={(input) => { this.fiveTextInput = input; }}
+                    returnKeyLabel="Hotovo"
+                    returnKeyType="done"
+                    placeholder="Tel. číslo v tvare 9xx xxx xxx"
+                    style={styles.textInputNumber}
+                    value={number}
+                  />
+                </View>
+              </View>
             </Animated.View>
           </ScrollView>
 

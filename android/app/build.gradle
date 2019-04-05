@@ -112,7 +112,7 @@ android {
         applicationId "com.safetytrebisov"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 10
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
