@@ -35,6 +35,6 @@ Cross platform mobile application written in React Native framework that will tr
 
 ## App is live at:
 
-https://apps.apple.com/us/app/safety-trebi%C5%A1ov/id1456183944
-https://play.google.com/store/apps/details?id=com.safetytrebisov&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1
+- https://apps.apple.com/us/app/safety-trebi%C5%A1ov/id1456183944
+- https://play.google.com/store/apps/details?id=com.safetytrebisov&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1
 
